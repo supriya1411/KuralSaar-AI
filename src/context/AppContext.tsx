@@ -4,6 +4,8 @@ import { progressService } from '../services/progressService';
 import { kuralService } from '../services/kuralService';
 import confetti from 'canvas-confetti';
 
+import { Language, TRANSLATIONS } from '../i18n/translations';
+
 interface AppContextType {
   activeTab: ActiveTab;
   setActiveTab: (tab: ActiveTab) => void;
@@ -29,6 +31,9 @@ interface AppContextType {
   searchGlobalQuery: string;
   setSearchGlobalQuery: (query: string) => void;
   refreshUserProgress: () => Promise<void>;
+  language: Language;
+  setLanguage: (lang: Language) => void;
+  t: (key: string) => string;
 }
 
 const AppContext = createContext<AppContextType | undefined>(undefined);
@@ -171,6 +176,18 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
     setUserProgress(progressService.getUserProgress());
   };
 
+  const [language, setLanguage] = useState<Language>(() => {
+    return (localStorage.getItem('kural_saar_lang') as Language) || 'en';
+  });
+
+  useEffect(() => {
+    localStorage.setItem('kural_saar_lang', language);
+  }, [language]);
+
+  const t = (key: string): string => {
+    return TRANSLATIONS[language]?.[key] || TRANSLATIONS['en']?.[key] || key;
+  };
+
   return (
     <AppContext.Provider
       value={{
@@ -192,6 +209,9 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
         searchGlobalQuery,
         setSearchGlobalQuery,
         refreshUserProgress,
+        language,
+        setLanguage,
+        t,
       }}
     >
       {children}

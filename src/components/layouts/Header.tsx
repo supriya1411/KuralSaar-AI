@@ -24,6 +24,7 @@ export const Header: React.FC<Props> = ({ onMobileMenuToggle }) => {
     resetProgressToDemo,
     searchGlobalQuery,
     setSearchGlobalQuery,
+    t,
   } = useApp();
 
   const [showProfileMenu, setShowProfileMenu] = useState(false);
@@ -34,8 +35,8 @@ export const Header: React.FC<Props> = ({ onMobileMenuToggle }) => {
     switch (activeTab) {
       case 'dashboard':
         return {
-          title: 'Welcome back, Ethical Thinker 👋',
-          subtitle: 'Learn legal principles. Explore ethical wisdom. Make responsible decisions.',
+          title: t('welcomeTitle'),
+          subtitle: t('slogan'),
         };
       case 'scenario-challenge':
         return {

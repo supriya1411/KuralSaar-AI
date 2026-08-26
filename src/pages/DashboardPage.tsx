@@ -29,6 +29,7 @@ export const DashboardPage: React.FC = () => {
     setActiveTab,
     setSelectedScenarioNumber,
     openKuralModalByNumber,
+    t,
   } = useApp();
 
   const [recommendedKurals, setRecommendedKurals] = useState<Kural[]>([]);
@@ -53,7 +54,7 @@ export const DashboardPage: React.FC = () => {
 
   return (
     <div className="space-y-8 animate-in fade-in duration-200 pb-12">
-      {/* 1. Hero Grid: Main Welcome Card + Live Preview Card (Matching Reference Image) */}
+      {/* 1. Hero Grid: Main Welcome Card + Live Preview Card */}
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-stretch">
         {/* Left Hero Card (8 Cols) */}
         <div className="lg:col-span-8 bg-white border border-slate-200 rounded-2xl shadow-xs p-6 sm:p-8 flex flex-col justify-between">
@@ -61,22 +62,22 @@ export const DashboardPage: React.FC = () => {
             {/* Top Yellow Pill Badge */}
             <div className="inline-flex items-center gap-2 px-3 py-1 bg-amber-100/90 text-amber-900 border border-amber-300/60 rounded-full text-xs font-bold shadow-2xs">
               <Sparkles className="w-3.5 h-3.5 text-amber-600" />
-              <span>Indian Law + Thirukkural Ethics + AI Simulation</span>
+              <span>{t('heroTag')}</span>
             </div>
 
             {/* Main Title */}
             <h1 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-[#071B3A] tracking-tight font-heading mt-4 mb-2">
-              KuralSaar AI
+              {t('appName')}
             </h1>
 
             {/* Subtitle Tagline */}
             <p className="text-lg sm:text-xl font-bold text-slate-800 mb-3 font-heading">
-              "Learn Law. Live Ethics. Think Responsibly."
+              "{t('slogan')}"
             </p>
 
             {/* Description */}
-            <p className="text-sm text-slate-600 leading-relaxed max-w-2xl mb-6">
-              The premier interactive legal-ethics platform bridging 2,000+ years of classical Indian moral philosophy (Thirukkural) with modern constitutional law, statutory frameworks, and professional responsibilities.
+            <p className="text-sm text-slate-600 leading-relaxed max-w-2xl mb-6 font-medium">
+              {t('heroDesc')}
             </p>
 
             {/* Action Buttons */}
@@ -89,7 +90,7 @@ export const DashboardPage: React.FC = () => {
                 className="px-6 py-3 bg-[#071B3A] hover:bg-[#0A2540] text-white rounded-xl text-sm font-bold shadow-sm transition-colors flex items-center gap-2 cursor-pointer"
               >
                 <Scale className="w-4 h-4 text-amber-400" />
-                Launch Scenario Challenge →
+                {t('launchScenarioBtn')}
               </button>
 
               <button
@@ -97,7 +98,7 @@ export const DashboardPage: React.FC = () => {
                 className="px-6 py-3 border border-slate-300 hover:bg-slate-50 text-slate-700 rounded-xl text-sm font-bold transition-colors flex items-center gap-2 cursor-pointer"
               >
                 <BookOpen className="w-4 h-4 text-blue-600" />
-                Explore Kural Quest
+                {t('exploreKuralsBtn')}
               </button>
             </div>
           </div>
@@ -106,25 +107,25 @@ export const DashboardPage: React.FC = () => {
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 pt-6 mt-6 border-t border-slate-100 text-xs font-semibold text-slate-600">
             <div className="flex items-center gap-2">
               <CheckCircle2 className="w-4 h-4 text-blue-600 shrink-0" />
-              <span>10 Interactive Scenarios</span>
+              <span>{t('scenariosCount')}</span>
             </div>
             <div className="flex items-center gap-2">
               <CheckCircle2 className="w-4 h-4 text-amber-500 shrink-0" />
-              <span>1,330 Ethical Verses</span>
+              <span>{t('kuralsCount')}</span>
             </div>
             <div className="flex items-center gap-2">
               <CheckCircle2 className="w-4 h-4 text-emerald-600 shrink-0" />
-              <span>AI-Assisted Tutor</span>
+              <span>{t('aiTutorFeature')}</span>
             </div>
           </div>
         </div>
 
-        {/* Right Live Preview Card (4 Cols - Matching Reference Photo) */}
+        {/* Right Live Preview Card */}
         <div className="lg:col-span-4 bg-white border border-slate-200 rounded-2xl shadow-xs p-5 flex flex-col justify-between space-y-4">
           <div>
             <div className="flex items-center justify-between mb-3">
               <span className="text-xs font-black text-slate-400 uppercase tracking-widest">
-                LIVE PREVIEW
+                {t('livePreview')}
               </span>
               <span className="bg-slate-100 text-slate-700 font-bold text-xs px-2.5 py-1 rounded-md border border-slate-200">
                 Scenario 3
@@ -144,7 +145,7 @@ export const DashboardPage: React.FC = () => {
             <h3 className="text-sm font-extrabold text-slate-900 leading-tight">
               Scenario: Conflict of Interest
             </h3>
-            <p className="text-xs text-slate-500 italic mt-1 leading-normal">
+            <p className="text-xs text-slate-500 italic mt-1 leading-normal font-medium">
               "Senior advocate discovers rival firm is owned by a close family member..."
             </p>
           </div>
@@ -156,7 +157,7 @@ export const DashboardPage: React.FC = () => {
             }}
             className="w-full py-2.5 bg-[#071B3A] hover:bg-[#0A2540] text-white font-bold text-xs rounded-xl shadow-xs transition-colors cursor-pointer text-center block"
           >
-            Solve Scenario Now →
+            {t('solveScenarioNow')}
           </button>
         </div>
       </div>
@@ -164,13 +165,13 @@ export const DashboardPage: React.FC = () => {
       {/* 2. Educational Architecture Heading Section */}
       <div className="text-center space-y-2 pt-2">
         <span className="text-xs font-black text-slate-400 uppercase tracking-widest">
-          EDUCATIONAL ARCHITECTURE
+          {t('educationalArchitecture')}
         </span>
         <h2 className="text-2xl sm:text-3xl font-black text-[#071B3A] font-heading">
-          How KuralSaar AI Transforms Legal-Ethics Learning
+          {t('howPlatformTransforms')}
         </h2>
-        <p className="text-xs sm:text-sm text-slate-500 max-w-2xl mx-auto">
-          Moving beyond dry rote memorization to immersive scenario reflection and timeless philosophical reasoning.
+        <p className="text-xs sm:text-sm text-slate-500 max-w-2xl mx-auto font-medium">
+          {t('architectureSub')}
         </p>
       </div>
 

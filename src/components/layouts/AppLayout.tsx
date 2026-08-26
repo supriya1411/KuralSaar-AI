@@ -20,6 +20,7 @@ export const AppLayout: React.FC<Props> = ({ children }) => {
     setUnlockedBadgeToCelebrate,
     setSelectedScenarioNumber,
     setActiveTab,
+    t,
   } = useApp();
 
   return (
@@ -49,10 +50,10 @@ export const AppLayout: React.FC<Props> = ({ children }) => {
           <div className="bg-[#051329] text-white px-4 py-2 text-xs flex items-center justify-between border-b border-slate-800 shrink-0">
             <div className="flex items-center gap-3 max-w-5xl truncate">
               <span className="flex items-center justify-center px-2.5 py-0.5 text-[10px] font-black uppercase tracking-wider bg-amber-400 text-slate-950 rounded-md shrink-0">
-                EDUCATIONAL PLATFORM
+                {t('educationalTag')}
               </span>
               <span className="truncate text-slate-200 font-medium text-xs">
-                ⚖️ <strong>Educational Platform:</strong> KuralSaar AI pairs Indian law with Thirukkural ethics. This is not formal legal advice.
+                ⚖️ <strong>{t('educationalTag')}:</strong> {t('educationalBanner')}
               </span>
             </div>
             <button
