@@ -51,27 +51,27 @@ export const Sidebar: React.FC = () => {
 
   return (
     <aside
-      className={`relative flex flex-col justify-between h-screen bg-[#0F172A] text-slate-300 border-r border-slate-800 transition-all duration-300 z-30 select-none shrink-0 ${
+      className={`relative flex flex-col justify-between h-screen bg-[#071B3A] text-slate-300 border-r border-[#1E3A8A]/30 transition-all duration-300 z-30 select-none shrink-0 ${
         isSidebarCollapsed ? 'w-20' : 'w-64'
       }`}
     >
       {/* Brand Header */}
-      <div className="p-5 flex items-center justify-between border-b border-slate-800 shrink-0">
+      <div className="p-5 flex items-center justify-between border-b border-slate-800/80 shrink-0">
         <div
-          onClick={() => setActiveTab('landing')}
+          onClick={() => setActiveTab('dashboard')}
           className="flex items-center gap-3 cursor-pointer group"
         >
-          {/* Indigo Brand Badge */}
-          <div className="w-8 h-8 bg-indigo-500 rounded-lg flex items-center justify-center font-bold text-white text-lg italic shadow-md shadow-indigo-500/20 group-hover:scale-105 transition-transform shrink-0">
-            J
+          {/* Blue Shield Logo Badge */}
+          <div className="w-9 h-9 bg-blue-600 rounded-lg flex items-center justify-center font-bold text-white text-lg shadow-md shadow-blue-900/40 group-hover:scale-105 transition-transform shrink-0">
+            <Scale className="w-5 h-5 text-white" />
           </div>
 
           {!isSidebarCollapsed && (
             <div className="flex flex-col">
-              <span className="text-white font-bold tracking-tight text-base leading-none">
+              <span className="text-white font-extrabold tracking-tight text-base leading-none font-heading">
                 JUSTICE AI
               </span>
-              <span className="text-[10px] uppercase tracking-widest text-slate-500 font-semibold mt-1">
+              <span className="text-[10px] uppercase tracking-widest text-slate-400 font-bold mt-1">
                 Legal & Ethics
               </span>
             </div>
@@ -81,7 +81,7 @@ export const Sidebar: React.FC = () => {
         {/* Collapse button (Desktop) */}
         <button
           onClick={() => setIsSidebarCollapsed(!isSidebarCollapsed)}
-          className="hidden md:flex p-1.5 rounded-lg text-slate-400 hover:text-white hover:bg-slate-800 transition-colors"
+          className="hidden md:flex p-1.5 rounded-lg text-slate-400 hover:text-white hover:bg-slate-800/80 transition-colors"
           title={isSidebarCollapsed ? 'Expand sidebar' : 'Collapse sidebar'}
         >
           {isSidebarCollapsed ? (
@@ -93,34 +93,32 @@ export const Sidebar: React.FC = () => {
       </div>
 
       {/* Navigation Links */}
-      <nav className="flex-1 py-3 px-3 space-y-1 overflow-y-auto custom-scrollbar">
+      <nav className="flex-1 py-4 px-3 space-y-1.5 overflow-y-auto custom-scrollbar">
         {NAV_ITEMS.map((item) => {
           const Icon = item.icon;
           const isActive = activeTab === item.id;
-
-          // Social category divider before Leaderboard
           const isSocialHeader = item.id === 'leaderboard';
 
           return (
             <React.Fragment key={item.id}>
               {isSocialHeader && !isSidebarCollapsed && (
-                <div className="mt-5 mb-2 px-3 text-[10px] font-bold text-slate-500 uppercase tracking-widest">
+                <div className="mt-6 mb-2 px-3 text-[10px] font-bold text-slate-400 uppercase tracking-widest">
                   Social & Progress
                 </div>
               )}
               <button
                 onClick={() => setActiveTab(item.id)}
-                className={`w-full flex items-center gap-3 px-3 py-2 rounded-md font-medium text-xs sm:text-sm transition-all duration-150 group relative ${
+                className={`w-full flex items-center gap-3 px-3 py-2.5 rounded-lg font-semibold text-xs sm:text-sm transition-all duration-150 group relative ${
                   isActive
-                    ? 'bg-indigo-600/10 text-indigo-400 border-l-4 border-indigo-500 font-semibold pl-2'
-                    : 'text-slate-300 hover:bg-slate-800 hover:text-white'
+                    ? 'bg-[#1E3A8A]/90 text-white shadow-sm font-bold border-l-4 border-blue-400'
+                    : 'text-slate-300 hover:bg-slate-800/60 hover:text-white'
                 }`}
                 title={item.label}
               >
                 <Icon
-                  className={`w-4 h-4 shrink-0 transition-transform ${
+                  className={`w-4 h-4 shrink-0 transition-colors ${
                     isActive
-                      ? 'text-indigo-400'
+                      ? 'text-blue-400'
                       : 'text-slate-400 group-hover:text-slate-200'
                   }`}
                 />
@@ -131,9 +129,9 @@ export const Sidebar: React.FC = () => {
 
                 {!isSidebarCollapsed && item.badge && (
                   <span
-                    className={`ml-auto text-[9px] px-1.5 py-0.5 rounded font-semibold uppercase tracking-wider ${
+                    className={`ml-auto text-[9px] px-1.5 py-0.5 rounded font-bold uppercase tracking-wider ${
                       isActive
-                        ? 'bg-indigo-500 text-white'
+                        ? 'bg-amber-400 text-slate-950'
                         : item.badge.includes('RAG')
                         ? 'bg-purple-500/20 text-purple-300 border border-purple-500/30'
                         : 'bg-emerald-500/20 text-emerald-300 border border-emerald-500/30'
@@ -157,20 +155,20 @@ export const Sidebar: React.FC = () => {
 
       {/* Level XP Progress Card in Sidebar */}
       {!isSidebarCollapsed && (
-        <div className="p-3.5 bg-slate-800/30 m-3 rounded-xl border border-slate-800/60 shrink-0">
+        <div className="p-3.5 bg-[#0A192F]/80 m-3 rounded-xl border border-slate-700/60 shrink-0">
           <div className="flex items-center justify-between mb-1.5">
-            <span className="text-xs font-semibold text-slate-200">Level {userProgress.level}</span>
-            <span className="text-[10px] text-slate-400">{userProgress.xp} / {userProgress.nextLevelXp} XP</span>
+            <span className="text-xs font-bold text-slate-200">Level {userProgress.level}</span>
+            <span className="text-[10px] text-slate-400 font-semibold">{userProgress.xp} / {userProgress.nextLevelXp} XP</span>
           </div>
-          <div className="w-full h-1.5 bg-slate-700 rounded-full overflow-hidden">
+          <div className="w-full h-1.5 bg-slate-800 rounded-full overflow-hidden">
             <div
-              className="h-full bg-indigo-500 transition-all duration-300"
+              className="h-full bg-blue-500 transition-all duration-300"
               style={{
                 width: `${Math.min(100, Math.round((userProgress.xp / userProgress.nextLevelXp) * 100))}%`,
               }}
             />
           </div>
-          <p className="text-[10px] mt-2 text-center text-slate-400 italic">
+          <p className="text-[10px] mt-2 text-center text-slate-400 font-medium italic">
             {userProgress.levelTitle}
           </p>
         </div>

@@ -167,9 +167,9 @@ export const ScenarioChallengePage: React.FC = () => {
       {/* ========================================================================= */}
       <div className="lg:col-span-8 space-y-5">
         {/* Step Progress Indicator Bar & Timer */}
-        <div className="flex flex-wrap items-center justify-between gap-4 p-4 bg-white rounded-2xl border border-slate-200 shadow-xs">
+        <div className="flex flex-wrap items-center justify-between gap-4 p-4 bg-white rounded-2xl border border-slate-200 shadow-2xs">
           <div className="flex items-center gap-3">
-            <span className="text-sm font-bold text-slate-800">
+            <span className="text-sm font-extrabold text-[#071B3A]">
               Scenario {currentScenario.number} of {allScenarios.length || 10}
             </span>
             {/* Step bubbles 1..10 */}
@@ -184,11 +184,11 @@ export const ScenarioChallengePage: React.FC = () => {
                   <button
                     key={stepNum}
                     onClick={() => setSelectedScenarioNumber(stepNum)}
-                    className={`w-7 h-7 rounded-full flex items-center justify-center text-xs font-bold transition-all ${
+                    className={`w-7 h-7 rounded-full flex items-center justify-center text-xs font-bold transition-all cursor-pointer ${
                       isActive
-                        ? 'bg-indigo-600 text-white ring-2 ring-indigo-300 ring-offset-1 scale-105 shadow-xs'
+                        ? 'bg-[#071B3A] text-white ring-2 ring-blue-400 ring-offset-1 scale-105 shadow-2xs'
                         : isSolved
-                        ? 'bg-emerald-500 text-white hover:bg-emerald-600'
+                        ? 'bg-emerald-600 text-white hover:bg-emerald-700'
                         : 'bg-slate-100 text-slate-500 hover:bg-slate-200'
                     }`}
                     title={`Go to Scenario ${stepNum}`}
@@ -205,66 +205,70 @@ export const ScenarioChallengePage: React.FC = () => {
           </div>
 
           {/* Countdown Timer */}
-          <div className="flex items-center gap-1.5 text-xs font-bold text-slate-700 bg-slate-100 px-3 py-1.5 rounded-xl">
-            <Clock className="w-4 h-4 text-indigo-600" />
+          <div className="flex items-center gap-1.5 text-xs font-bold text-slate-700 bg-slate-100 px-3 py-1.5 rounded-xl border border-slate-200">
+            <Clock className="w-4 h-4 text-blue-600" />
             <span>{formatTimer(timeLeft)}</span>
-            <span className="text-[10px] font-normal text-slate-500">Time Left</span>
+            <span className="text-[10px] font-semibold text-slate-400">Time Left</span>
           </div>
         </div>
 
-        {/* Main Scenario Card with Illustration */}
-        <div className="bg-white rounded-2xl border border-slate-200 shadow-xs overflow-hidden">
-          {/* Scenario Header banner */}
-          <div className="p-6 pb-2">
-            <div className="flex items-center justify-between gap-3 mb-4">
-              <div className="flex items-center gap-3">
-                <div className="flex items-center justify-center w-10 h-10 rounded-xl bg-indigo-50 text-indigo-600">
-                  <Users className="w-5 h-5" />
-                </div>
-                <div>
-                  <h2 className="text-lg sm:text-xl font-bold text-slate-900 font-heading">
-                    Scenario {currentScenario.number}: {currentScenario.title}
-                  </h2>
-                  <span className="text-xs text-slate-500 font-medium">{currentScenario.category}</span>
-                </div>
-              </div>
+        {/* Real Photographic Hero Banner */}
+        <div className="relative rounded-2xl overflow-hidden border border-slate-200 shadow-sm min-h-[150px] flex items-center">
+          <img
+            src="/assets/images/legal_courtroom.jpg"
+            alt="Indian Courtroom & Law Library"
+            className="absolute inset-0 w-full h-full object-cover object-center"
+          />
+          {/* Subtle gradient overlay to ensure 100% text readability */}
+          <div className="absolute inset-0 bg-gradient-to-r from-slate-950/90 via-slate-950/75 to-slate-950/40 backdrop-blur-[1px]" />
 
-              {/* Difficulty pill */}
-              <span
-                className={`px-3 py-1 rounded-full text-xs font-bold ${
-                  currentScenario.difficulty === 'Easy'
-                    ? 'bg-emerald-50 text-emerald-700 border border-emerald-200'
-                    : currentScenario.difficulty === 'Medium'
-                    ? 'bg-amber-50 text-amber-700 border border-amber-200'
-                    : 'bg-rose-50 text-rose-700 border border-rose-200'
-                }`}
-              >
-                {currentScenario.difficulty}
-              </span>
+          <div className="relative z-10 p-6 sm:p-8 w-full flex flex-col sm:flex-row sm:items-center justify-between gap-4 text-white">
+            <div className="space-y-2 max-w-2xl">
+              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-black bg-amber-400 text-slate-950 shadow-2xs">
+                <Scale className="w-3.5 h-3.5 text-slate-950" />
+                Scenario {currentScenario.number} of {allScenarios.length || 10} • {currentScenario.category}
+              </div>
+              <h2 className="text-xl sm:text-2xl font-extrabold font-heading text-white tracking-tight drop-shadow-sm">
+                {currentScenario.title}
+              </h2>
+              <p className="text-xs sm:text-sm text-slate-200 font-medium leading-relaxed drop-shadow-xs">
+                Real-world Indian legal case study & ethical deliberation
+              </p>
             </div>
 
-            {/* Narrative & Illustration Layout */}
-            <div className="grid grid-cols-1 md:grid-cols-12 gap-4 items-center pt-2">
-              <div className="md:col-span-7 space-y-3">
-                <p className="text-sm sm:text-base text-slate-700 leading-relaxed">
-                  {currentScenario.description}
-                </p>
-                <div className="p-3 bg-slate-50 rounded-xl border border-slate-100 text-xs text-slate-600">
-                  <span className="font-semibold text-slate-900">Key Context:</span>{' '}
-                  {currentScenario.summary}
-                </div>
-              </div>
+            <span
+              className={`px-3.5 py-1.5 rounded-full text-xs font-black uppercase tracking-wider self-start sm:self-center shadow-md ${
+                currentScenario.difficulty === 'Easy'
+                  ? 'bg-emerald-400 text-slate-950'
+                  : currentScenario.difficulty === 'Medium'
+                  ? 'bg-amber-400 text-slate-950'
+                  : 'bg-rose-500 text-white'
+              }`}
+            >
+              {currentScenario.difficulty} Level
+            </span>
+          </div>
+        </div>
 
-              {/* Character Illustration */}
-              <div className="md:col-span-5 flex justify-center">
-                <ScenarioFemaleIllustration className="w-full max-w-[280px]" />
-              </div>
+        {/* Main Scenario Case Card */}
+        <div className="bg-white rounded-2xl border border-slate-200 shadow-2xs p-6 sm:p-8 space-y-6">
+          <div className="space-y-3">
+            <div className="flex items-center gap-2 text-xs font-extrabold text-[#071B3A] uppercase tracking-wider">
+              <FileText className="w-4 h-4 text-blue-600" />
+              Case Background Narrative
+            </div>
+            <p className="text-sm sm:text-base text-slate-800 leading-relaxed font-medium bg-slate-50/80 p-5 rounded-xl border border-slate-200/80">
+              {currentScenario.description}
+            </p>
+            <div className="p-3.5 bg-blue-50/60 rounded-xl border border-blue-200/70 text-xs text-slate-700 font-medium">
+              <span className="font-extrabold text-[#071B3A]">Key Context:</span>{' '}
+              {currentScenario.summary}
             </div>
           </div>
 
           {/* Question & Options Area */}
           <div className="p-6 pt-4 border-t border-slate-100 space-y-4">
-            <h3 className="text-sm sm:text-base font-bold text-slate-900">
+            <h3 className="text-sm sm:text-base font-extrabold text-[#071B3A]">
               {currentScenario.question}
             </h3>
 
@@ -275,12 +279,12 @@ export const ScenarioChallengePage: React.FC = () => {
                 const isCorrectOpt = option.id === currentScenario.correctOptionId;
 
                 // Border & Background Logic
-                let optionStyle = 'border-slate-200 bg-white hover:border-indigo-300 hover:bg-slate-50/50';
+                let optionStyle = 'border-slate-200 bg-white hover:border-blue-400 hover:bg-slate-50/50';
                 let badgeStyle = 'border-slate-300 text-slate-600 bg-slate-50';
 
                 if (isSelected && !isSubmitted) {
-                  optionStyle = 'border-indigo-600 bg-indigo-50/60 ring-2 ring-indigo-500/20';
-                  badgeStyle = 'border-indigo-600 bg-indigo-600 text-white';
+                  optionStyle = 'border-blue-600 bg-blue-50/70 ring-2 ring-blue-500/20';
+                  badgeStyle = 'border-[#071B3A] bg-[#071B3A] text-white';
                 } else if (isSubmitted) {
                   if (isCorrectOpt) {
                     optionStyle = 'border-emerald-500 bg-emerald-50/80 ring-2 ring-emerald-500/30';
@@ -311,13 +315,13 @@ export const ScenarioChallengePage: React.FC = () => {
                     </div>
 
                     <div className="flex-1 space-y-1">
-                      <p className="text-sm font-medium text-slate-800 leading-snug">
+                      <p className="text-sm font-semibold text-slate-800 leading-snug">
                         {option.text}
                       </p>
 
                       {/* Post-submit detailed option explanation */}
                       {isSubmitted && isSelected && (
-                        <p className={`text-xs mt-2 pt-2 border-t font-medium ${isCorrectOpt ? 'text-emerald-800 border-emerald-200' : 'text-rose-800 border-rose-200'}`}>
+                        <p className={`text-xs mt-2 pt-2 border-t font-semibold ${isCorrectOpt ? 'text-emerald-800 border-emerald-200' : 'text-rose-800 border-rose-200'}`}>
                           {option.explanation}
                         </p>
                       )}
@@ -328,19 +332,19 @@ export const ScenarioChallengePage: React.FC = () => {
             </div>
 
             {/* "Think Ethically!" Box */}
-            <div className="p-4 bg-indigo-50/70 border border-indigo-200/70 rounded-xl space-y-1">
-              <div className="flex items-center gap-2 text-xs font-bold text-indigo-900">
-                <Lightbulb className="w-4 h-4 text-indigo-600" />
+            <div className="p-4 bg-blue-50/70 border border-blue-200/80 rounded-xl space-y-1">
+              <div className="flex items-center gap-2 text-xs font-extrabold text-[#071B3A]">
+                <Lightbulb className="w-4 h-4 text-amber-500" />
                 Think Ethically!
               </div>
-              <p className="text-xs text-indigo-950/80 leading-relaxed">
+              <p className="text-xs text-slate-700 leading-relaxed font-medium">
                 {currentScenario.thinkEthicallyHint}
               </p>
               <div className="flex flex-wrap gap-1.5 pt-1.5">
                 {currentScenario.ethicalConcepts.map((ec, idx) => (
                   <span
                     key={idx}
-                    className="px-2 py-0.5 text-[11px] font-semibold bg-white/80 text-indigo-800 border border-indigo-200 rounded-md"
+                    className="px-2.5 py-0.5 text-[11px] font-bold bg-white text-blue-900 border border-blue-200 rounded-md"
                   >
                     {ec}
                   </span>
@@ -350,9 +354,9 @@ export const ScenarioChallengePage: React.FC = () => {
 
             {/* Post-Submission Phase 3 Grounded AI Feedback Showcase */}
             {isSubmitted && (
-              <div className="p-6 bg-gradient-to-br from-slate-900 via-indigo-950 to-slate-900 text-white rounded-2xl shadow-xl space-y-5 animate-in fade-in duration-300 border border-indigo-500/20">
+              <div className="p-6 bg-[#071B3A] text-white rounded-2xl shadow-sm space-y-5 animate-in fade-in duration-300 border border-slate-700">
                 {/* Result Header */}
-                <div className="flex items-center justify-between pb-3 border-b border-slate-800">
+                <div className="flex items-center justify-between pb-3 border-b border-slate-700">
                   <div className="flex items-center gap-3">
                     {isCurrentCorrect ? (
                       <div className="p-2 bg-emerald-500 rounded-full text-slate-950 shadow-md">
@@ -369,7 +373,7 @@ export const ScenarioChallengePage: React.FC = () => {
                           ? 'Outstanding Ethical & Legal Discernment!'
                           : 'Educational Evaluation & Reflection'}
                       </h4>
-                      <p className="text-xs text-slate-300">
+                      <p className="text-xs text-slate-300 font-medium">
                         {aiFeedback?.decisionAssessment ||
                           (isCurrentCorrect
                             ? `+${currentScenario.xpReward} XP Earned • Perfect adherence to statutory & ethical standards`
@@ -382,13 +386,13 @@ export const ScenarioChallengePage: React.FC = () => {
                     {aiFeedback?.traces && aiFeedback.traces.length > 0 && (
                       <button
                         onClick={() => setShowReasonedModal(true)}
-                        className="px-3 py-1.5 bg-indigo-600/30 hover:bg-indigo-600/50 border border-indigo-400/30 text-indigo-200 text-xs font-bold rounded-xl flex items-center gap-1.5 transition-all"
+                        className="px-3 py-1.5 bg-blue-600/30 hover:bg-blue-600/50 border border-blue-400/30 text-blue-200 text-xs font-bold rounded-xl flex items-center gap-1.5 transition-all cursor-pointer"
                       >
                         <Cpu className="w-3.5 h-3.5" />
                         How AI Reasoned
                       </button>
                     )}
-                    <span className="px-3 py-1 text-xs font-extrabold bg-amber-400 text-slate-950 rounded-full">
+                    <span className="px-3 py-1 text-xs font-black bg-amber-400 text-slate-950 rounded-full">
                       +{aiFeedback?.xpAwarded || currentScenario.xpReward} XP
                     </span>
                   </div>
@@ -398,25 +402,25 @@ export const ScenarioChallengePage: React.FC = () => {
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-xs">
                   {/* Ethical Perspective */}
                   <div className="p-4 bg-white/5 rounded-xl space-y-2 border border-white/10">
-                    <span className="font-bold text-amber-300 uppercase tracking-wider flex items-center gap-1.5">
-                      <Sparkles className="w-4 h-4" />
+                    <span className="font-extrabold text-amber-400 uppercase tracking-wider flex items-center gap-1.5">
+                      <Sparkles className="w-4 h-4 text-amber-400" />
                       Ethical Perspective (Aram / Duty)
                     </span>
-                    <p className="text-slate-200 leading-relaxed">
+                    <p className="text-slate-200 leading-relaxed font-medium">
                       {aiFeedback?.ethicalReasoning || currentScenario.ethicalPerspective.deepDive}
                     </p>
                   </div>
 
                   {/* Legal Perspective */}
                   <div className="p-4 bg-white/5 rounded-xl space-y-2 border border-white/10">
-                    <span className="font-bold text-indigo-300 uppercase tracking-wider flex items-center gap-1.5">
-                      <Scale className="w-4 h-4" />
+                    <span className="font-extrabold text-blue-300 uppercase tracking-wider flex items-center gap-1.5">
+                      <Scale className="w-4 h-4 text-blue-400" />
                       Statutory Legal Context
                     </span>
-                    <p className="text-slate-200 leading-relaxed">
+                    <p className="text-slate-200 leading-relaxed font-medium">
                       {aiFeedback?.legalEducationalContext || currentScenario.legalPerspective.explanation}
                     </p>
-                    <p className="text-[11px] text-slate-400 italic">
+                    <p className="text-[11px] text-slate-400 italic font-medium">
                       Statutes: {currentScenario.legalPerspective.statutes.join(', ')}
                     </p>
                   </div>
@@ -424,24 +428,24 @@ export const ScenarioChallengePage: React.FC = () => {
 
                 {/* Better Responsible Action */}
                 <div className="p-4 bg-emerald-950/40 rounded-xl border border-emerald-500/30 space-y-1.5">
-                  <span className="text-xs font-bold text-emerald-300 uppercase tracking-wider flex items-center gap-1.5">
+                  <span className="text-xs font-extrabold text-emerald-400 uppercase tracking-wider flex items-center gap-1.5">
                     <CheckCircle2 className="w-4 h-4 text-emerald-400" />
                     Ideal Responsible Action
                   </span>
-                  <p className="text-xs text-slate-200 leading-relaxed">
+                  <p className="text-xs text-slate-200 leading-relaxed font-medium">
                     {aiFeedback?.betterResponsibleAction ||
                       `Adhere strictly to procedural governance while consulting organizational ombudsmen or ethical oversight channels.`}
                   </p>
                 </div>
 
                 {/* Key Pedagogical Takeaway */}
-                <div className="p-4 bg-gradient-to-r from-indigo-900/60 to-slate-900 rounded-xl border border-indigo-500/30 flex items-start gap-3">
-                  <FileText className="w-4 h-4 text-indigo-300 shrink-0 mt-0.5" />
+                <div className="p-4 bg-slate-800/80 rounded-xl border border-slate-700 flex items-start gap-3">
+                  <FileText className="w-4 h-4 text-amber-400 shrink-0 mt-0.5" />
                   <div className="text-xs">
-                    <span className="font-bold text-indigo-300 uppercase tracking-wider">
+                    <span className="font-extrabold text-amber-400 uppercase tracking-wider">
                       Pedagogical Takeaway:
                     </span>
-                    <p className="text-slate-100 mt-0.5 italic">
+                    <p className="text-slate-100 mt-0.5 italic font-medium">
                       "{aiFeedback?.learningTakeaway || 'True justice balances strict statutory compliance with unyielding moral courage.'}"
                     </p>
                   </div>
@@ -454,7 +458,7 @@ export const ScenarioChallengePage: React.FC = () => {
               <button
                 onClick={handlePrev}
                 disabled={selectedScenarioNumber <= 1}
-                className="inline-flex items-center gap-1.5 px-4 py-2.5 text-xs font-bold text-slate-700 bg-white border border-slate-300 rounded-xl hover:bg-slate-100 disabled:opacity-40 disabled:cursor-not-allowed transition-colors"
+                className="inline-flex items-center gap-1.5 px-4 py-2.5 text-xs font-bold text-slate-700 bg-white border border-slate-300 rounded-xl hover:bg-slate-100 disabled:opacity-40 disabled:cursor-not-allowed transition-colors cursor-pointer"
               >
                 <ArrowLeft className="w-3.5 h-3.5" />
                 Previous
@@ -463,9 +467,9 @@ export const ScenarioChallengePage: React.FC = () => {
               <div className="flex items-center gap-2">
                 <button
                   onClick={() => openKuralModalByNumber(currentScenario.relatedKuralNumber)}
-                  className="inline-flex items-center gap-1.5 px-4 py-2.5 text-xs font-bold text-slate-700 bg-slate-100 hover:bg-slate-200 border border-slate-200 rounded-xl transition-colors"
+                  className="inline-flex items-center gap-1.5 px-4 py-2.5 text-xs font-bold text-[#071B3A] bg-slate-100 hover:bg-slate-200 border border-slate-200 rounded-xl transition-colors cursor-pointer"
                 >
-                  <BookOpen className="w-3.5 h-3.5 text-indigo-600" />
+                  <BookOpen className="w-3.5 h-3.5 text-blue-600" />
                   Review Kural {currentScenario.relatedKuralNumber}
                 </button>
 
@@ -473,7 +477,7 @@ export const ScenarioChallengePage: React.FC = () => {
                   <button
                     onClick={handleSubmit}
                     disabled={!selectedOptionId || isEvaluating}
-                    className="inline-flex items-center gap-2 px-6 py-2.5 text-xs font-bold text-white bg-indigo-600 hover:bg-indigo-500 disabled:opacity-50 disabled:cursor-not-allowed rounded-xl shadow-md transition-all active:scale-98"
+                    className="inline-flex items-center gap-2 px-6 py-2.5 text-xs font-bold text-white bg-[#071B3A] hover:bg-[#0A2540] disabled:opacity-50 disabled:cursor-not-allowed rounded-xl shadow-2xs transition-all active:scale-98 cursor-pointer"
                   >
                     {isEvaluating ? (
                       <>
@@ -481,14 +485,14 @@ export const ScenarioChallengePage: React.FC = () => {
                       </>
                     ) : (
                       <>
-                        <Sparkles className="w-4 h-4" /> Submit Answer
+                        <Sparkles className="w-4 h-4 text-amber-400" /> Submit Answer
                       </>
                     )}
                   </button>
                 ) : (
                   <button
                     onClick={handleNext}
-                    className="inline-flex items-center gap-1.5 px-6 py-2.5 text-xs font-bold text-white bg-emerald-600 hover:bg-emerald-700 rounded-xl shadow-md transition-all active:scale-98"
+                    className="inline-flex items-center gap-1.5 px-6 py-2.5 text-xs font-bold text-white bg-emerald-600 hover:bg-emerald-700 rounded-xl shadow-2xs transition-all active:scale-98 cursor-pointer"
                   >
                     Next Scenario
                     <ArrowRight className="w-3.5 h-3.5" />
@@ -505,8 +509,8 @@ export const ScenarioChallengePage: React.FC = () => {
       {/* ========================================================================= */}
       <div className="lg:col-span-4 space-y-5">
         {/* 1. Your Progress Radial Box */}
-        <div className="p-5 bg-white rounded-2xl border border-slate-200 shadow-xs space-y-4">
-          <h3 className="text-sm font-bold text-slate-900 font-heading">
+        <div className="p-5 bg-white rounded-2xl border border-slate-200 shadow-2xs space-y-4">
+          <h3 className="text-sm font-extrabold text-[#071B3A] font-heading">
             Your Progress
           </h3>
 
@@ -522,7 +526,7 @@ export const ScenarioChallengePage: React.FC = () => {
                   d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831"
                 />
                 <path
-                  className="text-indigo-600"
+                  className="text-blue-600"
                   strokeDasharray={`${(userProgress.casesCompleted / (allScenarios.length || 10)) * 100}, 100`}
                   strokeWidth="3.5"
                   strokeLinecap="round"
@@ -535,7 +539,7 @@ export const ScenarioChallengePage: React.FC = () => {
                 <span className="text-base font-black text-slate-900 leading-none">
                   {Math.round((userProgress.casesCompleted / (allScenarios.length || 10)) * 100)}%
                 </span>
-                <span className="text-[9px] font-semibold text-slate-400 uppercase">
+                <span className="text-[9px] font-extrabold text-slate-400 uppercase">
                   Completed
                 </span>
               </div>
@@ -544,21 +548,21 @@ export const ScenarioChallengePage: React.FC = () => {
             {/* Stats list */}
             <div className="flex-1 space-y-2 text-xs">
               <div className="flex justify-between items-center text-slate-600">
-                <span>Completed</span>
+                <span className="font-medium">Completed</span>
                 <span className="font-bold text-slate-900">
                   {userProgress.casesCompleted} / {allScenarios.length || 10}
                 </span>
               </div>
               <div className="flex justify-between items-center text-slate-600">
-                <span>Accuracy</span>
+                <span className="font-medium">Accuracy</span>
                 <span className="font-bold text-emerald-600">
                   {userProgress.accuracyPercentage}%
                 </span>
               </div>
               <div className="flex justify-between items-center text-slate-600">
-                <span>Best Streak</span>
-                <span className="font-bold text-orange-600">
-                  {userProgress.bestStreak}
+                <span className="font-medium">Best Streak</span>
+                <span className="font-bold text-amber-600">
+                  🔥 {userProgress.bestStreak}
                 </span>
               </div>
             </div>
@@ -566,34 +570,34 @@ export const ScenarioChallengePage: React.FC = () => {
         </div>
 
         {/* 2. Rewards Card */}
-        <div className="p-5 bg-white rounded-2xl border border-slate-200 shadow-xs space-y-3">
+        <div className="p-5 bg-white rounded-2xl border border-slate-200 shadow-2xs space-y-3">
           <div className="flex items-center justify-between">
             <span className="text-xs font-bold text-slate-800 flex items-center gap-1.5">
               <span className="text-amber-500">🎁</span> Active Reward
             </span>
             <button
               onClick={() => setActiveTab('rewards')}
-              className="text-xs font-semibold text-indigo-600 hover:text-indigo-800"
+              className="text-xs font-bold text-blue-600 hover:text-blue-800 cursor-pointer"
             >
               View All
             </button>
           </div>
 
-          <div className="flex items-center gap-3.5 p-3 rounded-xl bg-amber-50/70 border border-amber-200/60">
-            <div className="flex items-center justify-center w-12 h-12 rounded-full bg-gradient-to-tr from-amber-400 via-yellow-400 to-amber-200 text-amber-950 shadow-md shadow-amber-300/40 shrink-0">
+          <div className="flex items-center gap-3.5 p-3 rounded-xl bg-amber-50/70 border border-amber-200/80">
+            <div className="flex items-center justify-center w-12 h-12 rounded-full bg-amber-400 text-slate-950 font-black shadow-xs shrink-0">
               <Award className="w-6 h-6 stroke-[2.2]" />
             </div>
             <div>
               <h4 className="text-xs font-bold text-slate-900">Ethical Discernment</h4>
-              <p className="text-[11px] font-bold text-amber-700">+{currentScenario.xpReward} Points</p>
-              <p className="text-[10px] text-slate-500">Earned through reasoned legal decisions</p>
+              <p className="text-[11px] font-black text-amber-800">+{currentScenario.xpReward} Points</p>
+              <p className="text-[10px] text-slate-500 font-medium">Earned through reasoned legal decisions</p>
             </div>
           </div>
         </div>
 
         {/* 3. Skills Being Improved */}
-        <div className="p-5 bg-white rounded-2xl border border-slate-200 shadow-xs space-y-4">
-          <h3 className="text-sm font-bold text-slate-900 font-heading">
+        <div className="p-5 bg-white rounded-2xl border border-slate-200 shadow-2xs space-y-4">
+          <h3 className="text-sm font-extrabold text-[#071B3A] font-heading">
             Skills Being Improved
           </h3>
 
@@ -604,7 +608,7 @@ export const ScenarioChallengePage: React.FC = () => {
                   <Scale className="w-3.5 h-3.5 text-blue-600" />
                   Legal Awareness
                 </span>
-                <span className="font-bold text-blue-700">{userProgress.skills.legalAwareness}%</span>
+                <span className="font-extrabold text-blue-700">{userProgress.skills.legalAwareness}%</span>
               </div>
               <div className="w-full h-2 bg-slate-100 rounded-full overflow-hidden">
                 <div className="h-full bg-blue-600 rounded-full transition-all duration-500" style={{ width: `${userProgress.skills.legalAwareness}%` }} />
@@ -617,7 +621,7 @@ export const ScenarioChallengePage: React.FC = () => {
                   <Brain className="w-3.5 h-3.5 text-indigo-600" />
                   Ethical Reasoning
                 </span>
-                <span className="font-bold text-indigo-700">{userProgress.skills.ethicalReasoning}%</span>
+                <span className="font-extrabold text-indigo-700">{userProgress.skills.ethicalReasoning}%</span>
               </div>
               <div className="w-full h-2 bg-slate-100 rounded-full overflow-hidden">
                 <div className="h-full bg-indigo-600 rounded-full transition-all duration-500" style={{ width: `${userProgress.skills.ethicalReasoning}%` }} />
@@ -630,7 +634,7 @@ export const ScenarioChallengePage: React.FC = () => {
                   <ShieldAlert className="w-3.5 h-3.5 text-amber-600" />
                   Conflict Resolution
                 </span>
-                <span className="font-bold text-amber-700">{userProgress.skills.conflictResolution}%</span>
+                <span className="font-extrabold text-amber-700">{userProgress.skills.conflictResolution}%</span>
               </div>
               <div className="w-full h-2 bg-slate-100 rounded-full overflow-hidden">
                 <div className="h-full bg-amber-500 rounded-full transition-all duration-500" style={{ width: `${userProgress.skills.conflictResolution}%` }} />
@@ -643,7 +647,7 @@ export const ScenarioChallengePage: React.FC = () => {
                   <Sparkles className="w-3.5 h-3.5 text-emerald-600" />
                   Prosocial Decision Making
                 </span>
-                <span className="font-bold text-emerald-700">{userProgress.skills.prosocialDecisionMaking}%</span>
+                <span className="font-extrabold text-emerald-700">{userProgress.skills.prosocialDecisionMaking}%</span>
               </div>
               <div className="w-full h-2 bg-slate-100 rounded-full overflow-hidden">
                 <div className="h-full bg-emerald-500 rounded-full transition-all duration-500" style={{ width: `${userProgress.skills.prosocialDecisionMaking}%` }} />
@@ -653,24 +657,24 @@ export const ScenarioChallengePage: React.FC = () => {
         </div>
 
         {/* 4. Related Thirukkural Card */}
-        <div className="p-5 bg-gradient-to-br from-emerald-50/60 via-slate-50 to-indigo-50/40 rounded-2xl border border-emerald-200/80 shadow-xs space-y-3">
+        <div className="p-5 bg-white rounded-2xl border border-slate-200 shadow-2xs space-y-3">
           <div className="flex items-center justify-between">
-            <span className="text-xs font-bold text-emerald-900 uppercase tracking-wider">
+            <span className="text-xs font-extrabold text-[#071B3A] uppercase tracking-wider">
               Related Thirukkural
             </span>
-            <span className="px-2 py-0.5 text-[10px] font-bold text-emerald-800 bg-emerald-100 rounded-md">
+            <span className="px-2 py-0.5 text-[10px] font-black text-amber-950 bg-amber-400 rounded-md">
               Kural {currentScenario.relatedKuralNumber}
             </span>
           </div>
 
           <div className="flex items-start justify-between gap-3">
             <div className="space-y-2">
-              <p className="text-xs font-tamil text-slate-900 font-bold leading-relaxed">
+              <p className="text-xs font-tamil text-slate-950 font-bold leading-relaxed">
                 ஒழுக்கம் விழுப்பம் தரலான்
                 <br />
                 ஒழுக்கம் உயிரினும் ஓம்பப் படும்.
               </p>
-              <p className="text-xs text-slate-600 italic leading-snug">
+              <p className="text-xs text-slate-600 italic leading-snug font-medium">
                 "Virtue (ethical conduct) is the true wealth; it must be protected even more than life."
               </p>
             </div>
@@ -682,7 +686,7 @@ export const ScenarioChallengePage: React.FC = () => {
 
           <button
             onClick={() => openKuralModalByNumber(currentScenario.relatedKuralNumber)}
-            className="w-full py-1.5 text-xs font-semibold text-indigo-700 hover:text-indigo-900 bg-white/80 hover:bg-white border border-indigo-200 rounded-lg transition-colors text-center"
+            className="w-full py-2 text-xs font-bold text-[#071B3A] hover:bg-slate-100 bg-slate-50 border border-slate-200 rounded-xl transition-colors text-center cursor-pointer"
           >
             Explore Couplet Detail →
           </button>

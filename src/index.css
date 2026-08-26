@@ -3,9 +3,11 @@
 @layer base {
   body {
     font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    background-color: #f4f6f9;
+    color: #1e293b;
   }
   
-  h1, h2, h3, .font-heading {
+  h1, h2, h3, h4, .font-heading {
     font-family: 'Outfit', 'Plus Jakarta Sans', sans-serif;
   }
 
@@ -16,6 +18,43 @@
   .font-cinzel {
     font-family: 'Cinzel', serif;
   }
+}
+
+/* Custom Design System Tokens & Utilities */
+.bg-navy-950 {
+  background-color: #071B3A;
+}
+
+.bg-navy-900 {
+  background-color: #0A192F;
+}
+
+.bg-navy-800 {
+  background-color: #112240;
+}
+
+.border-navy-800 {
+  border-color: #1E3A8A;
+}
+
+.text-navy-950 {
+  color: #071B3A;
+}
+
+.bg-gold-400 {
+  background-color: #EAB308;
+}
+
+.bg-gold-500 {
+  background-color: #CA8A04;
+}
+
+.text-gold-500 {
+  color: #CA8A04;
+}
+
+.border-gold-300 {
+  border-color: #FDE047;
 }
 
 /* Custom scrollbar */
@@ -33,4 +72,5 @@
 ::-webkit-scrollbar-thumb:hover {
   background: #94a3b8;
 }
+
 

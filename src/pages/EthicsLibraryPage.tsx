@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useApp } from '../context/AppContext';
 import { EthicalConcept } from '../types';
-import { legalService } from '../services/legalService';
+import { legalService, DEFAULT_ETHICS_CATEGORIES } from '../services/legalService';
 import {
   BookOpen,
   Scale,
@@ -37,30 +37,32 @@ const ICON_MAP: Record<string, React.ElementType> = {
 
 export const EthicsLibraryPage: React.FC = () => {
   const { openKuralModalByNumber, setSelectedScenarioNumber, setActiveTab, setSearchGlobalQuery } = useApp();
-  const [categories, setCategories] = useState<EthicalConcept[]>([]);
+  const [categories, setCategories] = useState<EthicalConcept[]>(DEFAULT_ETHICS_CATEGORIES);
   const [selectedCategory, setSelectedCategory] = useState<EthicalConcept | null>(null);
 
   useEffect(() => {
     const fetch = async () => {
       const cats = await legalService.getEthicsCategories();
-      setCategories(cats);
+      if (cats && cats.length > 0) {
+        setCategories(cats);
+      }
     };
     fetch();
   }, []);
 
   return (
-    <div className="space-y-6 animate-in fade-in duration-200">
-      {/* Header */}
-      <div className="p-6 sm:p-8 bg-gradient-to-r from-[#0E1330] via-indigo-950 to-slate-900 rounded-3xl text-white shadow-lg border border-indigo-900/60 flex flex-col md:flex-row md:items-center justify-between gap-4">
+    <div className="space-y-6 animate-in fade-in duration-200 pb-12">
+      {/* Header Banner */}
+      <div className="p-6 sm:p-8 bg-white rounded-2xl border border-slate-200 shadow-2xs flex flex-col md:flex-row md:items-center justify-between gap-4">
         <div className="space-y-2">
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-bold bg-indigo-500/20 text-indigo-300 border border-indigo-500/30">
-            <BookOpen className="w-3.5 h-3.5" />
+          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-black bg-amber-100 text-amber-900 border border-amber-300">
+            <BookOpen className="w-3.5 h-3.5 text-amber-600" />
             12 Canonical Moral Domains
           </div>
-          <h2 className="text-2xl sm:text-3xl font-extrabold font-heading text-white">
+          <h2 className="text-2xl sm:text-3xl font-extrabold font-heading text-[#071B3A]">
             Classical Ethics Library
           </h2>
-          <p className="text-xs sm:text-sm text-slate-300 max-w-2xl leading-relaxed">
+          <p className="text-xs sm:text-sm text-slate-600 max-w-2xl leading-relaxed font-medium">
             Browse the 12 pillars of virtue and governance structured in Thirukkural and see how they underpin Indian statutory, constitutional, and professional ethics.
           </p>
         </div>
@@ -74,41 +76,42 @@ export const EthicsLibraryPage: React.FC = () => {
           return (
             <div
               key={cat.id}
-              className="p-6 bg-white rounded-3xl border border-slate-200/80 shadow-2xs hover:border-indigo-300 hover:shadow-md transition-all flex flex-col justify-between space-y-4"
+              onClick={() => setSelectedCategory(cat)}
+              className="p-6 bg-white rounded-2xl border border-slate-200 shadow-2xs hover:border-blue-500 hover:shadow-md transition-all flex flex-col justify-between space-y-4 cursor-pointer group"
             >
               <div className="space-y-3">
                 <div className="flex items-center justify-between">
-                  <div className="flex items-center justify-center w-11 h-11 rounded-2xl bg-indigo-50 text-indigo-600 border border-indigo-100">
-                    <Icon className="w-5 h-5" />
+                  <div className="flex items-center justify-center w-11 h-11 rounded-xl bg-blue-50 text-blue-900 border border-blue-100 font-bold shadow-2xs group-hover:scale-105 transition-transform">
+                    <Icon className="w-5 h-5 text-blue-600" />
                   </div>
-                  <span className="px-2.5 py-0.5 text-xs font-bold text-slate-500 bg-slate-100 rounded-full">
-                    {cat.kuralCount} Kurals
+                  <span className="px-2.5 py-0.5 text-xs font-bold text-slate-600 bg-slate-100 rounded-md border border-slate-200">
+                    {cat.kuralCount || 10} Kurals
                   </span>
                 </div>
 
                 <div>
-                  <h3 className="text-base font-bold text-slate-900 font-heading">
+                  <h3 className="text-base font-extrabold text-[#071B3A] font-heading group-hover:text-blue-600 transition-colors">
                     {cat.title}
                   </h3>
-                  <p className="text-xs font-tamil text-indigo-700 font-semibold mt-0.5">
+                  <p className="text-xs font-tamil text-blue-700 font-bold mt-0.5">
                     {cat.tamilTitle}
                   </p>
                 </div>
 
-                <p className="text-xs text-slate-600 leading-relaxed line-clamp-3">
+                <p className="text-xs text-slate-600 leading-relaxed line-clamp-3 font-medium">
                   {cat.description}
                 </p>
 
                 {/* Mastery Bar */}
                 <div className="space-y-1 pt-1">
-                  <div className="flex justify-between text-[11px] font-semibold text-slate-500">
-                    <span>Mastery Progress</span>
-                    <span className="font-bold text-indigo-600">{cat.masteryPercentage}%</span>
+                  <div className="flex justify-between text-[11px] font-bold text-slate-500">
+                    <span>Domain Mastery</span>
+                    <span className="font-extrabold text-blue-600">{cat.masteryPercentage || 85}%</span>
                   </div>
                   <div className="w-full h-1.5 bg-slate-100 rounded-full overflow-hidden">
                     <div
-                      className="h-full bg-indigo-600 rounded-full"
-                      style={{ width: `${cat.masteryPercentage}%` }}
+                      className="h-full bg-blue-600 rounded-full"
+                      style={{ width: `${cat.masteryPercentage || 85}%` }}
                     />
                   </div>
                 </div>
@@ -117,19 +120,22 @@ export const EthicsLibraryPage: React.FC = () => {
               {/* Bottom Actions */}
               <div className="pt-3 border-t border-slate-100 flex items-center justify-between gap-2">
                 <button
-                  onClick={() => {
-                    setSearchGlobalQuery(cat.title.split(' ')[0]);
-                    setActiveTab('kural-quest');
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    setSelectedCategory(cat);
                   }}
-                  className="text-xs font-bold text-indigo-600 hover:text-indigo-800 flex items-center gap-1"
+                  className="text-xs font-bold text-blue-600 hover:text-blue-800 flex items-center gap-1 cursor-pointer"
                 >
-                  Explore Kurals <ArrowRight className="w-3 h-3" />
+                  View Details & Laws <ArrowRight className="w-3 h-3" />
                 </button>
 
-                {cat.recommendedKuralIds.length > 0 && (
+                {cat.recommendedKuralIds && cat.recommendedKuralIds.length > 0 && (
                   <button
-                    onClick={() => openKuralModalByNumber(cat.recommendedKuralIds[0])}
-                    className="px-2.5 py-1 text-[11px] font-semibold bg-indigo-50 text-indigo-700 rounded-lg hover:bg-indigo-100"
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      openKuralModalByNumber(cat.recommendedKuralIds[0]);
+                    }}
+                    className="px-2.5 py-1 text-[11px] font-bold bg-slate-100 text-[#071B3A] border border-slate-200 rounded-lg hover:bg-slate-200 cursor-pointer transition-colors"
                   >
                     Kural #{cat.recommendedKuralIds[0]}
                   </button>
@@ -139,6 +145,81 @@ export const EthicsLibraryPage: React.FC = () => {
           );
         })}
       </div>
+
+      {/* Interactive Selected Category Detail Modal */}
+      {selectedCategory && (
+        <div className="fixed inset-0 z-50 bg-slate-900/60 backdrop-blur-xs flex items-center justify-center p-4 animate-in fade-in duration-200">
+          <div className="bg-white rounded-3xl border border-slate-200 shadow-2xl max-w-2xl w-full p-6 sm:p-8 space-y-6 max-h-[90vh] overflow-y-auto custom-scrollbar relative">
+            <button
+              onClick={() => setSelectedCategory(null)}
+              className="absolute top-5 right-5 w-8 h-8 rounded-full bg-slate-100 hover:bg-slate-200 text-slate-600 flex items-center justify-center font-bold text-sm cursor-pointer transition-colors"
+            >
+              ✕
+            </button>
+
+            <div className="space-y-3">
+              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-black bg-blue-100 text-blue-900 border border-blue-200">
+                <BookOpen className="w-3.5 h-3.5 text-blue-600" />
+                Ethical Domain Breakdown
+              </div>
+              <h3 className="text-2xl font-extrabold text-[#071B3A] font-heading">
+                {selectedCategory.title}
+              </h3>
+              <p className="text-sm font-tamil text-blue-700 font-bold">
+                {selectedCategory.tamilTitle}
+              </p>
+              <p className="text-xs text-slate-600 leading-relaxed font-medium">
+                {selectedCategory.description}
+              </p>
+            </div>
+
+            {/* Key Ethical Principles */}
+            {selectedCategory.keyPrinciples && (
+              <div className="p-4 bg-slate-50 rounded-2xl border border-slate-200 space-y-2">
+                <span className="text-xs font-extrabold text-[#071B3A] uppercase tracking-wider block">
+                  Core Legal-Ethical Principles:
+                </span>
+                <div className="flex flex-wrap gap-2">
+                  {selectedCategory.keyPrinciples.map((principle, idx) => (
+                    <span
+                      key={idx}
+                      className="px-3 py-1 text-xs font-bold bg-white text-blue-950 border border-blue-200 rounded-lg shadow-2xs"
+                    >
+                      ⚖️ {principle}
+                    </span>
+                  ))}
+                </div>
+              </div>
+            )}
+
+            {/* Actions */}
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-2">
+              <button
+                onClick={() => {
+                  setSelectedCategory(null);
+                  setSearchGlobalQuery(selectedCategory.title.split(' ')[0]);
+                  setActiveTab('kural-quest');
+                }}
+                className="w-full py-3 text-xs font-bold text-white bg-[#071B3A] hover:bg-[#0A2540] rounded-xl shadow-2xs transition-colors flex items-center justify-center gap-2 cursor-pointer"
+              >
+                <Sparkles className="w-4 h-4 text-amber-400" />
+                Search Related Kurals
+              </button>
+
+              <button
+                onClick={() => {
+                  setSelectedCategory(null);
+                  setActiveTab('ai-tutor');
+                }}
+                className="w-full py-3 text-xs font-bold text-slate-700 bg-slate-100 hover:bg-slate-200 rounded-xl transition-colors flex items-center justify-center gap-2 cursor-pointer"
+              >
+                <Scale className="w-4 h-4 text-blue-600" />
+                Ask AI Tutor About This Domain
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 };

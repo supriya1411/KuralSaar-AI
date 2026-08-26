@@ -46,7 +46,10 @@ async function startServer() {
   app.use('/api', retrievalRouter); // Mounts /api/ai-tutor/query
 
   // Vite middleware for development vs Static serving for production
-  if (process.env.NODE_ENV !== 'production') {
+  const distIndex = path.join(process.cwd(), 'dist', 'index.html');
+  const isProductionMode = process.env.NODE_ENV === 'production' || require('fs').existsSync(distIndex);
+
+  if (!isProductionMode) {
     // Intercept /@vite/client to provide a resilient, zero-error HMR client in cloud preview/container environments
     app.get('/@vite/client', (_req, res) => {
       res.setHeader('Content-Type', 'application/javascript; charset=utf-8');

@@ -119,30 +119,36 @@ export const Header: React.FC<Props> = ({ onMobileMenuToggle }) => {
                 setActiveTab('kural-quest');
               }
             }}
-            className="block w-full pl-9 pr-3 py-1.5 border border-slate-200 rounded-lg bg-slate-50 text-sm placeholder-slate-400 focus:bg-white focus:outline-none focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500 transition-all"
+            className="block w-full pl-9 pr-3 py-1.5 border border-slate-200 rounded-lg bg-slate-50/80 text-sm text-slate-800 placeholder-slate-400 focus:bg-white focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-600 transition-all font-medium"
           />
         </div>
       </div>
 
-      {/* Right: Gamification Badges & Profile (Matching Sleek Interface) */}
+      {/* Right: Gamification Badges & Profile (Matching Reference Interface) */}
       <div className="flex items-center gap-4 sm:gap-6">
         <div className="flex items-center gap-4 sm:gap-6 border-r border-slate-200 pr-4 sm:pr-6">
           {/* Streak */}
           <div className="flex flex-col items-center">
-            <span className="text-[10px] font-bold text-slate-400 uppercase tracking-tighter">Streak</span>
-            <span className="text-xs sm:text-sm font-bold text-orange-500 whitespace-nowrap">🔥 {userProgress.streakDays} Days</span>
+            <span className="text-[9px] font-extrabold text-slate-400 uppercase tracking-wider">Streak</span>
+            <span className="text-xs sm:text-sm font-bold text-amber-600 whitespace-nowrap flex items-center gap-1">
+              🔥 {userProgress.streakDays} Days
+            </span>
           </div>
 
           {/* Total XP */}
           <div className="flex flex-col items-center">
-            <span className="text-[10px] font-bold text-slate-400 uppercase tracking-tighter">Total XP</span>
-            <span className="text-xs sm:text-sm font-bold text-indigo-600 whitespace-nowrap">⭐ {userProgress.xp}</span>
+            <span className="text-[9px] font-extrabold text-slate-400 uppercase tracking-wider">Total XP</span>
+            <span className="text-xs sm:text-sm font-bold text-amber-500 whitespace-nowrap flex items-center gap-1">
+              ⭐ {userProgress.xp}
+            </span>
           </div>
 
           {/* Level */}
           <div className="hidden lg:flex flex-col items-center">
-            <span className="text-[10px] font-bold text-slate-400 uppercase tracking-tighter">Level</span>
-            <span className="text-xs sm:text-sm font-bold text-slate-700 whitespace-nowrap">⚖️ Lvl {userProgress.level}</span>
+            <span className="text-[9px] font-extrabold text-slate-400 uppercase tracking-wider">Level</span>
+            <span className="text-xs sm:text-sm font-bold text-slate-700 whitespace-nowrap flex items-center gap-1">
+              ⚖️ Lvl {userProgress.level}
+            </span>
           </div>
         </div>
 
@@ -150,24 +156,24 @@ export const Header: React.FC<Props> = ({ onMobileMenuToggle }) => {
         <div className="relative">
           <button
             onClick={() => setShowNotificationPopup(!showNotificationPopup)}
-            className="p-1.5 text-slate-400 hover:text-slate-700 hover:bg-slate-100 rounded-lg relative transition-colors"
+            className="p-2 text-slate-500 hover:text-slate-800 hover:bg-slate-100 rounded-lg relative transition-colors"
             title="Notifications"
           >
             <Bell className="w-4 h-4" />
-            <span className="absolute top-1 right-1 w-2 h-2 bg-indigo-600 rounded-full ring-2 ring-white"></span>
+            <span className="absolute top-1.5 right-1.5 w-2 h-2 bg-blue-600 rounded-full ring-2 ring-white"></span>
           </button>
 
           {showNotificationPopup && (
             <div className="absolute right-0 mt-2 w-72 p-3 bg-white rounded-xl shadow-xl border border-slate-200 z-50 animate-in fade-in zoom-in-95 duration-150">
               <div className="flex items-center justify-between pb-2 mb-2 border-b border-slate-100 text-xs font-bold text-slate-800">
                 <span>Recent Updates</span>
-                <span className="text-[10px] text-indigo-600 font-semibold">Updates</span>
+                <span className="text-[10px] text-blue-600 font-semibold">Updates</span>
               </div>
               <div className="space-y-2 text-xs">
-                <div className="p-2 bg-indigo-50/60 rounded-lg text-indigo-950">
+                <div className="p-2 bg-blue-50/70 rounded-lg text-blue-950 font-medium">
                   🎉 <strong>+100 XP Earned:</strong> Completed Scenario 3 "Conflict of Interest".
                 </div>
-                <div className="p-2 bg-amber-50/60 rounded-lg text-amber-950">
+                <div className="p-2 bg-amber-50/70 rounded-lg text-amber-950 font-medium">
                   🔥 <strong>Streak Maintained:</strong> 7 consecutive days of reflection.
                 </div>
                 <div className="p-2 bg-slate-50 rounded-lg text-slate-700">
@@ -178,20 +184,20 @@ export const Header: React.FC<Props> = ({ onMobileMenuToggle }) => {
           )}
         </div>
 
-        {/* User Profile Avatar (Sleek Interface Look) */}
+        {/* User Profile Avatar */}
         <div className="relative">
           <div
             onClick={() => setShowProfileMenu(!showProfileMenu)}
-            className="flex items-center gap-2.5 cursor-pointer select-none p-1 rounded-lg hover:bg-slate-50 transition-colors"
+            className="flex items-center gap-2 cursor-pointer select-none p-1 rounded-lg hover:bg-slate-100 transition-colors"
           >
-            <div className="w-8 h-8 rounded-full bg-indigo-100 flex items-center justify-center text-indigo-700 font-bold text-xs shrink-0">
-              ET
+            <div className="w-8 h-8 rounded-full bg-blue-100 border border-blue-200 flex items-center justify-center text-blue-800 font-bold text-xs shrink-0">
+              AK
             </div>
             <div className="hidden sm:flex flex-col text-left">
               <span className="text-xs font-bold text-slate-900 leading-tight">
                 {userProgress.userName}
               </span>
-              <span className="text-[10px] text-emerald-500 font-bold leading-tight">
+              <span className="text-[10px] text-emerald-600 font-bold leading-tight">
                 Online
               </span>
             </div>

@@ -52,69 +52,178 @@ export const DashboardPage: React.FC = () => {
   }, []);
 
   return (
-    <div className="space-y-6 animate-in fade-in duration-200 pb-12">
-      {/* Welcome Banner */}
-      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
-        <div>
-          <h1 className="text-2xl sm:text-3xl font-extrabold text-slate-900 tracking-tight">
-            Welcome back, {userProgress.userName} 👋
-          </h1>
-          <p className="text-slate-500 text-sm">
-            AI-powered legal education connecting Indian statutory law with Thirukkural ethics.
-          </p>
+    <div className="space-y-8 animate-in fade-in duration-200 pb-12">
+      {/* 1. Hero Grid: Main Welcome Card + Live Preview Card (Matching Reference Image) */}
+      <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-stretch">
+        {/* Left Hero Card (8 Cols) */}
+        <div className="lg:col-span-8 bg-white border border-slate-200 rounded-2xl shadow-xs p-6 sm:p-8 flex flex-col justify-between">
+          <div>
+            {/* Top Yellow Pill Badge */}
+            <div className="inline-flex items-center gap-2 px-3 py-1 bg-amber-100/90 text-amber-900 border border-amber-300/60 rounded-full text-xs font-bold shadow-2xs">
+              <Sparkles className="w-3.5 h-3.5 text-amber-600" />
+              <span>Indian Law + Thirukkural Ethics + AI Simulation</span>
+            </div>
+
+            {/* Main Title */}
+            <h1 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-[#071B3A] tracking-tight font-heading mt-4 mb-2">
+              JUSTICE AI
+            </h1>
+
+            {/* Subtitle Tagline */}
+            <p className="text-lg sm:text-xl font-bold text-slate-800 mb-3 font-heading">
+              "Learn Law. Live Ethics. Think Responsibly."
+            </p>
+
+            {/* Description */}
+            <p className="text-sm text-slate-600 leading-relaxed max-w-2xl mb-6">
+              The premier interactive legal-ethics platform bridging 2,000+ years of classical Indian moral philosophy (Thirukkural) with modern constitutional law, statutory frameworks, and professional responsibilities.
+            </p>
+
+            {/* Action Buttons */}
+            <div className="flex flex-wrap items-center gap-3">
+              <button
+                onClick={() => {
+                  setSelectedScenarioNumber(3);
+                  setActiveTab('scenario-challenge');
+                }}
+                className="px-6 py-3 bg-[#071B3A] hover:bg-[#0A2540] text-white rounded-xl text-sm font-bold shadow-sm transition-colors flex items-center gap-2 cursor-pointer"
+              >
+                <Scale className="w-4 h-4 text-amber-400" />
+                Launch Scenario Challenge →
+              </button>
+
+              <button
+                onClick={() => setActiveTab('kural-quest')}
+                className="px-6 py-3 border border-slate-300 hover:bg-slate-50 text-slate-700 rounded-xl text-sm font-bold transition-colors flex items-center gap-2 cursor-pointer"
+              >
+                <BookOpen className="w-4 h-4 text-blue-600" />
+                Explore Kural Quest
+              </button>
+            </div>
+          </div>
+
+          {/* Feature Highlights Row */}
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 pt-6 mt-6 border-t border-slate-100 text-xs font-semibold text-slate-600">
+            <div className="flex items-center gap-2">
+              <CheckCircle2 className="w-4 h-4 text-blue-600 shrink-0" />
+              <span>10 Interactive Scenarios</span>
+            </div>
+            <div className="flex items-center gap-2">
+              <CheckCircle2 className="w-4 h-4 text-amber-500 shrink-0" />
+              <span>1,330 Ethical Verses</span>
+            </div>
+            <div className="flex items-center gap-2">
+              <CheckCircle2 className="w-4 h-4 text-emerald-600 shrink-0" />
+              <span>AI-Assisted Tutor</span>
+            </div>
+          </div>
+        </div>
+
+        {/* Right Live Preview Card (4 Cols - Matching Reference Photo) */}
+        <div className="lg:col-span-4 bg-white border border-slate-200 rounded-2xl shadow-xs p-5 flex flex-col justify-between space-y-4">
+          <div>
+            <div className="flex items-center justify-between mb-3">
+              <span className="text-xs font-black text-slate-400 uppercase tracking-widest">
+                LIVE PREVIEW
+              </span>
+              <span className="bg-slate-100 text-slate-700 font-bold text-xs px-2.5 py-1 rounded-md border border-slate-200">
+                Scenario 3
+              </span>
+            </div>
+
+            {/* Realistic Thiruvalluvar Statue & Law Books Image */}
+            <div className="relative rounded-xl overflow-hidden border border-slate-200 shadow-2xs mb-3 group">
+              <img
+                src="/assets/images/thiruvalluvar_statue.jpg"
+                alt="Thiruvalluvar & Legal Ethics"
+                className="w-full h-44 object-cover group-hover:scale-103 transition-transform duration-300"
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-slate-950/40 to-transparent"></div>
+            </div>
+
+            <h3 className="text-sm font-extrabold text-slate-900 leading-tight">
+              Scenario: Conflict of Interest
+            </h3>
+            <p className="text-xs text-slate-500 italic mt-1 leading-normal">
+              "Senior advocate discovers rival firm is owned by a close family member..."
+            </p>
+          </div>
+
+          <button
+            onClick={() => {
+              setSelectedScenarioNumber(3);
+              setActiveTab('scenario-challenge');
+            }}
+            className="w-full py-2.5 bg-[#071B3A] hover:bg-[#0A2540] text-white font-bold text-xs rounded-xl shadow-xs transition-colors cursor-pointer text-center block"
+          >
+            Solve Scenario Now →
+          </button>
         </div>
       </div>
 
-      {/* 1. Four Sleek KPI Metric Cards */}
+      {/* 2. Educational Architecture Heading Section */}
+      <div className="text-center space-y-2 pt-2">
+        <span className="text-xs font-black text-slate-400 uppercase tracking-widest">
+          EDUCATIONAL ARCHITECTURE
+        </span>
+        <h2 className="text-2xl sm:text-3xl font-black text-[#071B3A] font-heading">
+          How Justice AI Transforms Legal-Ethics Learning
+        </h2>
+        <p className="text-xs sm:text-sm text-slate-500 max-w-2xl mx-auto">
+          Moving beyond dry rote memorization to immersive scenario reflection and timeless philosophical reasoning.
+        </p>
+      </div>
+
+      {/* 3. Four Sleek KPI Metric Cards */}
       <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
         {/* Metric 1: XP Points */}
-        <div className="bg-white p-4 rounded-xl border border-slate-200 shadow-xs hover:border-indigo-300 transition-all">
-          <span className="text-[10px] font-bold text-slate-400 uppercase tracking-tight">
+        <div className="bg-white p-4 rounded-xl border border-slate-200 shadow-2xs hover:border-amber-400 transition-all">
+          <span className="text-[10px] font-extrabold text-slate-400 uppercase tracking-wider">
             XP Points
           </span>
-          <p className="text-2xl font-black text-indigo-600">
+          <p className="text-2xl font-black text-[#071B3A]">
             {userProgress.xp.toLocaleString()}
           </p>
-          <span className="text-[10px] text-emerald-600 font-semibold">
+          <span className="text-[10px] text-amber-600 font-bold">
             Level {userProgress.level} Practitioner
           </span>
         </div>
 
         {/* Metric 2: Streak Count */}
-        <div className="bg-white p-4 rounded-xl border border-slate-200 shadow-xs hover:border-orange-300 transition-all">
-          <span className="text-[10px] font-bold text-slate-400 uppercase tracking-tight">
+        <div className="bg-white p-4 rounded-xl border border-slate-200 shadow-2xs hover:border-amber-400 transition-all">
+          <span className="text-[10px] font-extrabold text-slate-400 uppercase tracking-wider">
             Streak Count
           </span>
-          <p className="text-2xl font-black text-orange-500">
-            {userProgress.streakDays} Days
+          <p className="text-2xl font-black text-amber-500">
+            🔥 {userProgress.streakDays} Days
           </p>
-          <span className="text-[10px] text-slate-400">
+          <span className="text-[10px] text-slate-400 font-medium">
             Best streak: {userProgress.bestStreak} days
           </span>
         </div>
 
         {/* Metric 3: Ethical Reasoning */}
-        <div className="bg-white p-4 rounded-xl border border-slate-200 shadow-xs hover:border-emerald-300 transition-all">
-          <span className="text-[10px] font-bold text-slate-400 uppercase tracking-tight">
+        <div className="bg-white p-4 rounded-xl border border-slate-200 shadow-2xs hover:border-blue-400 transition-all">
+          <span className="text-[10px] font-extrabold text-slate-400 uppercase tracking-wider">
             Ethical Reasoning
           </span>
-          <p className="text-2xl font-black text-emerald-600">
+          <p className="text-2xl font-black text-blue-700">
             {userProgress.skills.ethicalReasoning}%
           </p>
-          <span className="text-[10px] text-emerald-600 font-medium">
+          <span className="text-[10px] text-emerald-600 font-bold">
             Mastery Profile
           </span>
         </div>
 
         {/* Metric 4: Legal Awareness */}
-        <div className="bg-white p-4 rounded-xl border border-slate-200 shadow-xs hover:border-blue-300 transition-all">
-          <span className="text-[10px] font-bold text-slate-400 uppercase tracking-tight">
+        <div className="bg-white p-4 rounded-xl border border-slate-200 shadow-2xs hover:border-blue-400 transition-all">
+          <span className="text-[10px] font-extrabold text-slate-400 uppercase tracking-wider">
             Legal Awareness
           </span>
           <p className="text-2xl font-black text-blue-600">
             {userProgress.skills.legalAwareness}%
           </p>
-          <span className="text-[10px] text-indigo-600 font-medium">
+          <span className="text-[10px] text-blue-600 font-bold">
             Statutory Grounds
           </span>
         </div>
@@ -122,36 +231,36 @@ export const DashboardPage: React.FC = () => {
 
       {/* Dynamic AI Insights Banner */}
       {aiInsights && (
-        <div className="p-5 bg-gradient-to-r from-indigo-950 via-slate-900 to-indigo-950 text-white rounded-2xl border border-indigo-500/20 shadow-md space-y-3">
+        <div className="p-5 bg-[#071B3A] text-white rounded-2xl border border-slate-700 shadow-sm space-y-3">
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-2">
-              <div className="p-1.5 bg-indigo-500/20 rounded-lg text-indigo-300">
-                <Sparkles className="w-4 h-4" />
+              <div className="p-1.5 bg-blue-500/20 rounded-lg text-blue-300">
+                <Sparkles className="w-4 h-4 text-amber-400" />
               </div>
-              <span className="text-xs font-bold text-indigo-300 uppercase tracking-wider">
+              <span className="text-xs font-bold text-amber-400 uppercase tracking-wider">
                 AI Learning & Competency Insights
               </span>
             </div>
             <button
               onClick={() => setActiveTab('ai-tutor')}
-              className="text-xs text-amber-400 hover:underline font-semibold"
+              className="text-xs text-amber-300 hover:underline font-bold cursor-pointer"
             >
               Consult AI Tutor →
             </button>
           </div>
 
-          <p className="text-xs sm:text-sm text-slate-200 leading-relaxed">
+          <p className="text-xs sm:text-sm text-slate-200 leading-relaxed font-medium">
             {aiInsights.summary}
           </p>
 
-          <div className="flex flex-wrap items-center justify-between gap-3 pt-1 border-t border-slate-800 text-xs">
+          <div className="flex flex-wrap items-center justify-between gap-3 pt-2 border-t border-slate-700 text-xs">
             <div className="flex items-center gap-2">
               <span className="text-slate-400">Recommended Action:</span>
-              <span className="text-amber-300 font-medium">{aiInsights.recommendedAction}</span>
+              <span className="text-amber-300 font-semibold">{aiInsights.recommendedAction}</span>
             </div>
             <button
               onClick={() => openKuralModalByNumber(aiInsights.suggestedKuralNumber)}
-              className="text-xs font-bold text-indigo-300 hover:text-white underline"
+              className="text-xs font-bold text-blue-300 hover:text-white underline cursor-pointer"
             >
               Review Kural {aiInsights.suggestedKuralNumber}
             </button>
@@ -159,16 +268,16 @@ export const DashboardPage: React.FC = () => {
         </div>
       )}
 
-      {/* 2. Main Grid: Today's Scenario & Skills Mastery + Recommended Kural */}
+      {/* 4. Main Grid: Today's Scenario & Skills Mastery + Recommended Kural */}
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
         {/* Left 8-Columns: Today's Scenario Interactive Card */}
         {todayScenario && (
           <div className="lg:col-span-8 bg-white border border-slate-200 rounded-2xl shadow-xs overflow-hidden">
-            <div className="bg-slate-900 px-6 py-3 flex items-center justify-between">
-              <span className="text-white text-xs font-bold uppercase tracking-widest">
+            <div className="bg-[#071B3A] px-6 py-3.5 flex items-center justify-between border-b border-slate-800">
+              <span className="text-white text-xs font-extrabold uppercase tracking-widest">
                 Today's Legal Dilemma
               </span>
-              <span className="bg-indigo-500 text-white text-[10px] font-semibold px-2 py-0.5 rounded">
+              <span className="bg-amber-400 text-slate-950 text-[10px] font-black px-2.5 py-0.5 rounded">
                 Scenario {todayScenario.number}/10
               </span>
             </div>
@@ -179,21 +288,21 @@ export const DashboardPage: React.FC = () => {
                   <h3 className="text-xl font-bold text-slate-900">
                     {todayScenario.title}
                   </h3>
-                  <p className="text-xs text-slate-500">
+                  <p className="text-xs text-slate-500 font-medium">
                     Topic: {todayScenario.category}
                   </p>
                 </div>
                 <div className="flex flex-col items-end">
-                  <span className="text-[10px] font-bold text-slate-400 uppercase">
+                  <span className="text-[10px] font-extrabold text-slate-400 uppercase">
                     Difficulty
                   </span>
-                  <span className="text-amber-500 font-bold text-xs">
+                  <span className="text-amber-600 font-bold text-xs">
                     {todayScenario.difficulty}
                   </span>
                 </div>
               </div>
 
-              <p className="text-sm text-slate-700 leading-relaxed bg-slate-50 p-4 border-l-4 border-indigo-400 rounded-r-lg">
+              <p className="text-sm text-slate-700 leading-relaxed bg-slate-50 p-4 border-l-4 border-blue-600 rounded-r-lg font-medium">
                 "{todayScenario.description}"
               </p>
 
@@ -207,17 +316,17 @@ export const DashboardPage: React.FC = () => {
                     <div
                       key={opt.id}
                       onClick={() => setSelectedOptionId(opt.id)}
-                      className={`flex items-center p-3 border rounded-lg transition-colors cursor-pointer group ${
+                      className={`flex items-center p-3.5 border rounded-xl transition-colors cursor-pointer group ${
                         isSelected
-                          ? 'border-indigo-500 bg-indigo-50/70'
-                          : 'border-slate-200 hover:border-indigo-300 bg-white'
+                          ? 'border-blue-600 bg-blue-50/70'
+                          : 'border-slate-200 hover:border-blue-400 bg-white'
                       }`}
                     >
                       <div
                         className={`w-6 h-6 rounded-full flex items-center justify-center text-xs font-bold mr-3 shrink-0 transition-colors ${
                           isSelected
-                            ? 'bg-indigo-500 text-white'
-                            : 'border border-slate-300 text-slate-600 group-hover:bg-indigo-50'
+                            ? 'bg-[#071B3A] text-white'
+                            : 'border border-slate-300 text-slate-600 group-hover:bg-blue-50'
                         }`}
                       >
                         {letter}
@@ -225,8 +334,8 @@ export const DashboardPage: React.FC = () => {
                       <span
                         className={`text-sm ${
                           isSelected
-                            ? 'text-indigo-950 font-medium'
-                            : 'text-slate-600'
+                            ? 'text-slate-950 font-bold'
+                            : 'text-slate-700 font-medium'
                         }`}
                       >
                         {opt.text}
@@ -243,7 +352,7 @@ export const DashboardPage: React.FC = () => {
                     setSelectedScenarioNumber(todayScenario.number);
                     setActiveTab('scenario-challenge');
                   }}
-                  className="px-6 py-2 bg-indigo-600 text-white rounded-lg text-sm font-bold shadow-md shadow-indigo-200 hover:bg-indigo-700 transition-colors"
+                  className="px-6 py-2.5 bg-[#071B3A] hover:bg-[#0A2540] text-white rounded-xl text-sm font-bold shadow-xs transition-colors cursor-pointer"
                 >
                   Launch Full Simulation
                 </button>
@@ -252,7 +361,7 @@ export const DashboardPage: React.FC = () => {
                     setSelectedScenarioNumber(todayScenario.number);
                     setActiveTab('scenario-challenge');
                   }}
-                  className="px-6 py-2 border border-slate-200 text-slate-600 rounded-lg text-sm font-bold hover:bg-slate-50 transition-colors"
+                  className="px-6 py-2.5 border border-slate-300 text-slate-700 rounded-xl text-sm font-bold hover:bg-slate-50 transition-colors cursor-pointer"
                 >
                   Review Dilemma
                 </button>
@@ -266,14 +375,14 @@ export const DashboardPage: React.FC = () => {
           {/* Skills Mastery Card */}
           <div className="bg-white border border-slate-200 rounded-2xl p-5 shadow-xs space-y-4">
             <div className="flex items-center justify-between">
-              <h4 className="text-xs font-bold text-slate-400 uppercase tracking-widest">
+              <h4 className="text-xs font-extrabold text-slate-400 uppercase tracking-widest">
                 Your Skills Mastery
               </h4>
               <button
                 onClick={() => setActiveTab('my-progress')}
-                className="text-[11px] font-semibold text-indigo-600 hover:underline"
+                className="text-[11px] font-bold text-blue-600 hover:underline cursor-pointer"
               >
-                Analytics
+                Analytics →
               </button>
             </div>
 
@@ -281,11 +390,11 @@ export const DashboardPage: React.FC = () => {
               <div>
                 <div className="flex justify-between text-[11px] mb-1">
                   <span className="font-bold text-slate-700">Ethical Reasoning</span>
-                  <span className="text-indigo-600 font-bold">{userProgress.skills.ethicalReasoning}%</span>
+                  <span className="text-blue-700 font-extrabold">{userProgress.skills.ethicalReasoning}%</span>
                 </div>
-                <div className="h-1.5 w-full bg-slate-100 rounded-full overflow-hidden">
+                <div className="h-2 w-full bg-slate-100 rounded-full overflow-hidden">
                   <div
-                    className="h-full bg-indigo-500 rounded-full"
+                    className="h-full bg-blue-600 rounded-full"
                     style={{ width: `${userProgress.skills.ethicalReasoning}%` }}
                   />
                 </div>
@@ -294,9 +403,9 @@ export const DashboardPage: React.FC = () => {
               <div>
                 <div className="flex justify-between text-[11px] mb-1">
                   <span className="font-bold text-slate-700">Legal Awareness</span>
-                  <span className="text-blue-600 font-bold">{userProgress.skills.legalAwareness}%</span>
+                  <span className="text-blue-600 font-extrabold">{userProgress.skills.legalAwareness}%</span>
                 </div>
-                <div className="h-1.5 w-full bg-slate-100 rounded-full overflow-hidden">
+                <div className="h-2 w-full bg-slate-100 rounded-full overflow-hidden">
                   <div
                     className="h-full bg-blue-500 rounded-full"
                     style={{ width: `${userProgress.skills.legalAwareness}%` }}
@@ -307,9 +416,9 @@ export const DashboardPage: React.FC = () => {
               <div>
                 <div className="flex justify-between text-[11px] mb-1">
                   <span className="font-bold text-slate-700">Critical Thinking</span>
-                  <span className="text-amber-600 font-bold">{userProgress.skills.criticalThinking}%</span>
+                  <span className="text-amber-600 font-extrabold">{userProgress.skills.criticalThinking}%</span>
                 </div>
-                <div className="h-1.5 w-full bg-slate-100 rounded-full overflow-hidden">
+                <div className="h-2 w-full bg-slate-100 rounded-full overflow-hidden">
                   <div
                     className="h-full bg-amber-500 rounded-full"
                     style={{ width: `${userProgress.skills.criticalThinking}%` }}
@@ -320,9 +429,9 @@ export const DashboardPage: React.FC = () => {
               <div>
                 <div className="flex justify-between text-[11px] mb-1">
                   <span className="font-bold text-slate-700">Decision Making</span>
-                  <span className="text-emerald-600 font-bold">{userProgress.skills.prosocialDecisionMaking}%</span>
+                  <span className="text-emerald-600 font-extrabold">{userProgress.skills.prosocialDecisionMaking}%</span>
                 </div>
-                <div className="h-1.5 w-full bg-slate-100 rounded-full overflow-hidden">
+                <div className="h-2 w-full bg-slate-100 rounded-full overflow-hidden">
                   <div
                     className="h-full bg-emerald-500 rounded-full"
                     style={{ width: `${userProgress.skills.prosocialDecisionMaking}%` }}
@@ -333,19 +442,19 @@ export const DashboardPage: React.FC = () => {
           </div>
 
           {/* Recommended Kural Card */}
-          <div className="bg-gradient-to-br from-indigo-600 to-slate-900 border border-slate-200 rounded-2xl p-5 shadow-xs text-white">
-            <h4 className="text-xs font-bold text-indigo-200 uppercase tracking-widest mb-3">
+          <div className="bg-[#071B3A] border border-slate-700 rounded-2xl p-5 shadow-xs text-white space-y-3">
+            <h4 className="text-xs font-black text-amber-400 uppercase tracking-widest">
               Recommended Kural
             </h4>
-            <p className="text-base sm:text-lg font-serif italic mb-2 leading-snug">
+            <p className="text-base font-serif italic leading-snug text-slate-100">
               "Manathukan Maasilan Aadhal Anaithuran Aagula Neera Pir."
             </p>
-            <p className="text-[11px] text-indigo-100/80 leading-relaxed">
+            <p className="text-[11px] text-slate-300 leading-relaxed font-medium">
               "To be pure in mind is as much as all righteousness; all else is but empty display." (Kural 34)
             </p>
             <button
               onClick={() => openKuralModalByNumber(34)}
-              className="mt-4 w-full py-2 bg-white/10 hover:bg-white/20 transition-colors rounded-lg text-xs font-bold border border-white/20 text-center block"
+              className="w-full py-2 bg-white/10 hover:bg-white/20 transition-colors rounded-xl text-xs font-bold border border-white/20 text-center block cursor-pointer"
             >
               Explore Virtue (Aram)
             </button>
@@ -353,49 +462,49 @@ export const DashboardPage: React.FC = () => {
         </div>
       </div>
 
-      {/* 3. Three Learning Suite Pillar Cards */}
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-4 pt-2">
+      {/* 5. Three Learning Suite Pillar Cards */}
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-5 pt-2">
         <div
           onClick={() => setActiveTab('kural-quest')}
-          className="p-5 bg-white rounded-xl border border-slate-200 shadow-xs hover:border-indigo-300 transition-all cursor-pointer space-y-2 group"
+          className="p-6 bg-white rounded-2xl border border-slate-200 shadow-2xs hover:border-blue-400 transition-all cursor-pointer space-y-3 group"
         >
-          <div className="w-8 h-8 rounded-lg bg-amber-50 text-amber-600 flex items-center justify-center font-bold text-sm">
+          <div className="w-10 h-10 rounded-xl bg-amber-100 text-amber-700 flex items-center justify-center font-bold text-base shadow-2xs">
             📜
           </div>
-          <h4 className="text-sm font-bold text-slate-900 group-hover:text-indigo-600 transition-colors">
+          <h4 className="text-base font-bold text-[#071B3A] group-hover:text-blue-600 transition-colors font-heading">
             Kural Quest
           </h4>
-          <p className="text-xs text-slate-500">
+          <p className="text-xs text-slate-500 leading-relaxed">
             Explore 1,330 couplets categorized by moral concept and Paal.
           </p>
         </div>
 
         <div
           onClick={() => setActiveTab('scenario-challenge')}
-          className="p-5 bg-white rounded-xl border border-slate-200 shadow-xs hover:border-indigo-300 transition-all cursor-pointer space-y-2 group"
+          className="p-6 bg-white rounded-2xl border border-slate-200 shadow-2xs hover:border-blue-400 transition-all cursor-pointer space-y-3 group"
         >
-          <div className="w-8 h-8 rounded-lg bg-blue-50 text-blue-600 flex items-center justify-center font-bold text-sm">
+          <div className="w-10 h-10 rounded-xl bg-blue-100 text-blue-700 flex items-center justify-center font-bold text-base shadow-2xs">
             ⚖️
           </div>
-          <h4 className="text-sm font-bold text-slate-900 group-hover:text-indigo-600 transition-colors">
+          <h4 className="text-base font-bold text-[#071B3A] group-hover:text-blue-600 transition-colors font-heading">
             Scenario Challenge
           </h4>
-          <p className="text-xs text-slate-500">
+          <p className="text-xs text-slate-500 leading-relaxed">
             Apply legal & ethical principles to interactive real-world dilemmas.
           </p>
         </div>
 
         <div
           onClick={() => setActiveTab('ai-tutor')}
-          className="p-5 bg-white rounded-xl border border-slate-200 shadow-xs hover:border-indigo-300 transition-all cursor-pointer space-y-2 group"
+          className="p-6 bg-white rounded-2xl border border-slate-200 shadow-2xs hover:border-blue-400 transition-all cursor-pointer space-y-3 group"
         >
-          <div className="w-8 h-8 rounded-lg bg-emerald-50 text-emerald-600 flex items-center justify-center font-bold text-sm">
+          <div className="w-10 h-10 rounded-xl bg-emerald-100 text-emerald-700 flex items-center justify-center font-bold text-base shadow-2xs">
             🤖
           </div>
-          <h4 className="text-sm font-bold text-slate-900 group-hover:text-indigo-600 transition-colors">
+          <h4 className="text-base font-bold text-[#071B3A] group-hover:text-blue-600 transition-colors font-heading">
             AI Legal-Ethics Tutor
           </h4>
-          <p className="text-xs text-slate-500">
+          <p className="text-xs text-slate-500 leading-relaxed">
             Grounded dual-corpus mentoring with full explainability traces.
           </p>
         </div>
