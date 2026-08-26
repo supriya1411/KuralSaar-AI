@@ -32,7 +32,6 @@ const NAV_ITEMS: NavItem[] = [
   { id: 'scenario-challenge', label: 'Scenario Challenge', icon: Scale },
   { id: 'ethics-library', label: 'Ethics Library', icon: BookOpen },
   { id: 'ai-tutor', label: 'AI Legal-Ethics Tutor', icon: Bot },
-  { id: 'research-demo', label: 'Pipeline Inspector', icon: Cpu },
   { id: 'knowledge-graph', label: 'Knowledge Graph', icon: Network },
   { id: 'leaderboard', label: 'Leaderboard', icon: Trophy },
   { id: 'my-progress', label: 'My Progress', icon: LineChart },

@@ -63,14 +63,6 @@ export const DashboardPage: React.FC = () => {
             AI-powered legal education connecting Indian statutory law with Thirukkural ethics.
           </p>
         </div>
-
-        <button
-          onClick={() => setActiveTab('research-demo')}
-          className="inline-flex items-center gap-2 px-4 py-2.5 bg-indigo-600 hover:bg-indigo-700 text-white rounded-xl text-xs font-bold shadow-sm hover:shadow-md transition-all self-start sm:self-auto cursor-pointer"
-        >
-          <Cpu className="w-4 h-4" />
-          Pipeline Inspector
-        </button>
       </div>
 
       {/* 1. Four Sleek KPI Metric Cards */}
@@ -379,17 +371,17 @@ export const DashboardPage: React.FC = () => {
         </div>
 
         <div
-          onClick={() => setActiveTab('research-demo')}
+          onClick={() => setActiveTab('scenario-challenge')}
           className="p-5 bg-white rounded-xl border border-slate-200 shadow-xs hover:border-indigo-300 transition-all cursor-pointer space-y-2 group"
         >
-          <div className="w-8 h-8 rounded-lg bg-purple-50 text-purple-600 flex items-center justify-center font-bold text-sm">
-            🔬
+          <div className="w-8 h-8 rounded-lg bg-blue-50 text-blue-600 flex items-center justify-center font-bold text-sm">
+            ⚖️
           </div>
           <h4 className="text-sm font-bold text-slate-900 group-hover:text-indigo-600 transition-colors">
-            Pipeline Inspector
+            Scenario Challenge
           </h4>
           <p className="text-xs text-slate-500">
-            Trace step-by-step semantic retrieval and statutory grounding.
+            Apply legal & ethical principles to interactive real-world dilemmas.
           </p>
         </div>
 

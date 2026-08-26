@@ -1,0 +1,88 @@
+[
+  {
+    "id": "post-1787742150730",
+    "authorName": "Arun Kumar",
+    "authorRole": "Senior Legal-Ethics Scholar",
+    "authorAvatar": "https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=150&auto=format&fit=crop&q=80",
+    "title": "133",
+    "content": "hind",
+    "category": "Kural Interpretations",
+    "upvotes": 8,
+    "replyCount": 0,
+    "timestamp": "Just now",
+    "tags": [
+      "Discussion",
+      "Ethics"
+    ]
+  },
+  {
+    "id": "post-1",
+    "authorName": "Adv. Priyadarshini M.",
+    "authorRole": "Madras High Court Advocate",
+    "authorAvatar": "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=150&auto=format&fit=crop&q=80",
+    "title": "How does Kural 118 reconcile with the standard of proof beyond reasonable doubt?",
+    "content": "Kural 118 emphasizes unswerving impartiality without bending like a balance scale. In criminal trials with circumstantial evidence, how do trial judges balance the presumption of innocence with moral certitude?",
+    "category": "Legal Ethics",
+    "upvotes": 42,
+    "replyCount": 14,
+    "timestamp": "2 hours ago",
+    "tags": [
+      "Kural 118",
+      "Natural Justice",
+      "Criminal Law",
+      "BNS"
+    ]
+  },
+  {
+    "id": "post-2",
+    "authorName": "Rohan Deshmukh",
+    "authorRole": "National Law School Scholar",
+    "authorAvatar": "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=150&auto=format&fit=crop&q=80",
+    "title": "AI in Judicial Decision-Making: A Thirukkural Critique of Automated Bias",
+    "content": "Chapter 55 (Sengolmai) posits that righteous governance requires deep personal understanding of both sides. Can predictive policing algorithms or algorithmic sentencing ever satisfy Aram?",
+    "category": "Scenario Debates",
+    "upvotes": 38,
+    "replyCount": 9,
+    "timestamp": "5 hours ago",
+    "tags": [
+      "AI Ethics",
+      "Sengolmai",
+      "Constitutional Law"
+    ]
+  },
+  {
+    "id": "post-3",
+    "authorName": "Kavitha Sundaram",
+    "authorRole": "Corporate Governance Legal Advisor",
+    "authorAvatar": "https://images.unsplash.com/photo-1580489944761-15a19d654956?w=150&auto=format&fit=crop&q=80",
+    "title": "Whistleblower Protection vs Confidentiality Agreements: Lessons from Kural 291 (Vaaimai)",
+    "content": "When an associate discovers environmental non-compliance concealed by a non-disclosure agreement, what is the higher duty under Indian law and classical truthfulness?",
+    "category": "Kural Interpretations",
+    "upvotes": 29,
+    "replyCount": 7,
+    "timestamp": "Yesterday",
+    "tags": [
+      "Whistleblower",
+      "Vaaimai",
+      "Companies Act"
+    ]
+  },
+  {
+    "id": "post-4",
+    "authorName": "Vikramaditya Sen",
+    "authorRole": "Constitutional Law Researcher",
+    "authorAvatar": "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=150&auto=format&fit=crop&q=80",
+    "title": "Restraint in Road Rage: Private Defence (Sec 34-44 BNS) and Kural 304 on Anger Control",
+    "content": "Exploring the boundary between legitimate self-defence during high-stress public confrontations and unlawful retaliation when anger exceeds necessity.",
+    "category": "Scenario Debates",
+    "upvotes": 51,
+    "replyCount": 18,
+    "timestamp": "2 days ago",
+    "tags": [
+      "Road Rage",
+      "BNS",
+      "Anger Control",
+      "Kural 304"
+    ]
+  }
+]
