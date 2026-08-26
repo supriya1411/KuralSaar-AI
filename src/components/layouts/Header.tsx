@@ -124,33 +124,8 @@ export const Header: React.FC<Props> = ({ onMobileMenuToggle }) => {
         </div>
       </div>
 
-      {/* Right: Gamification Badges & Profile (Matching Reference Interface) */}
-      <div className="flex items-center gap-4 sm:gap-6">
-        <div className="flex items-center gap-4 sm:gap-6 border-r border-slate-200 pr-4 sm:pr-6">
-          {/* Streak */}
-          <div className="flex flex-col items-center">
-            <span className="text-[9px] font-extrabold text-slate-400 uppercase tracking-wider">Streak</span>
-            <span className="text-xs sm:text-sm font-bold text-amber-600 whitespace-nowrap flex items-center gap-1">
-              🔥 {userProgress.streakDays} Days
-            </span>
-          </div>
-
-          {/* Total XP */}
-          <div className="flex flex-col items-center">
-            <span className="text-[9px] font-extrabold text-slate-400 uppercase tracking-wider">Total XP</span>
-            <span className="text-xs sm:text-sm font-bold text-amber-500 whitespace-nowrap flex items-center gap-1">
-              ⭐ {userProgress.xp}
-            </span>
-          </div>
-
-          {/* Level */}
-          <div className="hidden lg:flex flex-col items-center">
-            <span className="text-[9px] font-extrabold text-slate-400 uppercase tracking-wider">Level</span>
-            <span className="text-xs sm:text-sm font-bold text-slate-700 whitespace-nowrap flex items-center gap-1">
-              ⚖️ Lvl {userProgress.level}
-            </span>
-          </div>
-        </div>
+      {/* Right: Notifications & Profile */}
+      <div className="flex items-center gap-4 sm:gap-5">
 
         {/* Notifications Bell */}
         <div className="relative">
