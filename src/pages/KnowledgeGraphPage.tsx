@@ -139,16 +139,19 @@ export const KnowledgeGraphPage: React.FC = () => {
           </div>
 
           {/* Graph Interactive Stage */}
-          <div className="flex-1 p-4 overflow-x-auto overflow-y-hidden custom-scrollbar bg-slate-900/5 relative min-h-[460px]">
-            <div
-              style={{
-                transform: `scale(${zoomLevel})`,
-                transformOrigin: 'top left',
-                width: '1320px',
-                height: '420px',
-              }}
-              className="relative select-none"
-            >
+          {(() => {
+            const maxCanvasY = Math.max(600, ...filteredNodes.map((n) => (n.y || 0) + 120));
+            return (
+              <div className="flex-1 p-4 overflow-auto custom-scrollbar bg-slate-900/5 relative min-h-[500px] max-h-[680px]">
+                <div
+                  style={{
+                    transform: `scale(${zoomLevel})`,
+                    transformOrigin: 'top left',
+                    width: '1380px',
+                    height: `${maxCanvasY}px`,
+                  }}
+                  className="relative select-none"
+                >
               <svg className="w-full h-full absolute inset-0 pointer-events-none">
                 {/* Flow lines with animated dashes */}
                 {edges.map((edge) => {
@@ -219,8 +222,10 @@ export const KnowledgeGraphPage: React.FC = () => {
                   </div>
                 );
               })}
+              </div>
             </div>
-          </div>
+          );
+        })()}
 
           <div className="p-3 bg-slate-50 border-t border-slate-100 text-center text-xs text-slate-500">
             💡 <strong>Interactive Flow:</strong> Trace from ethical question → moral concept → Thirukkural → legal statute → actionable resolution.
