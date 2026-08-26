@@ -66,7 +66,7 @@ export const DashboardPage: React.FC = () => {
 
             {/* Main Title */}
             <h1 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-[#071B3A] tracking-tight font-heading mt-4 mb-2">
-              JUSTICE AI
+              KuralSaar AI
             </h1>
 
             {/* Subtitle Tagline */}
@@ -167,7 +167,7 @@ export const DashboardPage: React.FC = () => {
           EDUCATIONAL ARCHITECTURE
         </span>
         <h2 className="text-2xl sm:text-3xl font-black text-[#071B3A] font-heading">
-          How Justice AI Transforms Legal-Ethics Learning
+          How KuralSaar AI Transforms Legal-Ethics Learning
         </h2>
         <p className="text-xs sm:text-sm text-slate-500 max-w-2xl mx-auto">
           Moving beyond dry rote memorization to immersive scenario reflection and timeless philosophical reasoning.

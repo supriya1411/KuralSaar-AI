@@ -52,7 +52,7 @@ export const AppLayout: React.FC<Props> = ({ children }) => {
                 EDUCATIONAL PLATFORM
               </span>
               <span className="truncate text-slate-200 font-medium text-xs">
-                ⚖️ <strong>Educational Platform:</strong> Justice AI pairs Indian law with Thirukkural ethics. This is not formal legal advice.
+                ⚖️ <strong>Educational Platform:</strong> KuralSaar AI pairs Indian law with Thirukkural ethics. This is not formal legal advice.
               </span>
             </div>
             <button

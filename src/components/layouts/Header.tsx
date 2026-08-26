@@ -84,7 +84,7 @@ export const Header: React.FC<Props> = ({ onMobileMenuToggle }) => {
         };
       default:
         return {
-          title: 'Justice AI',
+          title: 'KuralSaar AI',
           subtitle: 'Learn Law. Live Ethics. Think Responsibly.',
         };
     }

@@ -69,7 +69,7 @@ export const Sidebar: React.FC = () => {
           {!isSidebarCollapsed && (
             <div className="flex flex-col">
               <span className="text-white font-extrabold tracking-tight text-base leading-none font-heading">
-                JUSTICE AI
+                KuralSaar AI
               </span>
               <span className="text-[10px] uppercase tracking-widest text-slate-400 font-extrabold mt-1">
                 Legal & Ethics
