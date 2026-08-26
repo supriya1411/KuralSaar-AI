@@ -24,7 +24,7 @@ export const legalService = {
             data: transformed,
             total: json.pagination?.total || transformed.length,
             isMockData: false,
-            notice: 'Justice AI Phase 2 Active — Sourced directly from Indian Legal QA Dataset API.',
+            notice: 'Sourced directly from Indian Legal QA Dataset API.',
           };
         }
       }

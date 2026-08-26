@@ -60,13 +60,13 @@ export const DashboardPage: React.FC = () => {
             Welcome back, {userProgress.userName} 👋
           </h1>
           <p className="text-slate-500 text-sm">
-            Phase 3 Grounded RAG Intelligence is live across all modules.
+            AI-powered legal education connecting Indian statutory law with Thirukkural ethics.
           </p>
         </div>
 
         <button
           onClick={() => setActiveTab('research-demo')}
-          className="inline-flex items-center gap-2 px-4 py-2 bg-indigo-600 hover:bg-indigo-500 text-white rounded-xl text-xs font-bold shadow-md shadow-indigo-600/20 transition-all self-start sm:self-auto"
+          className="inline-flex items-center gap-2 px-4 py-2.5 bg-indigo-600 hover:bg-indigo-700 text-white rounded-xl text-xs font-bold shadow-sm hover:shadow-md transition-all self-start sm:self-auto cursor-pointer"
         >
           <Cpu className="w-4 h-4" />
           RAG Pipeline Inspector

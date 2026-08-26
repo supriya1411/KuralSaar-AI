@@ -49,7 +49,7 @@ export const AppLayout: React.FC<Props> = ({ children }) => {
           <div className="bg-gradient-to-r from-indigo-900 via-indigo-950 to-slate-900 text-white px-4 py-2 text-xs flex items-center justify-between border-b border-indigo-800/40 shrink-0">
             <div className="flex items-center gap-2 max-w-4xl truncate">
               <span className="flex items-center justify-center px-2 py-0.5 text-[10px] font-extrabold uppercase bg-amber-400 text-slate-950 rounded-full shrink-0">
-                Phase 1 Prototype
+                Educational Platform
               </span>
               <span className="truncate text-slate-200">
                 ⚖️ <strong>Educational Platform:</strong> Justice AI pairs Indian law with Thirukkural ethics. This is not formal legal advice.

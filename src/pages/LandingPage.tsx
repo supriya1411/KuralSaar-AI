@@ -242,7 +242,7 @@ export const LandingPage: React.FC = () => {
           Educational simulation platform. Justice AI is designed for academic, philosophical, and pedagogical inquiry. It does not furnish formal legal counsel.
         </p>
         <p className="text-[10px] text-slate-400">
-          Phase 1 Interactive Prototype • Clean Modular Architecture for Phase 2/3 Backend & RAG Integration
+          Justice AI Educational Platform • Connecting Indian Law with Thirukkural Ethics
         </p>
       </footer>
     </div>

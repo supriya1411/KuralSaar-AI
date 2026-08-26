@@ -161,7 +161,7 @@ export const Header: React.FC<Props> = ({ onMobileMenuToggle }) => {
             <div className="absolute right-0 mt-2 w-72 p-3 bg-white rounded-xl shadow-xl border border-slate-200 z-50 animate-in fade-in zoom-in-95 duration-150">
               <div className="flex items-center justify-between pb-2 mb-2 border-b border-slate-100 text-xs font-bold text-slate-800">
                 <span>Recent Updates</span>
-                <span className="text-[10px] text-indigo-600 font-semibold">Phase 1 Demo</span>
+                <span className="text-[10px] text-indigo-600 font-semibold">Updates</span>
               </div>
               <div className="space-y-2 text-xs">
                 <div className="p-2 bg-indigo-50/60 rounded-lg text-indigo-950">

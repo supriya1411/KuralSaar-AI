@@ -42,7 +42,7 @@ export const scenarioService = {
             data: transformed,
             total: transformed.length,
             isMockData: false,
-            notice: 'Justice AI Phase 2 Active — Sourced directly from Backend Scenario Service.'
+            notice: 'Sourced directly from Backend Scenario Service.'
           };
         }
       }

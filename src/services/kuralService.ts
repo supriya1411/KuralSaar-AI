@@ -55,7 +55,7 @@ export const kuralService = {
             total: json.pagination?.total || transformed.length,
             query: options.searchQuery,
             isMockData: false,
-            notice: 'Justice AI Phase 2 Active — Sourced directly from normalized canonical Thirukkural database & REST API.',
+            notice: 'Sourced directly from normalized canonical Thirukkural database & REST API.',
           };
         }
       }

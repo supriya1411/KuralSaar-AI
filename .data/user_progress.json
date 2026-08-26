@@ -3,34 +3,39 @@
   "userName": "Arun Kumar",
   "userRole": "Senior Legal-Ethics Scholar",
   "avatarUrl": "https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=150&auto=format&fit=crop&q=80",
-  "xp": 2840,
-  "level": 4,
-  "levelTitle": "Dharma & Nyaya Practitioner",
-  "nextLevelXp": 3500,
+  "xp": 3750,
+  "level": 9,
+  "levelTitle": "Justice Defender",
+  "nextLevelXp": 4000,
   "streakDays": 5,
   "bestStreak": 12,
-  "casesCompleted": 4,
+  "casesCompleted": 7,
   "totalCases": 12,
-  "accuracyPercentage": 94,
+  "accuracyPercentage": 52,
   "skills": {
-    "legalAwareness": 88,
-    "ethicalReasoning": 92,
-    "criticalThinking": 86,
-    "prosocialDecisionMaking": 90,
-    "professionalEthics": 94,
-    "conflictResolution": 90
+    "legalAwareness": 100,
+    "ethicalReasoning": 100,
+    "criticalThinking": 98,
+    "prosocialDecisionMaking": 100,
+    "professionalEthics": 100,
+    "conflictResolution": 100,
+    "decisionMaking": 100
   },
   "unlockedBadgeIds": [
     "badge-1",
     "badge-2",
     "badge-3",
-    "badge-4"
+    "badge-4",
+    "badge-case-solver",
+    "badge-critical-thinker"
   ],
   "completedScenarioIds": [
     "scen-1",
     "scen-2",
     "scen-3",
-    "scen-4"
+    "scen-4",
+    "scen-8",
+    "scen-9"
   ],
   "reviewedKuralIds": [
     34,
@@ -84,6 +89,134 @@
       "isCorrect": true,
       "timestamp": "2026-08-26T07:46:37.308Z",
       "xpEarned": 100
+    },
+    {
+      "scenarioId": "scen-3",
+      "scenarioNumber": 3,
+      "selectedOption": "B",
+      "isCorrect": true,
+      "timestamp": "2026-08-26T10:39:18.780Z",
+      "xpEarned": 75
+    },
+    {
+      "scenarioId": "scen-3",
+      "scenarioNumber": 3,
+      "selectedOption": "B",
+      "isCorrect": true,
+      "timestamp": "2026-08-26T10:39:19.650Z",
+      "xpEarned": 75
+    },
+    {
+      "scenarioId": "scen-4",
+      "scenarioNumber": 4,
+      "selectedOption": "A",
+      "isCorrect": false,
+      "timestamp": "2026-08-26T10:39:54.094Z",
+      "xpEarned": 20
+    },
+    {
+      "scenarioId": "scen-4",
+      "scenarioNumber": 4,
+      "selectedOption": "A",
+      "isCorrect": false,
+      "timestamp": "2026-08-26T10:39:54.976Z",
+      "xpEarned": 10
+    },
+    {
+      "scenarioId": "scen-5",
+      "scenarioNumber": 5,
+      "selectedOption": "A",
+      "isCorrect": false,
+      "timestamp": "2026-08-26T10:41:37.528Z",
+      "xpEarned": 20
+    },
+    {
+      "scenarioId": "scen-5",
+      "scenarioNumber": 5,
+      "selectedOption": "A",
+      "isCorrect": false,
+      "timestamp": "2026-08-26T10:41:38.666Z",
+      "xpEarned": 10
+    },
+    {
+      "scenarioId": "scen-6",
+      "scenarioNumber": 6,
+      "selectedOption": "C",
+      "isCorrect": false,
+      "timestamp": "2026-08-26T10:41:55.422Z",
+      "xpEarned": 20
+    },
+    {
+      "scenarioId": "scen-6",
+      "scenarioNumber": 6,
+      "selectedOption": "C",
+      "isCorrect": false,
+      "timestamp": "2026-08-26T10:41:56.419Z",
+      "xpEarned": 10
+    },
+    {
+      "scenarioId": "scen-7",
+      "scenarioNumber": 7,
+      "selectedOption": "D",
+      "isCorrect": false,
+      "timestamp": "2026-08-26T10:42:13.757Z",
+      "xpEarned": 20
+    },
+    {
+      "scenarioId": "scen-7",
+      "scenarioNumber": 7,
+      "selectedOption": "D",
+      "isCorrect": false,
+      "timestamp": "2026-08-26T10:42:15.605Z",
+      "xpEarned": 10
+    },
+    {
+      "scenarioId": "scen-8",
+      "scenarioNumber": 8,
+      "selectedOption": "B",
+      "isCorrect": true,
+      "timestamp": "2026-08-26T10:42:30.405Z",
+      "xpEarned": 150
+    },
+    {
+      "scenarioId": "scen-8",
+      "scenarioNumber": 8,
+      "selectedOption": "B",
+      "isCorrect": true,
+      "timestamp": "2026-08-26T10:42:32.504Z",
+      "xpEarned": 150
+    },
+    {
+      "scenarioId": "scen-9",
+      "scenarioNumber": 9,
+      "selectedOption": "B",
+      "isCorrect": true,
+      "timestamp": "2026-08-26T10:42:48.342Z",
+      "xpEarned": 150
+    },
+    {
+      "scenarioId": "scen-9",
+      "scenarioNumber": 9,
+      "selectedOption": "B",
+      "isCorrect": true,
+      "timestamp": "2026-08-26T10:42:50.343Z",
+      "xpEarned": 150
+    },
+    {
+      "scenarioId": "scen-10",
+      "scenarioNumber": 10,
+      "selectedOption": "C",
+      "isCorrect": false,
+      "timestamp": "2026-08-26T10:43:04.041Z",
+      "xpEarned": 20
+    },
+    {
+      "scenarioId": "scen-10",
+      "scenarioNumber": 10,
+      "selectedOption": "C",
+      "isCorrect": false,
+      "timestamp": "2026-08-26T10:43:07.006Z",
+      "xpEarned": 10
     }
   ],
   "bookmarks": {
@@ -101,12 +234,14 @@
       "legal-qa-5"
     ]
   },
-  "lastActiveDate": "2026-08-26T07:46:37.308Z",
+  "lastActiveDate": "2026-08-26T10:43:07.006Z",
   "solvedScenarioIds": [
     "scen-1",
     "scen-2",
     "scen-3",
-    "scen-4"
+    "scen-4",
+    "scen-8",
+    "scen-9"
   ],
   "scenarioAnswers": {},
   "recentActivity": [
@@ -144,6 +279,118 @@
       "type": "scenario",
       "timestamp": "Aug 26",
       "xpEarned": 100
+    },
+    {
+      "id": "act-5",
+      "title": "Scenario Challenge #3",
+      "type": "scenario",
+      "timestamp": "Aug 26",
+      "xpEarned": 75
+    },
+    {
+      "id": "act-6",
+      "title": "Scenario Challenge #3",
+      "type": "scenario",
+      "timestamp": "Aug 26",
+      "xpEarned": 75
+    },
+    {
+      "id": "act-7",
+      "title": "Scenario Challenge #4",
+      "type": "scenario",
+      "timestamp": "Aug 26",
+      "xpEarned": 20
+    },
+    {
+      "id": "act-8",
+      "title": "Scenario Challenge #4",
+      "type": "scenario",
+      "timestamp": "Aug 26",
+      "xpEarned": 10
+    },
+    {
+      "id": "act-9",
+      "title": "Scenario Challenge #5",
+      "type": "scenario",
+      "timestamp": "Aug 26",
+      "xpEarned": 20
+    },
+    {
+      "id": "act-10",
+      "title": "Scenario Challenge #5",
+      "type": "scenario",
+      "timestamp": "Aug 26",
+      "xpEarned": 10
+    },
+    {
+      "id": "act-11",
+      "title": "Scenario Challenge #6",
+      "type": "scenario",
+      "timestamp": "Aug 26",
+      "xpEarned": 20
+    },
+    {
+      "id": "act-12",
+      "title": "Scenario Challenge #6",
+      "type": "scenario",
+      "timestamp": "Aug 26",
+      "xpEarned": 10
+    },
+    {
+      "id": "act-13",
+      "title": "Scenario Challenge #7",
+      "type": "scenario",
+      "timestamp": "Aug 26",
+      "xpEarned": 20
+    },
+    {
+      "id": "act-14",
+      "title": "Scenario Challenge #7",
+      "type": "scenario",
+      "timestamp": "Aug 26",
+      "xpEarned": 10
+    },
+    {
+      "id": "act-15",
+      "title": "Scenario Challenge #8",
+      "type": "scenario",
+      "timestamp": "Aug 26",
+      "xpEarned": 150
+    },
+    {
+      "id": "act-16",
+      "title": "Scenario Challenge #8",
+      "type": "scenario",
+      "timestamp": "Aug 26",
+      "xpEarned": 150
+    },
+    {
+      "id": "act-17",
+      "title": "Scenario Challenge #9",
+      "type": "scenario",
+      "timestamp": "Aug 26",
+      "xpEarned": 150
+    },
+    {
+      "id": "act-18",
+      "title": "Scenario Challenge #9",
+      "type": "scenario",
+      "timestamp": "Aug 26",
+      "xpEarned": 150
+    },
+    {
+      "id": "act-19",
+      "title": "Scenario Challenge #10",
+      "type": "scenario",
+      "timestamp": "Aug 26",
+      "xpEarned": 20
+    },
+    {
+      "id": "act-20",
+      "title": "Scenario Challenge #10",
+      "type": "scenario",
+      "timestamp": "Aug 26",
+      "xpEarned": 10
     }
   ]
 }

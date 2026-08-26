@@ -373,7 +373,7 @@ export const ScenarioChallengePage: React.FC = () => {
                         {aiFeedback?.decisionAssessment ||
                           (isCurrentCorrect
                             ? `+${currentScenario.xpReward} XP Earned • Perfect adherence to statutory & ethical standards`
-                            : 'Review the grounded RAG evaluation below to strengthen your moral reasoning')}
+                            : 'Review the grounded evaluation below to strengthen your moral reasoning')}
                       </p>
                     </div>
                   </div>
@@ -477,7 +477,7 @@ export const ScenarioChallengePage: React.FC = () => {
                   >
                     {isEvaluating ? (
                       <>
-                        <RefreshCw className="w-4 h-4 animate-spin" /> Evaluating RAG...
+                        <RefreshCw className="w-4 h-4 animate-spin" /> Evaluating Answer...
                       </>
                     ) : (
                       <>
