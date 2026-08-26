@@ -3,22 +3,22 @@
   "userName": "Arun Kumar",
   "userRole": "Senior Legal-Ethics Scholar",
   "avatarUrl": "https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=150&auto=format&fit=crop&q=80",
-  "xp": 3230,
-  "level": 5,
-  "levelTitle": "Constitutional Advocate",
-  "nextLevelXp": 4000,
+  "xp": 2840,
+  "level": 4,
+  "levelTitle": "Dharma & Nyaya Practitioner",
+  "nextLevelXp": 3500,
   "streakDays": 5,
   "bestStreak": 12,
   "casesCompleted": 4,
   "totalCases": 12,
-  "accuracyPercentage": 100,
+  "accuracyPercentage": 94,
   "skills": {
-    "legalAwareness": 94,
-    "ethicalReasoning": 98,
-    "criticalThinking": 92,
-    "prosocialDecisionMaking": 96,
-    "professionalEthics": 100,
-    "conflictResolution": 94
+    "legalAwareness": 88,
+    "ethicalReasoning": 92,
+    "criticalThinking": 86,
+    "prosocialDecisionMaking": 90,
+    "professionalEthics": 94,
+    "conflictResolution": 90
   },
   "unlockedBadgeIds": [
     "badge-1",
@@ -136,6 +136,13 @@
       "title": "Scenario Challenge #4",
       "type": "scenario",
       "timestamp": "Aug 25",
+      "xpEarned": 100
+    },
+    {
+      "id": "act-4",
+      "title": "Scenario Challenge #1",
+      "type": "scenario",
+      "timestamp": "Aug 26",
       "xpEarned": 100
     }
   ]

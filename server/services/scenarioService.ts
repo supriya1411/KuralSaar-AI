@@ -163,7 +163,7 @@ RELATED KURAL: Kural ${topKural?.kuralNumber || scenario.relatedKuralIds[0]} (${
 Provide pedagogical AI feedback with decision assessment, ethical reasoning, legal context, better responsible action, and learning takeaway.`;
 
         const response = await ai.models.generateContent({
-          model: 'gemini-3.7-flash',
+          model: 'gemini-3.6-flash',
           contents: promptContent,
           config: {
             systemInstruction,

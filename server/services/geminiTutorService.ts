@@ -73,7 +73,7 @@ ${retrieval.ragPromptContext}
 Please synthesize a grounded legal-ethics response in JSON.`;
 
         const response = await ai.models.generateContent({
-          model: 'gemini-3.7-flash',
+          model: 'gemini-3.6-flash',
           contents: userContent,
           config: {
             systemInstruction,
@@ -132,6 +132,10 @@ Please synthesize a grounded legal-ethics response in JSON.`;
         if (response.text) {
           try {
             structuredOutput = JSON.parse(response.text.trim());
+            console.log('[GeminiTutorService] Live Gemini API call succeeded (Model: gemini-3.6-flash)');
+            if (retrieval.traces && retrieval.traces[7]) {
+              retrieval.traces[7].details = 'Live Gemini generation succeeded using model gemini-3.6-flash (usedFallback: false).';
+            }
           } catch {
             structuredOutput = null;
           }

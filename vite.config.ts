@@ -15,7 +15,9 @@ export default defineConfig(() => {
     },
     server: {
       hmr: isHmrDisabled ? false : undefined,
-      watch: isHmrDisabled ? null : {},
+      watch: isHmrDisabled ? null : {
+        ignored: ['**/.data/**']
+      },
     },
   };
 });
