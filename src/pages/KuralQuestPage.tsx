@@ -203,8 +203,8 @@ export const KuralQuestPage: React.FC = () => {
                     <span className="px-3 py-1 text-xs font-black text-blue-900 bg-blue-50 rounded-full border border-blue-200">
                       Kural #{kural.number}
                     </span>
-                    <span className="text-[11px] font-extrabold text-slate-400 uppercase tracking-wider">
-                      {kural.paal} • {kural.iyal}
+                    <span className="text-[11px] font-extrabold text-slate-500 uppercase tracking-wider">
+                      {kural.paal} • {kural.adhigaram}
                     </span>
                   </div>
 
