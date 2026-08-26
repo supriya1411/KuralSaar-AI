@@ -64,7 +64,7 @@ export const HowAiReasonedModal: React.FC<HowAiReasonedModalProps> = ({
                 </span>
               </div>
               <p className="text-xs text-slate-400 mt-0.5">
-                Full 8-Step RAG Retrieval, Knowledge Graph Traversal & Grounding Verification
+                Step-by-step Knowledge Retrieval, Knowledge Graph Traversal & Grounding Verification
               </p>
             </div>
           </div>

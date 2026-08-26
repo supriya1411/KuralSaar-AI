@@ -69,7 +69,7 @@ export const DashboardPage: React.FC = () => {
           className="inline-flex items-center gap-2 px-4 py-2.5 bg-indigo-600 hover:bg-indigo-700 text-white rounded-xl text-xs font-bold shadow-sm hover:shadow-md transition-all self-start sm:self-auto cursor-pointer"
         >
           <Cpu className="w-4 h-4" />
-          RAG Pipeline Inspector
+          Pipeline Inspector
         </button>
       </div>
 
@@ -386,10 +386,10 @@ export const DashboardPage: React.FC = () => {
             🔬
           </div>
           <h4 className="text-sm font-bold text-slate-900 group-hover:text-indigo-600 transition-colors">
-            RAG Pipeline Inspector
+            Pipeline Inspector
           </h4>
           <p className="text-xs text-slate-500">
-            Trace 8-step semantic retrieval, graph hops, and Gemini grounding.
+            Trace step-by-step semantic retrieval and statutory grounding.
           </p>
         </div>
 

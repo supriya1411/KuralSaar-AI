@@ -359,7 +359,7 @@ export const AiTutorPage: React.FC = () => {
               Ready for Your Inquiry
             </h3>
             <p className="text-xs text-slate-500 max-w-md mx-auto">
-              Select one of the suggested prompts above or type your own dilemma to experience the full RAG intelligence pipeline.
+              Select one of the suggested prompts above or type your own dilemma to receive legal and ethical guidance.
             </p>
           </div>
         </div>

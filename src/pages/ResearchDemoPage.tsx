@@ -87,7 +87,7 @@ export const ResearchDemoPage: React.FC = () => {
             Justice AI Research & Architecture Inspector
           </div>
           <h1 className="text-2xl md:text-3xl font-black text-white tracking-tight">
-            End-to-End RAG Intelligence Pipeline
+            End-to-End AI Reasoning & Retrieval Pipeline
           </h1>
           <p className="text-sm text-slate-300 leading-relaxed">
             Inspect how user queries pass through concept extraction, dual-corpus semantic retrieval,
@@ -158,7 +158,7 @@ export const ResearchDemoPage: React.FC = () => {
           >
             {loading ? (
               <>
-                <RefreshCw className="w-4 h-4 animate-spin" /> Processing RAG...
+                <RefreshCw className="w-4 h-4 animate-spin" /> Processing Query...
               </>
             ) : (
               <>
@@ -421,7 +421,7 @@ export const ResearchDemoPage: React.FC = () => {
             ) : (
               <div className="bg-slate-900 border border-slate-800 rounded-2xl p-12 text-center text-slate-400">
                 <RefreshCw className="w-8 h-8 animate-spin mx-auto text-indigo-400 mb-3" />
-                <p className="text-sm font-semibold">Running RAG Retrieval & Synthesis Pipeline...</p>
+                <p className="text-sm font-semibold">Running Retrieval & Synthesis Pipeline...</p>
               </div>
             )}
           </div>
