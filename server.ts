@@ -4,6 +4,7 @@ import path from 'path';
 import { createServer as createViteServer } from 'vite';
 import dotenv from 'dotenv';
 
+import fs from 'fs';
 import kuralsRouter from './server/routes/kurals';
 import legalRouter from './server/routes/legal';
 import scenariosRouter from './server/routes/scenarios';
@@ -21,7 +22,7 @@ dotenv.config();
 async function startServer() {
   const app = express();
   const server = http.createServer(app);
-  const PORT = 3000;
+  const PORT = parseInt(process.env.PORT || '3000', 10);
 
   // Initialize data preprocessing pipeline
   console.log('[Justice AI Server] Booting dataset ingestion and indexing engine...');
@@ -47,7 +48,7 @@ async function startServer() {
 
   // Vite middleware for development vs Static serving for production
   const distIndex = path.join(process.cwd(), 'dist', 'index.html');
-  const isProductionMode = process.env.NODE_ENV === 'production' || require('fs').existsSync(distIndex);
+  const isProductionMode = process.env.NODE_ENV === 'production' || fs.existsSync(distIndex);
 
   if (!isProductionMode) {
     // Intercept /@vite/client to provide a resilient, zero-error HMR client in cloud preview/container environments
