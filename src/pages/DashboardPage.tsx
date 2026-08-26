@@ -231,36 +231,36 @@ export const DashboardPage: React.FC = () => {
 
       {/* Dynamic AI Insights Banner */}
       {aiInsights && (
-        <div className="p-5 bg-[#071B3A] text-white rounded-2xl border border-slate-700 shadow-sm space-y-3">
+        <div className="p-5 bg-white text-slate-900 rounded-2xl border border-slate-200 shadow-2xs space-y-3">
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-2">
-              <div className="p-1.5 bg-blue-500/20 rounded-lg text-blue-300">
-                <Sparkles className="w-4 h-4 text-amber-400" />
+              <div className="p-1.5 bg-amber-100 rounded-lg text-amber-800 border border-amber-200">
+                <Sparkles className="w-4 h-4 text-amber-600" />
               </div>
-              <span className="text-xs font-bold text-amber-400 uppercase tracking-wider">
+              <span className="text-xs font-extrabold text-[#071B3A] uppercase tracking-wider">
                 AI Learning & Competency Insights
               </span>
             </div>
             <button
               onClick={() => setActiveTab('ai-tutor')}
-              className="text-xs text-amber-300 hover:underline font-bold cursor-pointer"
+              className="text-xs text-blue-600 hover:text-blue-800 font-bold cursor-pointer"
             >
               Consult AI Tutor →
             </button>
           </div>
 
-          <p className="text-xs sm:text-sm text-slate-200 leading-relaxed font-medium">
+          <p className="text-xs sm:text-sm text-slate-600 leading-relaxed font-medium">
             {aiInsights.summary}
           </p>
 
-          <div className="flex flex-wrap items-center justify-between gap-3 pt-2 border-t border-slate-700 text-xs">
+          <div className="flex flex-wrap items-center justify-between gap-3 pt-2 border-t border-slate-100 text-xs">
             <div className="flex items-center gap-2">
-              <span className="text-slate-400">Recommended Action:</span>
-              <span className="text-amber-300 font-semibold">{aiInsights.recommendedAction}</span>
+              <span className="text-slate-500 font-bold">Recommended Action:</span>
+              <span className="text-[#071B3A] font-extrabold">{aiInsights.recommendedAction}</span>
             </div>
             <button
               onClick={() => openKuralModalByNumber(aiInsights.suggestedKuralNumber)}
-              className="text-xs font-bold text-blue-300 hover:text-white underline cursor-pointer"
+              className="text-xs font-bold text-blue-600 hover:underline cursor-pointer"
             >
               Review Kural {aiInsights.suggestedKuralNumber}
             </button>
@@ -272,12 +272,12 @@ export const DashboardPage: React.FC = () => {
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
         {/* Left 8-Columns: Today's Scenario Interactive Card */}
         {todayScenario && (
-          <div className="lg:col-span-8 bg-white border border-slate-200 rounded-2xl shadow-xs overflow-hidden">
-            <div className="bg-[#071B3A] px-6 py-3.5 flex items-center justify-between border-b border-slate-800">
-              <span className="text-white text-xs font-extrabold uppercase tracking-widest">
+          <div className="lg:col-span-8 bg-white border border-slate-200 rounded-2xl shadow-2xs overflow-hidden">
+            <div className="bg-slate-50 px-6 py-3.5 flex items-center justify-between border-b border-slate-200">
+              <span className="text-[#071B3A] text-xs font-black uppercase tracking-widest">
                 Today's Legal Dilemma
               </span>
-              <span className="bg-amber-400 text-slate-950 text-[10px] font-black px-2.5 py-0.5 rounded">
+              <span className="bg-amber-100 text-amber-900 border border-amber-300 text-[10px] font-black px-2.5 py-0.5 rounded-full">
                 Scenario {todayScenario.number}/10
               </span>
             </div>
@@ -285,10 +285,10 @@ export const DashboardPage: React.FC = () => {
             <div className="p-6 space-y-5">
               <div className="flex justify-between items-start">
                 <div>
-                  <h3 className="text-xl font-bold text-slate-900">
+                  <h3 className="text-xl font-extrabold text-[#071B3A] font-heading">
                     {todayScenario.title}
                   </h3>
-                  <p className="text-xs text-slate-500 font-medium">
+                  <p className="text-xs text-slate-500 font-medium mt-0.5">
                     Topic: {todayScenario.category}
                   </p>
                 </div>
@@ -302,7 +302,7 @@ export const DashboardPage: React.FC = () => {
                 </div>
               </div>
 
-              <p className="text-sm text-slate-700 leading-relaxed bg-slate-50 p-4 border-l-4 border-blue-600 rounded-r-lg font-medium">
+              <p className="text-sm text-slate-700 leading-relaxed bg-slate-50/80 p-4 border-l-4 border-blue-600 rounded-r-lg font-medium border border-slate-200">
                 "{todayScenario.description}"
               </p>
 
@@ -318,7 +318,7 @@ export const DashboardPage: React.FC = () => {
                       onClick={() => setSelectedOptionId(opt.id)}
                       className={`flex items-center p-3.5 border rounded-xl transition-colors cursor-pointer group ${
                         isSelected
-                          ? 'border-blue-600 bg-blue-50/70'
+                          ? 'border-blue-600 bg-blue-50/70 shadow-2xs'
                           : 'border-slate-200 hover:border-blue-400 bg-white'
                       }`}
                     >
@@ -352,7 +352,7 @@ export const DashboardPage: React.FC = () => {
                     setSelectedScenarioNumber(todayScenario.number);
                     setActiveTab('scenario-challenge');
                   }}
-                  className="px-6 py-2.5 bg-[#071B3A] hover:bg-[#0A2540] text-white rounded-xl text-sm font-bold shadow-xs transition-colors cursor-pointer"
+                  className="px-6 py-2.5 bg-[#071B3A] hover:bg-[#0A2540] text-white rounded-xl text-sm font-bold shadow-2xs transition-colors cursor-pointer"
                 >
                   Launch Full Simulation
                 </button>
@@ -373,7 +373,7 @@ export const DashboardPage: React.FC = () => {
         {/* Right 4-Columns: Skills Mastery + Recommended Kural */}
         <div className="lg:col-span-4 space-y-6">
           {/* Skills Mastery Card */}
-          <div className="bg-white border border-slate-200 rounded-2xl p-5 shadow-xs space-y-4">
+          <div className="bg-white border border-slate-200 rounded-2xl p-5 shadow-2xs space-y-4">
             <div className="flex items-center justify-between">
               <h4 className="text-xs font-extrabold text-slate-400 uppercase tracking-widest">
                 Your Skills Mastery
@@ -442,21 +442,24 @@ export const DashboardPage: React.FC = () => {
           </div>
 
           {/* Recommended Kural Card */}
-          <div className="bg-[#071B3A] border border-slate-700 rounded-2xl p-5 shadow-xs text-white space-y-3">
-            <h4 className="text-xs font-black text-amber-400 uppercase tracking-widest">
-              Recommended Kural
-            </h4>
-            <p className="text-base font-serif italic leading-snug text-slate-100">
-              "Manathukan Maasilan Aadhal Anaithuran Aagula Neera Pir."
+          <div className="bg-white border border-slate-200 rounded-2xl p-5 shadow-2xs text-slate-900 space-y-3">
+            <div className="flex items-center justify-between">
+              <h4 className="text-xs font-black text-amber-900 bg-amber-100 px-2.5 py-0.5 rounded-full border border-amber-300 uppercase tracking-wider">
+                Recommended Kural
+              </h4>
+              <span className="text-xs font-bold text-slate-500">Kural #34</span>
+            </div>
+            <p className="text-base font-tamil font-bold text-blue-900 leading-snug">
+              "மனத்துக்கண் மாசிலன் ஆதல் அனைத்தறன் ஆகுல நீர பிற."
             </p>
-            <p className="text-[11px] text-slate-300 leading-relaxed font-medium">
-              "To be pure in mind is as much as all righteousness; all else is but empty display." (Kural 34)
+            <p className="text-xs text-slate-600 leading-relaxed font-medium">
+              "To be pure in mind is as much as all righteousness; all else is but empty display."
             </p>
             <button
               onClick={() => openKuralModalByNumber(34)}
-              className="w-full py-2 bg-white/10 hover:bg-white/20 transition-colors rounded-xl text-xs font-bold border border-white/20 text-center block cursor-pointer"
+              className="w-full py-2.5 bg-slate-100 hover:bg-slate-200 transition-colors rounded-xl text-xs font-bold border border-slate-200 text-[#071B3A] text-center block cursor-pointer"
             >
-              Explore Virtue (Aram)
+              Explore Virtue (Aram) →
             </button>
           </div>
         </div>
