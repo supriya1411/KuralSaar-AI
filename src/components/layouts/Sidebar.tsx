@@ -51,27 +51,27 @@ export const Sidebar: React.FC = () => {
 
   return (
     <aside
-      className={`relative flex flex-col justify-between h-screen bg-white text-slate-700 border-r border-slate-200 transition-all duration-300 z-30 select-none shrink-0 ${
+      className={`relative flex flex-col justify-between h-screen bg-[#071B3A] text-slate-300 border-r border-[#1E3A8A]/40 transition-all duration-300 z-30 select-none shrink-0 ${
         isSidebarCollapsed ? 'w-20' : 'w-64'
       }`}
     >
       {/* Brand Header */}
-      <div className="p-5 flex items-center justify-between border-b border-slate-200 shrink-0">
+      <div className="p-5 flex items-center justify-between border-b border-slate-800/80 shrink-0">
         <div
           onClick={() => setActiveTab('dashboard')}
           className="flex items-center gap-3 cursor-pointer group"
         >
-          {/* Blue Shield Logo Badge */}
-          <div className="w-9 h-9 bg-[#071B3A] rounded-lg flex items-center justify-center font-bold text-white text-lg shadow-2xs group-hover:bg-blue-600 transition-colors shrink-0">
+          {/* Royal Blue Shield Logo Badge */}
+          <div className="w-9 h-9 bg-blue-600 rounded-lg flex items-center justify-center font-bold text-white text-lg shadow-md shadow-blue-950/50 group-hover:scale-105 transition-transform shrink-0">
             <Scale className="w-5 h-5 text-white" />
           </div>
 
           {!isSidebarCollapsed && (
             <div className="flex flex-col">
-              <span className="text-[#071B3A] font-extrabold tracking-tight text-base leading-none font-heading">
+              <span className="text-white font-extrabold tracking-tight text-base leading-none font-heading">
                 JUSTICE AI
               </span>
-              <span className="text-[10px] uppercase tracking-widest text-slate-500 font-extrabold mt-1">
+              <span className="text-[10px] uppercase tracking-widest text-slate-400 font-extrabold mt-1">
                 Legal & Ethics
               </span>
             </div>
@@ -81,7 +81,7 @@ export const Sidebar: React.FC = () => {
         {/* Collapse button (Desktop) */}
         <button
           onClick={() => setIsSidebarCollapsed(!isSidebarCollapsed)}
-          className="hidden md:flex p-1.5 rounded-lg text-slate-400 hover:text-slate-700 hover:bg-slate-100 transition-colors cursor-pointer"
+          className="hidden md:flex p-1.5 rounded-lg text-slate-400 hover:text-white hover:bg-slate-800/80 transition-colors cursor-pointer"
           title={isSidebarCollapsed ? 'Expand sidebar' : 'Collapse sidebar'}
         >
           {isSidebarCollapsed ? (
@@ -110,16 +110,16 @@ export const Sidebar: React.FC = () => {
                 onClick={() => setActiveTab(item.id)}
                 className={`w-full flex items-center gap-3 px-3.5 py-2.5 rounded-xl font-bold text-xs sm:text-sm transition-all duration-150 group relative cursor-pointer ${
                   isActive
-                    ? 'bg-blue-50/90 text-blue-700 shadow-2xs border-l-4 border-blue-600 font-extrabold'
-                    : 'text-slate-600 hover:bg-slate-100/80 hover:text-slate-900'
+                    ? 'bg-[#1E3A8A] text-white shadow-md shadow-blue-950/50 font-extrabold border-l-4 border-blue-400'
+                    : 'text-slate-300 hover:bg-slate-800/70 hover:text-white'
                 }`}
                 title={item.label}
               >
                 <Icon
                   className={`w-4 h-4 shrink-0 transition-colors ${
                     isActive
-                      ? 'text-blue-600'
-                      : 'text-slate-400 group-hover:text-slate-700'
+                      ? 'text-blue-400'
+                      : 'text-slate-400 group-hover:text-slate-200'
                   }`}
                 />
 
@@ -133,8 +133,8 @@ export const Sidebar: React.FC = () => {
                       isActive
                         ? 'bg-amber-400 text-slate-950'
                         : item.badge.includes('RAG')
-                        ? 'bg-purple-100 text-purple-800 border border-purple-200'
-                        : 'bg-emerald-100 text-emerald-800 border border-emerald-200'
+                        ? 'bg-purple-500/20 text-purple-300 border border-purple-500/30'
+                        : 'bg-emerald-500/20 text-emerald-300 border border-emerald-500/30'
                     }`}
                   >
                     {item.badge}
@@ -155,20 +155,20 @@ export const Sidebar: React.FC = () => {
 
       {/* Level XP Progress Card in Sidebar */}
       {!isSidebarCollapsed && (
-        <div className="p-3.5 bg-slate-50 m-3 rounded-xl border border-slate-200 shrink-0">
+        <div className="p-3.5 bg-[#0A192F] m-3 rounded-xl border border-slate-700/70 shrink-0">
           <div className="flex items-center justify-between mb-1.5">
-            <span className="text-xs font-extrabold text-[#071B3A]">Level {userProgress.level}</span>
-            <span className="text-[10px] text-slate-500 font-bold">{userProgress.xp} / {userProgress.nextLevelXp} XP</span>
+            <span className="text-xs font-extrabold text-white">Level {userProgress.level}</span>
+            <span className="text-[10px] text-slate-400 font-bold">{userProgress.xp} / {userProgress.nextLevelXp} XP</span>
           </div>
-          <div className="w-full h-1.5 bg-slate-200 rounded-full overflow-hidden">
+          <div className="w-full h-1.5 bg-slate-800 rounded-full overflow-hidden">
             <div
-              className="h-full bg-blue-600 rounded-full transition-all duration-300"
+              className="h-full bg-blue-500 rounded-full transition-all duration-300"
               style={{
                 width: `${Math.min(100, Math.round((userProgress.xp / userProgress.nextLevelXp) * 100))}%`,
               }}
             />
           </div>
-          <p className="text-[10px] mt-2 text-center text-slate-500 font-bold italic">
+          <p className="text-[10px] mt-2 text-center text-slate-400 font-bold italic">
             {userProgress.levelTitle}
           </p>
         </div>
@@ -178,7 +178,7 @@ export const Sidebar: React.FC = () => {
       {isSidebarCollapsed && (
         <div
           onClick={() => openKuralModalByNumber(131)}
-          className="p-3 flex justify-center cursor-pointer hover:bg-slate-100 transition-colors"
+          className="p-3 flex justify-center cursor-pointer hover:bg-slate-800 transition-colors"
           title="Today's Thirukkural (Kural 131)"
         >
           <ThiruvalluvarAvatar size={32} />
