@@ -1,0 +1,142 @@
+{
+  "userId": "user-curr",
+  "userName": "Arun Kumar",
+  "userRole": "Senior Legal-Ethics Scholar",
+  "avatarUrl": "https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=150&auto=format&fit=crop&q=80",
+  "xp": 3230,
+  "level": 5,
+  "levelTitle": "Constitutional Advocate",
+  "nextLevelXp": 4000,
+  "streakDays": 5,
+  "bestStreak": 12,
+  "casesCompleted": 4,
+  "totalCases": 12,
+  "accuracyPercentage": 100,
+  "skills": {
+    "legalAwareness": 94,
+    "ethicalReasoning": 98,
+    "criticalThinking": 92,
+    "prosocialDecisionMaking": 96,
+    "professionalEthics": 100,
+    "conflictResolution": 94
+  },
+  "unlockedBadgeIds": [
+    "badge-1",
+    "badge-2",
+    "badge-3",
+    "badge-4"
+  ],
+  "completedScenarioIds": [
+    "scen-1",
+    "scen-2",
+    "scen-3",
+    "scen-4"
+  ],
+  "reviewedKuralIds": [
+    34,
+    111,
+    118,
+    127,
+    129,
+    131,
+    282,
+    291,
+    304,
+    314
+  ],
+  "scenarioAttempts": [
+    {
+      "scenarioId": "scen-1",
+      "scenarioNumber": 1,
+      "selectedOption": "B",
+      "isCorrect": true,
+      "timestamp": "2026-08-22T14:30:00.000Z",
+      "xpEarned": 100
+    },
+    {
+      "scenarioId": "scen-2",
+      "scenarioNumber": 2,
+      "selectedOption": "B",
+      "isCorrect": true,
+      "timestamp": "2026-08-23T09:15:00.000Z",
+      "xpEarned": 100
+    },
+    {
+      "scenarioId": "scen-3",
+      "scenarioNumber": 3,
+      "selectedOption": "B",
+      "isCorrect": true,
+      "timestamp": "2026-08-24T11:45:00.000Z",
+      "xpEarned": 100
+    },
+    {
+      "scenarioId": "scen-4",
+      "scenarioNumber": 4,
+      "selectedOption": "B",
+      "isCorrect": true,
+      "timestamp": "2026-08-25T08:20:00.000Z",
+      "xpEarned": 100
+    },
+    {
+      "scenarioId": "scen-1",
+      "scenarioNumber": 1,
+      "selectedOption": "B",
+      "isCorrect": true,
+      "timestamp": "2026-08-26T07:46:37.308Z",
+      "xpEarned": 100
+    }
+  ],
+  "bookmarks": {
+    "kuralIds": [
+      118,
+      131,
+      541
+    ],
+    "scenarioIds": [
+      "scen-1",
+      "scen-5"
+    ],
+    "legalIds": [
+      "legal-qa-1",
+      "legal-qa-5"
+    ]
+  },
+  "lastActiveDate": "2026-08-26T07:46:37.308Z",
+  "solvedScenarioIds": [
+    "scen-1",
+    "scen-2",
+    "scen-3",
+    "scen-4"
+  ],
+  "scenarioAnswers": {},
+  "recentActivity": [
+    {
+      "id": "act-0",
+      "title": "Scenario Challenge #1",
+      "type": "scenario",
+      "timestamp": "Aug 22",
+      "xpEarned": 100
+    },
+    {
+      "id": "act-1",
+      "title": "Scenario Challenge #2",
+      "type": "scenario",
+      "timestamp": "Aug 23",
+      "xpEarned": 100
+    },
+    {
+      "id": "act-2",
+      "title": "Scenario Challenge #3",
+      "type": "scenario",
+      "timestamp": "Aug 24",
+      "xpEarned": 100
+    },
+    {
+      "id": "act-3",
+      "title": "Scenario Challenge #4",
+      "type": "scenario",
+      "timestamp": "Aug 25",
+      "xpEarned": 100
+    }
+  ]
+}
