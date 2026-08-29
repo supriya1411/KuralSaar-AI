@@ -155,6 +155,108 @@ const MOCK_FALLBACK_SCENARIOS: Scenario[] = [
       principles: ['Naduvunilaimai (Equanimity)', 'Aruluudaimai (Compassion)'],
       deepDive: 'Kural 282 and 241 dictate that human worth cannot be bought or sold for monetary gain.'
     }
+  },
+  {
+    id: 'scen-4',
+    number: 4,
+    title: 'The Exam Question Leak & WhatsApp Forward (Peer Pressure)',
+    description: 'On the eve of the semester law exam, Rajesh is added to a study group where a close friend shares an unreleased leaked question paper received from an exam administrator. The friend pressures Rajesh to download it and keep quiet.',
+    difficulty: 'Medium',
+    category: 'Peer Pressure',
+    summary: 'Friend shares leaked exam paper in group chat and demands silence...',
+    question: 'How should Rajesh navigate the peer pressure while upholding legal and academic integrity?',
+    options: [
+      {
+        id: 'A',
+        text: 'Download the paper, memorize the answers, and justify it because "everyone else will score higher".',
+        explanation: 'Succumbing to peer rationalizations compromises moral character and makes one a co-conspirator in academic fraud.'
+      },
+      {
+        id: 'B',
+        text: 'Refuse to use the leaked paper, advise friends to step away from the breach, and report the leak immediately to the Controller of Examinations.',
+        explanation: 'Preserves the meritocratic integrity of public evaluation and fulfills the legal duty to deter examination malpractice.'
+      },
+      {
+        id: 'C',
+        text: 'Sell copies of the leaked paper to students in other colleges to earn quick cash.',
+        explanation: 'Commercial distribution of stolen intellectual material constitutes aggravated criminal fraud.'
+      },
+      {
+        id: 'D',
+        text: 'Pretend not to see the message, study normally, but stay silent while others cheat.',
+        explanation: 'Passive complicity allows systemic corruption to disadvantage honest candidates.'
+      }
+    ],
+    correctOptionId: 'B',
+    xpReward: 100,
+    thinkEthicallyHint: 'If an entire batch passes through cheating, what happens to public trust in the justice system they will administer tomorrow?',
+    ethicalConcepts: ['Academic Integrity', 'Moral Courage', 'Resisting Malpractice'],
+    legalConcepts: ['Public Examinations Act 2024', 'Criminal Conspiracy'],
+    skillsImproved: [{ name: 'Ethical Reasoning', percentage: 95, points: 40 }],
+    relatedKuralNumber: 656,
+    legalPerspective: {
+      title: 'Public Examinations (Prevention of Unfair Means) Act 2024',
+      statutes: ['Public Examinations Act 2024 Sections 3, 9, 10', 'BNS Section 61 (Conspiracy)'],
+      explanation: 'Organized paper leaks carry stringent penal sanctions under statutory law.',
+      precedentOrCode: 'Section 10 Public Examinations Act 2024',
+      isDisclaimerDemo: true
+    },
+    ethicalPerspective: {
+      title: 'Vinai Thooymai (Purity of Means)',
+      principles: ['Ozhukkam (Integrity)', 'Kallaamai (Non-Theft)'],
+      deepDive: 'Kural 656 dictates that even in extreme trial, one must never undertake actions condemned by wisdom.'
+    }
+  },
+  {
+    id: 'scen-5',
+    number: 5,
+    title: 'The Municipal Tender Speed-Money Demand (Corruption)',
+    description: 'A solar-energy startup has won a legitimate government procurement contract to install clean lighting in rural primary health centers. An assistant engineer demands a 5% "processing facilitation commission" before releasing the milestone payment.',
+    difficulty: 'Hard',
+    category: 'Corruption',
+    summary: 'Government engineer demands bribe before releasing startup milestone payment...',
+    question: 'What is the legally required and ethically sound path for the startup founder to pursue?',
+    options: [
+      {
+        id: 'A',
+        text: 'Pay the cash bribe disguised as "consulting fees" to protect the company\'s quarterly revenue.',
+        explanation: 'Paying bribes is a severe criminal offense under the Prevention of Corruption Act.'
+      },
+      {
+        id: 'B',
+        text: 'Refuse the bribe demand, document the interaction with dates and evidence, and lodge a formal complaint with the State Vigilance and Anti-Corruption Directorate / Lokayukta.',
+        explanation: 'Statutory compliance requires reporting bribe demands. Section 8 PCA protects individuals who report bribe demands within 7 days.'
+      },
+      {
+        id: 'C',
+        text: 'Subcontract the work to a shell company owned by the engineer\'s relative to bypass accounting audits.',
+        explanation: 'Engaging in illicit quid pro quo through third-party intermediaries constitutes money laundering.'
+      },
+      {
+        id: 'D',
+        text: 'Abandon the rural clinic project entirely without explaining why to the health department.',
+        explanation: 'Silently walking away harms public welfare without holding the corrupt official accountable.'
+      }
+    ],
+    correctOptionId: 'B',
+    xpReward: 150,
+    thinkEthicallyHint: 'Giving into "small facilitation bribes" systematically normalizes extortion and locks out ethical entrepreneurs.',
+    ethicalConcepts: ['Zero Tolerance to Bribery', 'Purity of Action', 'Civic Accountability'],
+    legalConcepts: ['Prevention of Corruption Act 1988', 'Lokayukta'],
+    skillsImproved: [{ name: 'Professional Ethics', percentage: 96, points: 50 }],
+    relatedKuralNumber: 651,
+    legalPerspective: {
+      title: 'Prevention of Corruption Act 1988 (Amended 2018)',
+      statutes: ['PC Act 1988 Section 7 & Section 8'],
+      explanation: 'Giving a bribe is an offense, but reporting coerced demands within 7 days protects the complainant.',
+      precedentOrCode: 'CBI Trap SOP Guidelines',
+      isDisclaimerDemo: true
+    },
+    ethicalPerspective: {
+      title: 'Vinai Thooymai & Good Governance',
+      principles: ['Purity of Conduct', 'Anti-Extortion'],
+      deepDive: 'Kural 651 teaches that clean execution of deeds guarantees permanent success.'
+    }
   }
 ];
 
@@ -162,7 +264,8 @@ export const scenarioService = {
   async getAllScenarios(lang: Language = 'en'): Promise<RetrievalResult<Scenario>> {
     try {
       const res = await fetch('/api/scenarios');
-      if (res.ok) {
+      const contentType = res.headers.get('content-type') || '';
+      if (res.ok && contentType.includes('application/json')) {
         const json = await res.json();
         if (json.success && Array.isArray(json.data) && json.data.length > 0) {
           const transformed: Scenario[] = json.data.map((item: any) => {
@@ -208,10 +311,10 @@ export const scenarioService = {
         }
       }
     } catch (err) {
-      console.warn('[scenarioService] Failed to load scenarios from API, using fallback:', err);
+      console.warn('[scenarioService] API request error, falling back to mock scenarios:', err);
     }
 
-    // Fallback if API returns empty array or fails
+    // Fallback guarantees data is NEVER empty
     const localizedFallback = MOCK_FALLBACK_SCENARIOS.map((s) => getLocalizedScenario(s, lang) as Scenario);
     return {
       data: localizedFallback,
@@ -224,7 +327,8 @@ export const scenarioService = {
   async getScenarioById(id: string, lang: Language = 'en'): Promise<Scenario | null> {
     try {
       const res = await fetch(`/api/scenarios/${id}`);
-      if (res.ok) {
+      const contentType = res.headers.get('content-type') || '';
+      if (res.ok && contentType.includes('application/json')) {
         const json = await res.json();
         if (json.success && json.data) {
           const item = json.data;
@@ -252,7 +356,7 @@ export const scenarioService = {
         }
       }
     } catch (err) {
-      console.warn('[scenarioService] Failed to fetch scenario:', err);
+      console.warn('[scenarioService] Failed to fetch scenario by id:', err);
     }
 
     const fallback = MOCK_FALLBACK_SCENARIOS.find((s) => s.id === id) || MOCK_FALLBACK_SCENARIOS[0];
@@ -277,7 +381,8 @@ export const scenarioService = {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ selectedOption })
       });
-      if (res.ok) {
+      const contentType = res.headers.get('content-type') || '';
+      if (res.ok && contentType.includes('application/json')) {
         return await res.json();
       }
     } catch (err) {
