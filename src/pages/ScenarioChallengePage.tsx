@@ -53,31 +53,46 @@ export const ScenarioChallengePage: React.FC = () => {
 
   // Load scenarios & current kural
   useEffect(() => {
+    let isMounted = true;
     const load = async () => {
       setIsLoading(true);
-      const res = await scenarioService.getAllScenarios(language);
-      setAllScenarios(res.data);
-      const active = res.data.find((s) => s.number === selectedScenarioNumber) || res.data[0];
-      setCurrentScenario(active);
+      try {
+        const res = await scenarioService.getAllScenarios(language);
+        if (!isMounted) return;
+        setAllScenarios(res.data);
+        const active = res.data.find((s) => s.number === selectedScenarioNumber) || res.data[0];
+        setCurrentScenario(active);
 
-      if (active) {
-        const k = await kuralService.getKuralByNumber(active.relatedKuralNumber);
-        setRelatedKural(k);
-      }
+        if (active) {
+          try {
+            const k = await kuralService.getKuralByNumber(active.relatedKuralNumber);
+            if (isMounted) setRelatedKural(k);
+          } catch (err) {
+            console.warn('[ScenarioChallengePage] Failed to fetch related kural:', err);
+          }
 
-      // Check if already solved
-      const savedAnswer = userProgress.scenarioAnswers[active?.id || ''];
-      if (savedAnswer) {
-        setSelectedOptionId(savedAnswer);
-        setIsSubmitted(true);
-      } else {
-        setSelectedOptionId(null);
-        setIsSubmitted(false);
-        setAiFeedback(null);
+          const savedAnswer = userProgress.scenarioAnswers[active?.id || ''];
+          if (savedAnswer) {
+            setSelectedOptionId(savedAnswer);
+            setIsSubmitted(true);
+          } else {
+            setSelectedOptionId(null);
+            setIsSubmitted(false);
+            setAiFeedback(null);
+          }
+        }
+      } catch (err) {
+        console.warn('[ScenarioChallengePage] Failed to load scenarios:', err);
+      } finally {
+        if (isMounted) {
+          setIsLoading(false);
+        }
       }
-      setIsLoading(false);
     };
     load();
+    return () => {
+      isMounted = false;
+    };
   }, [selectedScenarioNumber, language]);
 
   // Timer countdown
