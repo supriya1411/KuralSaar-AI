@@ -12,7 +12,11 @@
   }
 
   .font-tamil {
-    font-family: 'Mukta Malar', serif;
+    font-family: 'Mukta Malar', 'Noto Sans Tamil', serif;
+  }
+
+  .font-hindi {
+    font-family: 'Noto Sans Devanagari', 'Mukta', sans-serif;
   }
 
   .font-cinzel {
