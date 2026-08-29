@@ -1,7 +1,9 @@
 import React from 'react';
 import { Kural } from '../../types';
 import { ThiruvalluvarAvatar } from './ThiruvalluvarAvatar';
-import { X, BookOpen, Scale, Sparkles, Share2, Copy, Check } from 'lucide-react';
+import { useApp } from '../../context/AppContext';
+import { getLocalizedKural } from '../../i18n/kuralLocalizations';
+import { X, BookOpen, Scale, Sparkles, Copy, Check } from 'lucide-react';
 import { useState } from 'react';
 
 interface Props {
@@ -10,14 +12,17 @@ interface Props {
   onSelectScenario?: (scenarioId: string) => void;
 }
 
-export const KuralDetailModal: React.FC<Props> = ({ kural, onClose, onSelectScenario }) => {
+export const KuralDetailModal: React.FC<Props> = ({ kural: rawKural, onClose, onSelectScenario }) => {
   const [copied, setCopied] = useState(false);
+  const { language, t } = useApp();
 
-  if (!kural) return null;
+  if (!rawKural) return null;
+
+  const kural = getLocalizedKural(rawKural, language);
 
   const handleCopy = () => {
     navigator.clipboard.writeText(
-      `Thirukkural ${kural.number}:\n${kural.verseTamilFull}\n\n"${kural.verseEnglish}"\n\nExplanation: ${kural.explanationEnglish}\n\n- Justice AI (Learn Law. Live Ethics.)`
+      `Thirukkural ${kural.number}:\n${kural.verseTamilFull}\n\n"${kural.verseEnglish}"\n\nExplanation: ${kural.explanationEnglish}\n\n- KuralSaar AI`
     );
     setCopied(true);
     setTimeout(() => setCopied(false), 2000);
@@ -30,15 +35,15 @@ export const KuralDetailModal: React.FC<Props> = ({ kural, onClose, onSelectScen
         <div className="sticky top-0 z-10 flex items-center justify-between px-6 py-4 bg-white/95 backdrop-blur-md border-b border-slate-100">
           <div className="flex items-center gap-3">
             <span className="flex items-center justify-center px-3 py-1 text-xs font-bold text-indigo-700 bg-indigo-50 border border-indigo-200/60 rounded-full">
-              Kural #{kural.number}
+              {t('kuralNumFormat').replace('{number}', kural.number.toString())}
             </span>
             <span className="text-xs font-semibold text-slate-500">
-              {kural.paal} ({kural.paalTamil}) • {kural.adhigaram}
+              {kural.paalTamil || kural.paal} • {kural.adhigaram}
             </span>
           </div>
           <button
             onClick={onClose}
-            className="p-1.5 text-slate-400 hover:text-slate-700 hover:bg-slate-100 rounded-lg transition-colors"
+            className="p-1.5 text-slate-400 hover:text-slate-700 hover:bg-slate-100 rounded-lg transition-colors cursor-pointer"
           >
             <X className="w-5 h-5" />
           </button>
@@ -73,10 +78,10 @@ export const KuralDetailModal: React.FC<Props> = ({ kural, onClose, onSelectScen
                 "{kural.transliteration}"
               </p>
 
-              {/* English Translation */}
+              {/* Translation in active language */}
               <div className="pt-2 border-t border-slate-700/60">
                 <p className="text-sm font-medium leading-relaxed text-slate-100">
-                  "{kural.verseEnglish}"
+                  "{language === 'ta' ? (kural.explanationTamil || kural.verseEnglish) : kural.verseEnglish}"
                 </p>
               </div>
             </div>
@@ -87,7 +92,7 @@ export const KuralDetailModal: React.FC<Props> = ({ kural, onClose, onSelectScen
             <div className="p-4 bg-slate-50 border border-slate-200/80 rounded-xl space-y-1.5">
               <div className="flex items-center gap-2 text-xs font-bold text-slate-600 uppercase tracking-wider">
                 <BookOpen className="w-3.5 h-3.5 text-indigo-600" />
-                Tamil Explanation (மு. வரதராசனார் உரை)
+                {language === 'ta' ? 'மு. வரதராசனார் உரை' : language === 'hi' ? 'शास्त्रीय तमिल व्याख्या' : 'Tamil Canonical Meaning'}
               </div>
               <p className="text-sm text-slate-700 font-tamil leading-relaxed">
                 {kural.explanationTamil}
@@ -97,10 +102,14 @@ export const KuralDetailModal: React.FC<Props> = ({ kural, onClose, onSelectScen
             <div className="p-4 bg-slate-50 border border-slate-200/80 rounded-xl space-y-1.5">
               <div className="flex items-center gap-2 text-xs font-bold text-slate-600 uppercase tracking-wider">
                 <BookOpen className="w-3.5 h-3.5 text-indigo-600" />
-                English Jurisprudential Meaning
+                {language === 'hi' ? 'नैतिक व विधिक अर्थ' : language === 'ta' ? 'அறநெறி & நீதித்துறை விளக்கம்' : 'Jurisprudential Meaning'}
               </div>
               <p className="text-sm text-slate-700 leading-relaxed">
-                {kural.explanationEnglish}
+                {language === 'hi'
+                  ? (kural.explanationEnglish || kural.verseEnglish)
+                  : language === 'ta'
+                  ? (kural.explanationTamil || kural.explanationEnglish)
+                  : kural.explanationEnglish}
               </p>
             </div>
           </div>
@@ -109,9 +118,9 @@ export const KuralDetailModal: React.FC<Props> = ({ kural, onClose, onSelectScen
           <div className="p-4 bg-purple-50/60 border border-purple-200/60 rounded-xl space-y-2">
             <div className="flex items-center gap-2 text-xs font-bold text-purple-900 uppercase tracking-wider">
               <Scale className="w-4 h-4 text-purple-600" />
-              Application to Modern Indian Law & Jurisprudence
+              {t('whyThisStatute')}
             </div>
-            <p className="text-sm text-purple-950 leading-relaxed">
+            <p className="text-sm text-purple-950 leading-relaxed font-medium">
               {kural.modernRelevance}
             </p>
             <div className="flex flex-wrap gap-2 pt-2">
@@ -128,7 +137,7 @@ export const KuralDetailModal: React.FC<Props> = ({ kural, onClose, onSelectScen
 
           {/* Keywords / Tags */}
           <div className="flex flex-wrap items-center gap-2 pt-1">
-            <span className="text-xs font-semibold text-slate-400">Ethical Tags:</span>
+            <span className="text-xs font-semibold text-slate-400">{t('filterNodes')}</span>
             {kural.keywords.map((kw, i) => (
               <span key={i} className="px-2 py-0.5 text-xs bg-slate-100 text-slate-600 rounded-md">
                 #{kw}
@@ -141,10 +150,12 @@ export const KuralDetailModal: React.FC<Props> = ({ kural, onClose, onSelectScen
         <div className="sticky bottom-0 z-10 flex items-center justify-between px-6 py-4 bg-slate-50 border-t border-slate-200/80">
           <button
             onClick={handleCopy}
-            className="inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-semibold text-slate-700 bg-white border border-slate-300 rounded-lg hover:bg-slate-100 transition-colors"
+            className="inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-semibold text-slate-700 bg-white border border-slate-300 rounded-lg hover:bg-slate-100 transition-colors cursor-pointer"
           >
             {copied ? <Check className="w-3.5 h-3.5 text-emerald-600" /> : <Copy className="w-3.5 h-3.5" />}
-            {copied ? 'Copied Verse!' : 'Copy Kural'}
+            {copied
+              ? (language === 'hi' ? 'कॉपी हो गया!' : language === 'ta' ? 'நகலெடுக்கப்பட்டது!' : 'Copied Verse!')
+              : (language === 'hi' ? 'कुरल कॉपी करें' : language === 'ta' ? 'குறளை நகலெடு' : 'Copy Kural')}
           </button>
 
           <div className="flex items-center gap-3">
@@ -154,16 +165,16 @@ export const KuralDetailModal: React.FC<Props> = ({ kural, onClose, onSelectScen
                   onSelectScenario(kural.relatedScenarioIds[0]);
                   onClose();
                 }}
-                className="px-4 py-2 text-xs font-bold text-white bg-indigo-600 hover:bg-indigo-700 rounded-lg shadow-sm transition-colors"
+                className="px-4 py-2 text-xs font-bold text-white bg-indigo-600 hover:bg-indigo-700 rounded-lg shadow-xs transition-colors cursor-pointer"
               >
-                Try Related Scenario →
+                {t('scenarioChallenge')} →
               </button>
             )}
             <button
               onClick={onClose}
-              className="px-4 py-2 text-xs font-semibold text-slate-600 hover:text-slate-900 transition-colors"
+              className="px-4 py-2 text-xs font-semibold text-slate-600 hover:text-slate-900 transition-colors cursor-pointer"
             >
-              Close
+              {language === 'hi' ? 'बंद करें' : language === 'ta' ? 'மூடுக' : 'Close'}
             </button>
           </div>
         </div>

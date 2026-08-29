@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useApp } from '../context/AppContext';
 import { Kural } from '../types';
 import { kuralService } from '../services/kuralService';
+import { getLocalizedKural } from '../i18n/kuralLocalizations';
 import {
   Search,
   BookOpen,
@@ -56,6 +57,8 @@ export const KuralQuestPage: React.FC = () => {
 
     fetchKurals();
   }, [searchGlobalQuery, selectedPaal, selectedConcept]);
+
+  const localizedKurals = kurals.map((k) => getLocalizedKural(k, language));
 
   return (
     <div className="space-y-6 animate-in fade-in duration-200 pb-12">
@@ -167,7 +170,7 @@ export const KuralQuestPage: React.FC = () => {
         </div>
 
         <div className="text-xs text-slate-500 font-bold px-2">
-          {t('kuralsCountTag').replace('{count}', kurals.length.toString())}
+          {t('kuralsCountTag').replace('{count}', localizedKurals.length.toString())}
         </div>
       </div>
 
@@ -176,7 +179,7 @@ export const KuralQuestPage: React.FC = () => {
         <div className="flex justify-center p-12">
           <div className="w-8 h-8 border-3 border-blue-600 border-t-transparent rounded-full animate-spin" />
         </div>
-      ) : kurals.length === 0 ? (
+      ) : localizedKurals.length === 0 ? (
         <div className="p-12 text-center bg-white rounded-2xl border border-slate-200 space-y-3 shadow-2xs">
           <BookOpen className="w-12 h-12 text-slate-400 mx-auto" />
           <h3 className="text-base font-bold text-slate-800">{t('searchPlaceholder')}</h3>
@@ -193,25 +196,25 @@ export const KuralQuestPage: React.FC = () => {
         </div>
       ) : (
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          {kurals.map((kural) => (
+          {localizedKurals.map((kural) => (
             <div
               key={kural.id}
               className="group p-6 bg-white rounded-2xl border border-slate-200 shadow-2xs hover:border-blue-400 transition-all flex flex-col justify-between space-y-5"
             >
               <div className="space-y-3">
                 {/* Meta Header */}
-                <div className="flex items-center justify-between">
-                  <div className="flex items-center gap-2">
+                <div className="flex items-center justify-between gap-2">
+                  <div className="flex items-center gap-2 flex-wrap">
                     <span className="px-3 py-1 text-xs font-black text-blue-900 bg-blue-50 rounded-full border border-blue-200">
-                      Kural #{kural.number}
+                      {t('kuralNumFormat').replace('{number}', kural.number.toString())}
                     </span>
                     <span className="text-[11px] font-extrabold text-slate-500 uppercase tracking-wider">
-                      {language === 'ta' ? (kural.paalTamil || kural.paal) : kural.paal} • {language === 'ta' ? (kural.adhigaramTamil || kural.adhigaram) : kural.adhigaram}
+                      {kural.paalTamil || kural.paal} • {kural.adhigaram}
                     </span>
                   </div>
 
-                  <span className="px-2.5 py-0.5 text-xs font-extrabold text-amber-900 bg-amber-100/90 rounded-md border border-amber-300/60">
-                    {language === 'ta' ? (kural.ethicalConceptTamil || kural.ethicalConcept) : kural.ethicalConcept}
+                  <span className="px-2.5 py-0.5 text-xs font-extrabold text-amber-900 bg-amber-100/90 rounded-md border border-amber-300/60 shrink-0">
+                    {kural.ethicalConcept}
                   </span>
                 </div>
 
@@ -233,14 +236,19 @@ export const KuralQuestPage: React.FC = () => {
                   <p className="text-sm font-semibold text-slate-800 leading-relaxed">
                     "{language === 'ta' ? (kural.explanationTamil || kural.verseEnglish) : kural.verseEnglish}"
                   </p>
-                  {language !== 'ta' && kural.explanationEnglish && (
+                  {language === 'en' && kural.explanationEnglish && (
                     <p className="text-xs text-slate-600 leading-relaxed">
-                      <strong>{t('ethicalMeaning')}</strong> {kural.explanationEnglish}
+                      <strong>{t('ethicalMeaning')}:</strong> {kural.explanationEnglish}
+                    </p>
+                  )}
+                  {language === 'hi' && kural.explanationEnglish && (
+                    <p className="text-xs text-slate-600 leading-relaxed font-hindi">
+                      <strong>{t('ethicalMeaning')}:</strong> {kural.explanationEnglish}
                     </p>
                   )}
                   {language === 'ta' && kural.explanationTamil && (
-                    <p className="text-xs text-slate-600 leading-relaxed">
-                      <strong>{t('ethicalMeaning')}</strong> {kural.explanationTamil}
+                    <p className="text-xs text-slate-600 leading-relaxed font-tamil">
+                      <strong>{t('ethicalMeaning')}:</strong> {kural.explanationTamil}
                     </p>
                   )}
                 </div>
@@ -248,7 +256,7 @@ export const KuralQuestPage: React.FC = () => {
                 {/* Chapter Context */}
                 <div className="text-xs text-slate-500 font-medium">
                   <strong className="text-slate-800">{t('chapter')}:</strong>{' '}
-                  {language === 'ta' ? kural.adhigaramTamil || kural.adhigaram : kural.adhigaram}
+                  <span>{kural.adhigaram}</span>
                 </div>
 
                 {/* Legal Intersection preview */}
@@ -274,7 +282,7 @@ export const KuralQuestPage: React.FC = () => {
                 {kural.relatedScenarioIds.length > 0 ? (
                   <button
                     onClick={() => {
-                      const scenNum = parseInt(kural.relatedScenarioIds[0].replace('scenario-', ''), 10) || 3;
+                      const scenNum = parseInt(kural.relatedScenarioIds[0].replace('scenario-', '').replace('scen-', ''), 10) || 3;
                       setSelectedScenarioNumber(scenNum);
                       setActiveTab('scenario-challenge');
                     }}

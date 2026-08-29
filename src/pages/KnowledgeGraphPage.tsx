@@ -16,6 +16,8 @@ import {
   Compass,
   FileText,
 } from 'lucide-react';
+import { CHAPTER_NAMES_LOCALIZED, ETHICAL_CONCEPT_LOCALIZED } from '../i18n/kuralLocalizations';
+import { SCENARIO_TRANSLATIONS } from '../i18n/scenarioLocalizations';
 
 interface GuidedPathway {
   id: string;
@@ -287,11 +289,11 @@ export const KnowledgeGraphPage: React.FC = () => {
                       {t('step1Tag')}
                     </span>
                     <span className="text-xs font-extrabold text-emerald-800">
-                      Kural #{activePathway.steps.kuralNumber}
+                      {t('kuralNumFormat').replace('{number}', activePathway.steps.kuralNumber.toString())}
                     </span>
                   </div>
                   <h4 className="text-xs font-bold text-slate-950 font-heading">
-                    {activePathway.steps.kuralTitle}
+                    {CHAPTER_NAMES_LOCALIZED[language]?.[activePathway.steps.kuralTitle] || activePathway.steps.kuralTitle}
                   </h4>
                   <p className="text-xs font-tamil text-emerald-950 font-bold leading-relaxed italic bg-white/80 p-2.5 rounded-lg border border-emerald-200">
                     "{activePathway.steps.tamilVerse}"
@@ -326,7 +328,7 @@ export const KnowledgeGraphPage: React.FC = () => {
                     <Sparkles className="w-3.5 h-3.5 text-indigo-600" />
                   </div>
                   <h4 className="text-xs font-bold text-slate-950 font-heading">
-                    {activePathway.steps.ethicalPrinciple}
+                    {ETHICAL_CONCEPT_LOCALIZED[language]?.[activePathway.steps.ethicalPrinciple] || activePathway.steps.ethicalPrinciple}
                   </h4>
                   <p className="text-xs text-slate-600 leading-relaxed font-medium bg-white/80 p-2.5 rounded-lg border border-indigo-200">
                     {language === 'ta'
@@ -404,7 +406,7 @@ export const KnowledgeGraphPage: React.FC = () => {
                     <FileText className="w-3.5 h-3.5 text-amber-700" />
                   </div>
                   <h4 className="text-xs font-bold text-slate-950 font-heading">
-                    Scenario #{activePathway.steps.scenarioNumber}: {activePathway.steps.scenarioTitle}
+                    {t('scenarioNum').replace('{current}', activePathway.steps.scenarioNumber.toString()).replace(' of {total}', '').replace(' / {total}', '')}: {SCENARIO_TRANSLATIONS[language]?.[`scen-${activePathway.steps.scenarioNumber}`]?.title || activePathway.steps.scenarioTitle}
                   </h4>
                   <p className="text-xs text-slate-600 leading-relaxed font-medium bg-white/80 p-2.5 rounded-lg border border-amber-200">
                     {language === 'ta'
