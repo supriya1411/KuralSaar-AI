@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useApp } from '../context/AppContext';
 import { Badge } from '../types';
 import { progressService } from '../services/progressService';
+import { getLocalizedBadgeList, getLocalizedBadge } from '../i18n/badgeLocalizations';
 import {
   Gift,
   Award,
@@ -9,7 +10,7 @@ import {
 } from 'lucide-react';
 
 export const RewardsPage: React.FC = () => {
-  const { setUnlockedBadgeToCelebrate, t } = useApp();
+  const { setUnlockedBadgeToCelebrate, language, t } = useApp();
   const [badges, setBadges] = useState<Badge[]>([]);
 
   useEffect(() => {
@@ -20,7 +21,8 @@ export const RewardsPage: React.FC = () => {
     load();
   }, []);
 
-  const unlockedCount = badges.filter((b) => b.unlocked).length;
+  const localizedBadges = getLocalizedBadgeList(badges, language);
+  const unlockedCount = localizedBadges.filter((b) => b.unlocked).length;
 
   return (
     <div className="space-y-8 max-w-5xl mx-auto animate-in fade-in duration-200 pb-12">
@@ -42,7 +44,7 @@ export const RewardsPage: React.FC = () => {
         <div className="p-4 bg-slate-50 rounded-xl border border-slate-200 text-center shrink-0 min-w-[180px]">
           <span className="text-xs font-bold text-slate-500 block">{t('unlockedBadges')}</span>
           <h3 className="text-2xl font-black text-amber-600 mt-1">
-            {unlockedCount} / {badges.length}
+            {unlockedCount} / {localizedBadges.length}
           </h3>
           <span className="text-[10px] text-slate-500 font-bold uppercase tracking-wider">{t('allBadges')}</span>
         </div>
@@ -50,7 +52,7 @@ export const RewardsPage: React.FC = () => {
 
       {/* Badges Grid */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-        {badges.map((badge) => {
+        {localizedBadges.map((badge) => {
           return (
             <div
               key={badge.id}
@@ -94,17 +96,17 @@ export const RewardsPage: React.FC = () => {
                 </div>
 
                 <div>
-                  <h3 className="text-base font-extrabold text-[#071B3A] font-heading">
+                  <h3 className="text-base font-extrabold text-[#071B3A] font-heading font-tamil">
                     {badge.title}
                   </h3>
-                  <p className="text-xs text-slate-600 mt-1 leading-relaxed font-medium">
+                  <p className="text-xs text-slate-600 mt-1 leading-relaxed font-medium font-tamil">
                     {badge.description}
                   </p>
                 </div>
               </div>
 
-              <div className="pt-3 border-t border-slate-100 text-[11px] font-bold text-slate-400">
-                {badge.unlocked ? '🏆 Achievement Unlocked' : '🔒 Locked Challenge'}
+              <div className="pt-3 border-t border-slate-100 text-[11px] font-bold text-slate-500 font-tamil">
+                {badge.unlocked ? `🏆 ${t('achievementUnlocked')}` : `🔒 ${t('lockedChallenge')}`}
               </div>
             </div>
           );

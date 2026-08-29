@@ -22,7 +22,7 @@ export default defineConfig(() => {
       },
       hmr: isHmrDisabled ? false : undefined,
       watch: isHmrDisabled ? null : {
-        ignored: ['**/.data/**']
+        ignored: ['**/.data/**', '**/.system_generated/**', '**/dist/**', '**/node_modules/**', '**/.git/**']
       },
     },
   };

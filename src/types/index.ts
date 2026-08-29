@@ -27,10 +27,10 @@ export interface Kural {
 export interface ScenarioOption {
   id: 'A' | 'B' | 'C' | 'D';
   text: string;
-  isCorrect: boolean;
+  isCorrect?: boolean;
   explanation: string;
-  ethicalFeedback: string;
-  legalFeedback: string;
+  ethicalFeedback?: string;
+  legalFeedback?: string;
 }
 
 export interface Scenario {

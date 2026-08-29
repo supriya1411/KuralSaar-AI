@@ -5,6 +5,7 @@ import { scenarioService } from '../services/scenarioService';
 import { kuralService } from '../services/kuralService';
 import { HowAiReasonedModal } from '../components/common/HowAiReasonedModal';
 import { WhyKuralModal } from '../components/common/WhyKuralModal';
+import { ThiruvalluvarAvatar } from '../components/common/ThiruvalluvarAvatar';
 import {
   Clock,
   CheckCircle2,
