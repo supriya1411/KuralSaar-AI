@@ -1,7 +1,7 @@
 import { GoogleGenAI, Type } from '@google/genai';
 import { RetrievalService } from './retrievalService';
 import { LEGAL_DISCLAIMER_TEXT } from '../data/legalDataset';
-import { Phase3AiResponse, RetrievedKuralMatch } from '../types';
+import { Phase3AiResponse } from '../types';
 
 let geminiClient: GoogleGenAI | null = null;
 
@@ -38,7 +38,7 @@ export class GeminiTutorService {
     return GeminiTutorService.instance;
   }
 
-  public async queryTutor(userPrompt: string): Promise<Phase3AiResponse> {
+  public async queryTutor(userPrompt: string, lang: 'en' | 'ta' | 'hi' = 'en'): Promise<Phase3AiResponse> {
     // 1. Run full 8-step RAG retrieval
     const retrieval = this.retrievalService.retrieveContext(userPrompt, {
       limitKurals: 3,
@@ -50,15 +50,23 @@ export class GeminiTutorService {
 
     let structuredOutput: Partial<Phase3AiResponse> | null = null;
 
+    const languageInstruction = lang === 'ta'
+      ? 'CRITICAL MANDATE: You MUST write your entire JSON response in TAMIL (தமிழ் மொழி). All explanations, ethical perspectives, legal rules, recommendations, and key takeaways must be fully articulated in clear, natural Tamil (தமிழ்).'
+      : lang === 'hi'
+      ? 'CRITICAL MANDATE: You MUST write your entire JSON response in HINDI (हिंदी भाषा). All explanations, ethical perspectives, legal rules, recommendations, and key takeaways must be fully articulated in clear Hindi (हिंदी).'
+      : 'Write your response in clear English.';
+
     if (ai) {
       try {
         const systemInstruction = `You are "Justice AI Legal-Ethics Tutor", an authoritative educational mentor connecting classical Tamil ethical philosophy (Thirukkural) with modern Indian statutory jurisprudence.
+
+${languageInstruction}
 
 CRITICAL DIRECTIVES:
 1. Ground your reasoning strictly on the provided RETRIEVED GROUNDING CONTEXT (Kurals, legal statutes, knowledge graph).
 2. Prefer retrieved evidence over unsupported general knowledge.
 3. NEVER fabricate Kural numbers, verse lines, or legal section citations. Use only retrieved ones or state they are unavailable.
-4. Clearly distinguish Ethical Guidance (Aram / Dharma) from Statutory Legal Provisions (BNS, IT Act, Advocates Act, Constitution).
+4. Clearly distinguish Ethical Guidance (Aram / Duty) from Statutory Legal Provisions (BNS, IT Act, Advocates Act, Constitution).
 5. Explain legal and ethical concepts in simple, accessible language suitable for civic learners and law students.
 6. Admit when retrieved evidence is insufficient: if no exact matching Kural or statute exists, state "No sufficiently relevant Kural/Statute was retrieved."
 7. DO NOT provide personalized legal advice, represent yourself as a lawyer or judge, or make definitive legal adjudications.
@@ -70,7 +78,7 @@ CRITICAL DIRECTIVES:
 RETRIEVED GROUNDING CONTEXT:
 ${retrieval.ragPromptContext}
 
-Please synthesize a grounded legal-ethics response in JSON.`;
+Please synthesize a grounded legal-ethics response in JSON (${lang.toUpperCase()} language).`;
 
         const response = await ai.models.generateContent({
           model: 'gemini-3.6-flash',
@@ -132,16 +140,16 @@ Please synthesize a grounded legal-ethics response in JSON.`;
         if (response.text) {
           try {
             structuredOutput = JSON.parse(response.text.trim());
-            console.log('[GeminiTutorService] Live Gemini API call succeeded (Model: gemini-3.6-flash)');
+            console.log(`[GeminiTutorService] Live Gemini API call succeeded (Language: ${lang})`);
             if (retrieval.traces && retrieval.traces[7]) {
-              retrieval.traces[7].details = 'Live Gemini generation succeeded using model gemini-3.6-flash (usedFallback: false).';
+              retrieval.traces[7].details = `Live Gemini generation succeeded in ${lang.toUpperCase()} language.`;
             }
           } catch {
             structuredOutput = null;
           }
         }
       } catch (err) {
-        console.warn('[GeminiTutorService] Gemini API call fallback to deterministic synthesis:', err);
+        console.warn('[GeminiTutorService] Gemini API call fallback:', err);
       }
     }
 
@@ -151,27 +159,52 @@ Please synthesize a grounded legal-ethics response in JSON.`;
       const topLegal = retrieval.legalKnowledge[0];
       const conceptList = retrieval.detectedConcepts.map((c) => c.name);
 
-      const hasRevenge = retrieval.normalizedQuery.toLowerCase().includes('revenge') ||
-        retrieval.normalizedQuery.toLowerCase().includes('insult');
-
-      structuredOutput = {
-        situationUnderstanding: hasRevenge
-          ? `You have encountered an insult or provocation, creating an emotional urge to retaliate or seek retribution. The conflict tests personal composure and legal boundaries.`
-          : `Your inquiry explores the intersection of moral accountability and statutory compliance regarding "${retrieval.normalizedQuery}".`,
-        detectedConcepts: conceptList.length > 0 ? conceptList : ['Aram (Virtue)', 'Impartiality', 'Self-Control'],
-        ethicalPerspective: topKural
-          ? `In Thirukkural's Chapter on ${topKural.chapter} (${topKural.paal}), Valluvar establishes that retaliatory harm degrades the actor more than the instigator. Kural ${topKural.kuralNumber} explicitly teaches: "${topKural.englishVerse}". By practicing patience and refusing to strike back in anger, one preserves moral dignity and prevents compounding harm.`
-          : `Classical Tamil jurisprudence holds that Aram (Virtue) demands emotional mastery and non-injury. Returning hostility with hostility escalates personal ruin.`,
-        legalEducationalPerspective: topLegal
-          ? `Under Indian law (${topLegal.statute}), actions driven by retaliation or revenge carry strict penal liabilities. While the Right of Private Defence (BNS Sections 34-44) allows reasonable, proportional protection against imminent physical threats, it strictly prohibits retaliatory force once danger has passed. Furthermore, verbal insults cannot justify physical battery or criminal intimidation.`
-          : `Under the Indian Legal Framework, all citizens are governed by the Rule of Law. Retaliation outside legal channels constitutes an unlawful breach of peace.`,
-        whyKuralIsRelevant: topKural
-          ? topKural.whyRelevant
-          : `Teaches the fundamental duty of restraint when facing provocation.`,
-        responsibleAction: `1. Pause and de-escalate immediately: Avoid replying or reacting in the heat of anger.\n2. Document facts objectively if harassment or defamation occurred.\n3. Utilize institutional grievance or legal remedies rather than personal retribution.`,
-        modernApplication: `In workplace environments and digital platforms, insults frequently trigger flame wars or workplace disputes. Responding with composure and utilizing formal mediation protects reputation and avoids disciplinary or legal liability.`,
-        keyTakeaway: `Patience and proportional restraint disarm hostility; seeking revenge binds you to the wrongdoer's level while virtue elevates you above it.`
-      };
+      if (lang === 'ta') {
+        structuredOutput = {
+          situationUnderstanding: `உங்கள் கேள்வி தமிழ் அறநெறி (திருக்குறள்) மற்றும் இந்திய சட்டப் பின்னணி குறித்த ஆய்வு ஆகும்: "${retrieval.normalizedQuery}".`,
+          detectedConcepts: conceptList.length > 0 ? conceptList : ['அறம் (Virtue)', 'நடுவுநிலைமை', 'சுயகட்டுப்பாடு'],
+          ethicalPerspective: topKural
+            ? `திருக்குறளில் ${topKural.chapter} அதிகாரத்தில், வள்ளுவர் கூறுவது: "${topKural.tamilVerse}". நடுவுநிலைமையுடன் செயல்படுவது மனிதனின் உயர்ந்த அறநெறிப் பண்பாகும்.`
+            : `தமிழ் அறநெறி தத்துவத்தின்படி, அறம் என்பது நடுவுநிலைமையையும் நேர்மையையும் பேணுவது ஆகும்.`,
+          legalEducationalPerspective: topLegal
+            ? `இந்திய சட்டத்தின் கீழ் (${topLegal.statute}), அனைத்து குடிமக்களுக்கும் சட்டத்தின் முன் சமத்துவமும் (அரசியலமைப்பு பிரிவு 14) நடைமுறை நீதியும் உறுதி செய்யப்படுகின்றன.`
+            : `இந்திய சட்டக் கட்டமைப்பின் கீழ், தன்னிச்சையான நடவடிக்கைகளைத் தடுக்க சட்டத்தின் ஆட்சி நடைமுறைப்படுத்தப்படுகிறது.`,
+          whyKuralIsRelevant: topKural ? `குறள் ${topKural.kuralNumber} இந்த அறநெறி கடமையை வலியுறுத்துகிறது.` : `அறநெறி கடமையை வலியுறுத்துகிறது.`,
+          responsibleAction: `1. அமைதியுடன் சூழலை ஆராயுங்கள்.\n2. தன்னிச்சையான முடிவுகளைத் தவிர்த்து சட்ட வழிகளைப் பின்பற்றுங்கள்.\n3. நேர்மையையும் அறத்தையும் பேணுங்கள்.`,
+          modernApplication: `நவீன நிறுவனங்கள் மற்றும் சமுதாய வாழ்க்கையில் நேர்மையும் நடுவுநிலைமையும் சட்டப் பாதுகாப்பையும் நன்மதிப்பையும் அளிக்கின்றன.`,
+          keyTakeaway: `அறமும் நீதியும் இணைந்த வழியே உண்மையான வெற்றியைத் தரும்.`
+        };
+      } else if (lang === 'hi') {
+        structuredOutput = {
+          situationUnderstanding: `आपका प्रश्न तिरुक्कुरल नीतिशास्त्र और भारतीय कानूनी संदर्भ पर आधारित है: "${retrieval.normalizedQuery}".`,
+          detectedConcepts: conceptList.length > 0 ? conceptList : ['धर्म (Virtue)', 'निष्पक्षता', 'आत्म-नियंत्रण'],
+          ethicalPerspective: topKural
+            ? `तिरुक्कुरल के अध्याय ${topKural.chapter} में, वल्लुवर सिखाते हैं कि निष्पक्षता ही सच्चा धर्म है। कुरल ${topKural.kuralNumber} आचरण की पवित्रता पर जोर देता है।`
+            : `शास्त्रीय भारतीय दर्शन के अनुसार, धर्म हमें निष्पक्ष और सत्यवादी बनने का मार्गदर्शन करता है।`,
+          legalEducationalPerspective: topLegal
+            ? `भारतीय कानून (${topLegal.statute}) के तहत, कानून के समक्ष समानता (अनुच्छेद 14) और उचित प्रक्रिया की गारंटी दी गई है।`
+            : `भारतीय कानूनी ढांचे के तहत कानून का शासन सर्वोपरि है।`,
+          whyKuralIsRelevant: topKural ? `कुरल ${topKural.kuralNumber} इस नैतिक कर्तव्य का बोध कराता है।` : `नैतिक कर्तव्य का बोध कराता है।`,
+          responsibleAction: `1. धैर्यपूर्वक स्थिति का विश्लेषण करें।\n2. मनमानी कार्रवाई के बजाय कानूनी और नैतिक प्रक्रियाओं का पालन करें।`,
+          modernApplication: `आधुनिक जीवन और व्यावसायिक क्षेत्र में सत्यनिष्ठा और निष्पक्षता कानूनी सुरक्षा प्रदान करती है।`,
+          keyTakeaway: `सत्य और धर्म ही न्याय का वास्तविक आधार हैं।`
+        };
+      } else {
+        structuredOutput = {
+          situationUnderstanding: `Your inquiry explores the intersection of moral accountability and statutory compliance regarding "${retrieval.normalizedQuery}".`,
+          detectedConcepts: conceptList.length > 0 ? conceptList : ['Aram (Virtue)', 'Impartiality', 'Self-Control'],
+          ethicalPerspective: topKural
+            ? `In Thirukkural's Chapter on ${topKural.chapter} (${topKural.paal}), Valluvar establishes that Kural ${topKural.kuralNumber} explicitly teaches: "${topKural.englishVerse}".`
+            : `Classical Tamil jurisprudence holds that Aram (Virtue) demands emotional mastery and non-injury.`,
+          legalEducationalPerspective: topLegal
+            ? `Under Indian law (${topLegal.statute}), all citizens are entitled to equal protection under the law and due process.`
+            : `Under the Indian Legal Framework, all citizens are governed by the Rule of Law.`,
+          whyKuralIsRelevant: topKural ? topKural.whyRelevant : `Teaches the fundamental duty of restraint.`,
+          responsibleAction: `1. Pause and evaluate objectively.\n2. Utilize statutory legal remedies and ethical channels.`,
+          modernApplication: `Responding with composure and utilizing formal mediation protects reputation and avoids legal liability.`,
+          keyTakeaway: `Patience and proportional restraint disarm hostility; virtue elevates you above conflict.`
+        };
+      }
     }
 
     const responseId = `ai-resp-${Date.now()}-${Math.random().toString(36).substring(2, 7)}`;

@@ -63,17 +63,19 @@ router.post('/context', (req: Request, res: Response): void => {
 
 /**
  * POST /api/ai-tutor/query
- * Body: { prompt?: string, query?: string, message?: string }
+ * Body: { prompt?: string, query?: string, message?: string, lang?: string, language?: string }
  */
 router.post('/ai-tutor/query', async (req: Request, res: Response): Promise<void> => {
   try {
     const rawPrompt = req.body.prompt || req.body.query || req.body.message || req.body.input;
+    const lang = (req.body.lang || req.body.language || 'en') as 'en' | 'ta' | 'hi';
+
     if (!rawPrompt || typeof rawPrompt !== 'string' || !rawPrompt.trim()) {
       res.status(400).json({ success: false, error: 'User prompt is required.' });
       return;
     }
 
-    const response = await tutorService.queryTutor(rawPrompt.trim());
+    const response = await tutorService.queryTutor(rawPrompt.trim(), lang);
     res.json({
       success: true,
       data: response
@@ -86,13 +88,13 @@ router.post('/ai-tutor/query', async (req: Request, res: Response): Promise<void
 
 /**
  * POST /api/research-demo/run
- * Body: { query?: string }
- * Returns comprehensive pipeline inspection payload
+ * Body: { query?: string, lang?: string }
  */
 router.post('/research-demo/run', async (req: Request, res: Response): Promise<void> => {
   try {
     const query = req.body.query || 'Someone insulted me and I want revenge. What should I do?';
-    const tutorResponse = await tutorService.queryTutor(query);
+    const lang = (req.body.lang || req.body.language || 'en') as 'en' | 'ta' | 'hi';
+    const tutorResponse = await tutorService.queryTutor(query, lang);
     const retrievalContext = retrievalService.retrieveContext(query);
 
     res.json({

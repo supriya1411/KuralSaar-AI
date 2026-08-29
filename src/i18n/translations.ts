@@ -217,6 +217,24 @@ export const TRANSLATIONS: Record<Language, Record<string, string>> = {
     openKuralModalBtn: 'Open Kural #{num} Detail Modal →',
     askAiAboutStep: 'Ask AI Tutor About This Step',
 
+    // Step AI Tutor Modal Labels
+    aiTutorTitle: 'AI Legal & Ethical Tutor',
+    aiTutorSub: 'Ask any question or click a suggested inquiry below to analyze {topic} grounded in Indian Law and Thirukkural.',
+    suggestedInquiries: 'Suggested Inquiries for this topic:',
+    quickPrompts: 'Quick Prompts:',
+    askFollowUpPlaceholder: 'Ask follow-up questions about this ethical principle or legal rule...',
+    askAiBtn: 'Ask AI',
+    groundedDualCorpus: 'Grounded Dual-Corpus Response',
+    copyAnalysis: 'Copy Analysis',
+    copied: 'Copied',
+    situationUnderstanding: 'Situation Understanding',
+    ethicalVirtuesAram: 'Ethical Virtues (Aram)',
+    statutoryLegalRules: 'Statutory Legal Rules',
+    groundedThirukkuralCouplets: 'Grounded Thirukkural Couplets',
+    responsibleActionRec: 'Responsible Action & Recommendation',
+    keyTakeawayLabel: 'Key Takeaway',
+    reasoningOverLaw: 'AI Tutor is reasoning over Indian Law & Thirukkural...',
+
     // Pathways
     pathJusticeTitle: 'Impartiality & Natural Justice',
     pathJusticeDesc: 'How ancient Tamil impartiality rules mirror Article 21 and the Principles of Natural Justice.',
@@ -469,6 +487,24 @@ export const TRANSLATIONS: Record<Language, Record<string, string>> = {
     openKuralModalBtn: 'குறள் #{num} விவரங்களைப் பார்க்க →',
     askAiAboutStep: 'இந்த படி பற்றி AI ஆசிரியரிடம் கேட்க',
 
+    // Step AI Tutor Modal Labels in Tamil
+    aiTutorTitle: 'AI சட்ட-அறவியல் ஆசிரியர்',
+    aiTutorSub: 'இந்திய சட்டம் மற்றும் திருக்குறள் அடிப்படையில் {topic} பற்றிய கேள்விகளைக் கேட்கலாம்.',
+    suggestedInquiries: 'இந்த தலைப்பிற்காகப் பரிந்துரைக்கப்பட்ட கேள்விகள்:',
+    quickPrompts: 'விரைவு கேள்விகள்:',
+    askFollowUpPlaceholder: 'இந்த அறநெறி கோட்பாடு அல்லது சட்டப்பிரிவு பற்றி கேள்விகள் கேட்க...',
+    askAiBtn: 'கேட்க',
+    groundedDualCorpus: 'இணைக்கப்பட்ட இருமொழி சட்ட-அறவியல் பதில்',
+    copyAnalysis: 'நகலெடு',
+    copied: 'நகலெடுக்கப்பட்டது',
+    situationUnderstanding: 'சூழ்நிலை புரிதல்',
+    ethicalVirtuesAram: 'அறநெறிப் பார்வை (அறம்)',
+    statutoryLegalRules: 'சட்ட விதிகள்',
+    groundedThirukkuralCouplets: 'தொடர்புடைய திருக்குறள்கள்',
+    responsibleActionRec: 'பொறுப்பான நடவடிக்கை & பரிந்துரை',
+    keyTakeawayLabel: 'முக்கிய பாடம்',
+    reasoningOverLaw: 'AI ஆசிரியர் இந்திய சட்டம் மற்றும் திருக்குறளை ஆராய்கிறார்...',
+
     // Pathways in Tamil
     pathJusticeTitle: 'நடுவுநிலைமை & இயற்கை நீதி',
     pathJusticeDesc: 'பண்டைய தமிழ் நடுவுநிலைமை விதிகள் அரசியலமைப்பு பிரிவு 21 மற்றும் இயற்கை நீதி கோட்பாடுகளுடன் எவ்வாறு ஒத்துப் போகின்றன.',
@@ -720,6 +756,24 @@ export const TRANSLATIONS: Record<Language, Record<string, string>> = {
     pathwayLabel: 'मार्ग:',
     openKuralModalBtn: 'कुरल #{num} विवरण देखें →',
     askAiAboutStep: 'इस चरण के बारे में AI गुरु से पूछें',
+
+    // Step AI Tutor Modal Labels in Hindi
+    aiTutorTitle: 'AI कानूनी एवं नैतिक गुरु',
+    aiTutorSub: 'भारतीय कानून और तिरुक्कुरल के आधार पर {topic} का विश्लेषण करने के लिए प्रश्न पूछें।',
+    suggestedInquiries: 'इस विषय के लिए सुझाये गए प्रश्न:',
+    quickPrompts: 'त्वरित प्रश्न:',
+    askFollowUpPlaceholder: 'इस नैतिक सिद्धांत या कानूनी नियम के बारे में प्रश्न पूछें...',
+    askAiBtn: 'पूछें',
+    groundedDualCorpus: 'संबद्ध दोहरा-ग्रंथ उत्तर',
+    copyAnalysis: 'कॉपी करें',
+    copied: 'कॉपी हो गया',
+    situationUnderstanding: 'स्थिति की समझ',
+    ethicalVirtuesAram: 'नैतिक दृष्टिकोण (धर्म)',
+    statutoryLegalRules: 'वैधानिक कानूनी नियम',
+    groundedThirukkuralCouplets: 'संबंधित तिरुक्कुरल छंद',
+    responsibleActionRec: 'जिम्मेदार कार्रवाई और सिफारिश',
+    keyTakeawayLabel: 'मुख्य सीख',
+    reasoningOverLaw: 'AI गुरु भारतीय कानून और तिरुक्कुरल का विश्लेषण कर रहा है...',
 
     // Pathways in Hindi
     pathJusticeTitle: 'निष्पक्षता एवं प्राकृतिक न्याय',
