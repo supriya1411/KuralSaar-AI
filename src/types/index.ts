@@ -75,11 +75,14 @@ export interface EthicalConcept {
   description: string;
   icon: string;
   kuralCount: number;
-  masteryPercentage: number;
-  category: string;
-  keyPrinciples: string[];
-  recommendedKuralIds: number[];
-  relatedScenarioIds: string[];
+  masteryPercentage?: number;
+  category?: string;
+  keyPrinciples?: string[];
+  recommendedKuralIds?: number[];
+  relatedKurals?: number[];
+  relatedScenarioIds?: string[];
+  statutes?: string[];
+  color?: string;
 }
 
 export interface LegalConcept {
