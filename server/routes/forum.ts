@@ -6,6 +6,17 @@ const router = Router();
 const DATA_DIR = path.join(process.cwd(), '.data');
 const FORUM_FILE = path.join(DATA_DIR, 'forum_posts.json');
 
+export interface ForumReplyItem {
+  id: string;
+  authorName: string;
+  authorRole: string;
+  authorAvatar: string;
+  content: string;
+  timestamp: string;
+  upvotes: number;
+  audioUrl?: string;
+}
+
 export interface ForumPostItem {
   id: string;
   authorName: string;
@@ -18,6 +29,8 @@ export interface ForumPostItem {
   replyCount: number;
   timestamp: string;
   tags: string[];
+  audioUrl?: string;
+  replies?: ForumReplyItem[];
 }
 
 const INITIAL_FORUM_POSTS: ForumPostItem[] = [
@@ -34,6 +47,7 @@ const INITIAL_FORUM_POSTS: ForumPostItem[] = [
     replyCount: 14,
     timestamp: '2 hours ago',
     tags: ['Kural 118', 'Natural Justice', 'Criminal Law', 'BNS'],
+    replies: [],
   },
   {
     id: 'post-2',
@@ -48,6 +62,7 @@ const INITIAL_FORUM_POSTS: ForumPostItem[] = [
     replyCount: 9,
     timestamp: '5 hours ago',
     tags: ['AI Ethics', 'Sengolmai', 'Constitutional Law'],
+    replies: [],
   },
   {
     id: 'post-3',
@@ -62,6 +77,7 @@ const INITIAL_FORUM_POSTS: ForumPostItem[] = [
     replyCount: 7,
     timestamp: 'Yesterday',
     tags: ['Whistleblower', 'Vaaimai', 'Companies Act'],
+    replies: [],
   },
   {
     id: 'post-4',
@@ -76,6 +92,7 @@ const INITIAL_FORUM_POSTS: ForumPostItem[] = [
     replyCount: 18,
     timestamp: '2 days ago',
     tags: ['Road Rage', 'BNS', 'Anger Control', 'Kural 304'],
+    replies: [],
   }
 ];
 
@@ -142,10 +159,10 @@ router.get(['/', '/posts'], (req: Request, res: Response) => {
  */
 router.post(['/', '/posts'], (req: Request, res: Response): void => {
   try {
-    const { authorName, authorRole, authorAvatar, title, content, category, tags } = req.body;
+    const { authorName, authorRole, authorAvatar, title, content, category, tags, audioUrl } = req.body;
 
-    if (!title || !content) {
-      res.status(400).json({ success: false, error: 'Title and content are required.' });
+    if (!title || (!content && !audioUrl)) {
+      res.status(400).json({ success: false, error: 'Title and content or voice recording are required.' });
       return;
     }
 
@@ -155,12 +172,14 @@ router.post(['/', '/posts'], (req: Request, res: Response): void => {
       authorRole: authorRole || 'Legal-Ethics Scholar',
       authorAvatar: authorAvatar || 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=150&auto=format&fit=crop&q=80',
       title: title.trim(),
-      content: content.trim(),
+      content: (content || '').trim(),
       category: category || 'Scenario Debates',
       upvotes: 1,
       replyCount: 0,
       timestamp: 'Just now',
       tags: tags || ['Discussion', 'Ethics'],
+      audioUrl: audioUrl || undefined,
+      replies: [],
     };
 
     postsCache = [newPost, ...postsCache];
@@ -169,6 +188,52 @@ router.post(['/', '/posts'], (req: Request, res: Response): void => {
     res.json({
       success: true,
       data: newPost,
+    });
+  } catch (err: unknown) {
+    const errorMsg = err instanceof Error ? err.message : 'Internal Server Error';
+    res.status(500).json({ success: false, error: errorMsg });
+  }
+});
+
+/**
+ * POST /api/forum/:id/reply - Add a reply to a post
+ */
+router.post('/:id/reply', (req: Request, res: Response): void => {
+  try {
+    const { id } = req.params;
+    const { authorName, authorRole, authorAvatar, content, audioUrl } = req.body;
+
+    const post = postsCache.find((p) => p.id === id);
+    if (!post) {
+      res.status(404).json({ success: false, error: 'Post not found.' });
+      return;
+    }
+
+    if (!content && !audioUrl) {
+      res.status(400).json({ success: false, error: 'Content or voice recording is required for reply.' });
+      return;
+    }
+
+    const newReply: ForumReplyItem = {
+      id: `reply-${Date.now()}`,
+      authorName: authorName || 'Anonymous Scholar',
+      authorRole: authorRole || 'Legal-Ethics Scholar',
+      authorAvatar: authorAvatar || 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=150&auto=format&fit=crop&q=80',
+      content: (content || '').trim(),
+      timestamp: 'Just now',
+      upvotes: 1,
+      audioUrl: audioUrl || undefined,
+    };
+
+    if (!post.replies) post.replies = [];
+    post.replies.push(newReply);
+    post.replyCount = post.replies.length;
+
+    savePosts(postsCache);
+
+    res.json({
+      success: true,
+      data: post,
     });
   } catch (err: unknown) {
     const errorMsg = err instanceof Error ? err.message : 'Internal Server Error';

@@ -35,7 +35,9 @@ export const ScenarioChallengePage: React.FC = () => {
     solveScenario,
     openKuralModalByNumber,
     setActiveTab,
-    refreshUserProgress
+    refreshUserProgress,
+    language,
+    t,
   } = useApp();
 
   const [allScenarios, setAllScenarios] = useState<Scenario[]>([]);
@@ -55,7 +57,7 @@ export const ScenarioChallengePage: React.FC = () => {
   useEffect(() => {
     const load = async () => {
       setIsLoading(true);
-      const res = await scenarioService.getAllScenarios();
+      const res = await scenarioService.getAllScenarios(language);
       setAllScenarios(res.data);
       const active = res.data.find((s) => s.number === selectedScenarioNumber) || res.data[0];
       setCurrentScenario(active);
@@ -73,7 +75,7 @@ export const ScenarioChallengePage: React.FC = () => {
       setIsLoading(false);
     };
     load();
-  }, [selectedScenarioNumber]);
+  }, [selectedScenarioNumber, language]);
 
   // Timer countdown
   useEffect(() => {

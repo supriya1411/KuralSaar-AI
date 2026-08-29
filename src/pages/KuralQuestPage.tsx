@@ -15,6 +15,8 @@ import {
   ArrowRight,
 } from 'lucide-react';
 
+import { VoiceDictationButton } from '../components/common/VoiceDictationButton';
+
 const CONCEPT_CHIPS = [
   'All',
   'Integrity',
@@ -83,16 +85,22 @@ export const KuralQuestPage: React.FC = () => {
               placeholder="Search by situation, concept or meaning (e.g., 'Conflict of Interest', 'Anger', 'Kural 131', 'Justice')..."
               value={searchGlobalQuery}
               onChange={(e) => setSearchGlobalQuery(e.target.value)}
-              className="w-full pl-12 pr-4 py-3 text-sm bg-slate-50 border border-slate-200 text-slate-900 placeholder-slate-400 focus:bg-white focus:border-blue-600 focus:outline-hidden focus:ring-4 focus:ring-blue-500/20 rounded-xl transition-all font-medium"
+              className="w-full pl-12 pr-20 py-3 text-sm bg-slate-50 border border-slate-200 text-slate-900 placeholder-slate-400 focus:bg-white focus:border-blue-600 focus:outline-hidden focus:ring-4 focus:ring-blue-500/20 rounded-xl transition-all font-medium"
             />
-            {searchGlobalQuery && (
-              <button
-                onClick={() => setSearchGlobalQuery('')}
-                className="absolute right-4 text-xs font-bold text-slate-500 hover:text-slate-900 bg-slate-200 px-2.5 py-1 rounded-md cursor-pointer"
-              >
-                Clear
-              </button>
-            )}
+            <div className="absolute right-3 flex items-center gap-1">
+              <VoiceDictationButton
+                currentValue={searchGlobalQuery}
+                onTranscript={(text) => setSearchGlobalQuery(text)}
+              />
+              {searchGlobalQuery && (
+                <button
+                  onClick={() => setSearchGlobalQuery('')}
+                  className="text-xs font-bold text-slate-500 hover:text-slate-900 bg-slate-200 px-2 py-1 rounded-md cursor-pointer"
+                >
+                  Clear
+                </button>
+              )}
+            </div>
           </div>
 
           {/* Concept Filter Chips */}

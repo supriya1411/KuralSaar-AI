@@ -41,6 +41,8 @@ export const TRANSLATIONS: Record<Language, Record<string, string>> = {
     aiTutorFeature: 'AI-Assisted Tutor',
     livePreview: 'LIVE PREVIEW',
     solveScenarioNow: 'Solve Scenario Now →',
+    scenario3Title: 'Scenario: Conflict of Interest',
+    scenario3Desc: '"Senior advocate discovers rival firm is owned by a close family member..."',
     
     // Section Titles
     educationalArchitecture: 'EDUCATIONAL ARCHITECTURE',
@@ -56,15 +58,28 @@ export const TRANSLATIONS: Record<Language, Record<string, string>> = {
     decisionMaking: 'Decision Making',
     masteryProfile: 'Mastery Profile',
     statutoryGrounds: 'Statutory Grounds',
+    levelPractitioner: 'Level {level} Practitioner',
+    daysCount: '{days} Days',
+    bestStreakText: 'Best streak: {days} days',
     
     // Dilemma & Recommendation
     todaysDilemma: "Today's Legal Dilemma",
+    scenarioNum: 'Scenario {current}/10',
+    topicLabel: 'Topic:',
+    difficultyLabel: 'Difficulty',
     launchSimulation: 'Launch Full Simulation',
     reviewDilemma: 'Review Dilemma',
     yourSkillsMastery: 'Your Skills Mastery',
     analyticsBtn: 'Analytics →',
     recommendedKural: 'Recommended Kural',
     exploreVirtue: 'Explore Virtue (Aram) →',
+    kuralQuote34: '"To be pure in mind is as much as all righteousness; all else is but empty display."',
+    kuralTamil34: '"மனத்துக்கண் மாசிலன் ஆதல் அனைத்தறன் ஆகுல நீர பிற."',
+    
+    // Pillar Cards
+    kuralQuestPillarDesc: 'Explore 1,330 couplets categorized by moral concept and Paal.',
+    scenarioChallengePillarDesc: 'Apply legal & ethical principles to interactive real-world dilemmas.',
+    aiTutorPillarDesc: 'Grounded dual-corpus mentoring with full explainability traces.',
     
     // AI Insights
     aiInsightsTitle: 'AI Learning & Competency Insights',
@@ -78,6 +93,45 @@ export const TRANSLATIONS: Record<Language, Record<string, string>> = {
     online: 'Online',
     activeJourney: 'Active Journey',
     filterNodes: 'Filter Nodes:',
+
+    // Scenario Challenge Page
+    scenarioChallengeHeaderTitle: 'Interactive Scenario Challenge',
+    scenarioChallengeHeaderSub: 'Engage with complex moral conflicts, constitutional questions, and professional legal ethics.',
+    previousScenario: 'Previous',
+    nextScenario: 'Next',
+    submitDecision: 'Submit Ethical Decision',
+    evaluatingFeedback: 'Evaluating Ethical & Legal Reasoning...',
+    viewTraceDetails: 'View 8-Step Reasoning Trace',
+    whyThisKural: 'Why This Kural?',
+    whyThisStatute: 'Legal Statute Context',
+    ethicalHint: 'Think Ethically Hint',
+    indianLegalContext: 'Indian Legal & Statutory Context',
+
+    // Ethics Library Page
+    canonicalDomains: '12 Canonical Moral Domains',
+    ethicsLibraryTitle: 'Classical Ethics Library',
+    ethicsLibrarySub: 'Browse the 12 pillars of virtue and governance structured in Thirukkural and see how they underpin Indian statutory, constitutional, and professional ethics.',
+    kuralsCountTag: '{count} Kurals',
+    domainMastery: 'Domain Mastery',
+    viewDetailsLaws: 'View Details & Laws →',
+    ethicalBreakdown: 'Ethical Domain Breakdown',
+    corePrinciples: 'Core Legal-Ethical Principles:',
+    searchRelatedKurals: 'Search Related Kurals',
+    askAiAboutDomain: 'Ask AI Tutor About This Domain',
+
+    // Category Titles & Descriptions
+    catImpartialityTitle: 'Impartiality & Equity',
+    catImpartialityDesc: 'Maintaining absolute neutrality and judicial balance without bias or personal interest.',
+    catVeracityTitle: 'Veracity & Truthfulness',
+    catVeracityDesc: 'The foundation of sworn testimony, evidentiary integrity, and anti-perjury laws.',
+    catProprietyTitle: 'Propriety of Conduct',
+    catProprietyDesc: 'Adhering to professional codes of ethics, advocate duties, and institutional decorum.',
+    catSelfControlTitle: 'Self-Control & Restraint',
+    catSelfControlDesc: 'Restraint in speech, emotional control during litigation, and judicial temperament.',
+    catCompassionTitle: 'Compassion & Benevolence',
+    catCompassionDesc: 'Humane treatment in criminal justice, human rights preservation, and mercy petitions.',
+    catGovernanceTitle: 'Righteous Governance',
+    catGovernanceDesc: 'Constitutional governance, rule of law, anti-arbitrariness, and administrative justice.',
   },
   ta: {
     // Brand & App
@@ -119,6 +173,8 @@ export const TRANSLATIONS: Record<Language, Record<string, string>> = {
     aiTutorFeature: 'AI வழிநடத்தும் ஆசிரியர்',
     livePreview: 'நேரடி முன்னோட்டம்',
     solveScenarioNow: 'வழக்கை தீர்க்கவும் →',
+    scenario3Title: 'வழக்கு: நலன்களின் முரண்பாடு',
+    scenario3Desc: '"மூத்த வழக்கறிஞர் எதிர்தரப்பு நிறுவனம் தனது தம்பியுடையது என அறிகிறார்..."',
     
     // Section Titles
     educationalArchitecture: 'கல்வி கட்டமைப்பு',
@@ -134,15 +190,28 @@ export const TRANSLATIONS: Record<Language, Record<string, string>> = {
     decisionMaking: 'முடிவெடுக்கும் திறன்',
     masteryProfile: 'தேர்ச்சி விவரம்',
     statutoryGrounds: 'சட்டப் பின்னணி',
+    levelPractitioner: 'நிலை {level} பயிற்றுனர்',
+    daysCount: '{days} நாட்கள்',
+    bestStreakText: 'சிறந்த தொடர்: {days} நாட்கள்',
     
     // Dilemma & Recommendation
     todaysDilemma: 'இன்றைய சட்ட சவால்',
+    scenarioNum: 'வழக்கு {current}/10',
+    topicLabel: 'தலைப்பு:',
+    difficultyLabel: 'சிரமம்',
     launchSimulation: 'முழு உருவகப்படுத்துதலைத் தொடங்கு',
     reviewDilemma: 'வழக்கை மறுபரிசீலனை செய்க',
     yourSkillsMastery: 'உங்கள் திறன்களின் தேர்ச்சி',
     analyticsBtn: 'பகுப்பாய்வு →',
     recommendedKural: 'பரிந்துரைக்கப்பட்ட குறள்',
     exploreVirtue: 'அறத்தை ஆராய்க →',
+    kuralQuote34: '"மனதில் குற்றம் இல்லாதிருப்பதே சிறந்த அறமாகும்; மற்றவையெல்லாம் வெறும் ஆரவாரமே."',
+    kuralTamil34: '"மனத்துக்கண் மாசிலன் ஆதல் அனைத்தறன் ஆகுல நீர பிற."',
+    
+    // Pillar Cards
+    kuralQuestPillarDesc: 'அறநெறி கருத்து மற்றும் பால்களின்படி வகைப்படுத்தப்பட்ட 1,330 குறள்களை ஆராய்க.',
+    scenarioChallengePillarDesc: 'ஊடாடும் நிஜ உலகச் சவால்களுக்குச் சட்ட மற்றும் அறநெறிக் கோட்பாடுகளைப் பயன்படுத்துங்கள்.',
+    aiTutorPillarDesc: 'முழு விளக்கத் தடங்களுடன் கூடிய இருமொழி மூல வழிகாட்டுதல்.',
     
     // AI Insights
     aiInsightsTitle: 'AI கற்றல் மற்றும் திறன் பகுப்பாய்வு',
@@ -156,6 +225,45 @@ export const TRANSLATIONS: Record<Language, Record<string, string>> = {
     online: 'இணைப்பில்',
     activeJourney: 'செயலில் உள்ள பயணம்',
     filterNodes: 'முனைகளை வடிகட்டுக:',
+
+    // Scenario Challenge Page
+    scenarioChallengeHeaderTitle: 'ஊடாடும் வழக்கு சவால்',
+    scenarioChallengeHeaderSub: 'சிக்கலான அறநெறி மோதல்கள், அரசியலமைப்பு கேள்விகள் மற்றும் சட்ட அறநெறிகளுடன் இணையுங்கள்.',
+    previousScenario: 'முந்தையது',
+    nextScenario: 'அடுத்தது',
+    submitDecision: 'அறநெறி முடிவை சமர்ப்பிக்கவும்',
+    evaluatingFeedback: 'அறநெறி & சட்ட விளக்கங்கள் மதிப்பீடு செய்யப்படுகின்றன...',
+    viewTraceDetails: '8-படி காரண பகுப்பாய்வைப் பார்க்க',
+    whyThisKural: 'ஏன் இந்தக் குறள்?',
+    whyThisStatute: 'சட்டப்பிரிவு விளக்கம்',
+    ethicalHint: 'அறவியல் சிந்தனை குறிப்பு',
+    indianLegalContext: 'இந்திய சட்டப் பின்னணி',
+
+    // Ethics Library Page
+    canonicalDomains: '12 முக்கிய அறநெறி பிரிவுகள்',
+    ethicsLibraryTitle: 'தொன்மை அறவியல் நூலகம்',
+    ethicsLibrarySub: 'திருக்குறளில் அமைக்கப்பட்ட 12 அறநெறித் தூண்களை ஆராய்ந்து, அவை இந்திய சட்டத்திற்கும் அரசியலமைப்பிற்கும் எவ்வாறு அடிப்படையாக அமைந்தன என்பதை அறியுங்கள்.',
+    kuralsCountTag: '{count} குறள்கள்',
+    domainMastery: 'பிரிவு தேர்ச்சி',
+    viewDetailsLaws: 'விவரங்கள் & சட்டங்களைப் பார்க்க →',
+    ethicalBreakdown: 'அறநெறி பிரிவு விளக்கம்',
+    corePrinciples: 'முக்கிய சட்ட-அறநெறி கோட்பாடுகள்:',
+    searchRelatedKurals: 'தொடர்புடைய குறள்களைத் தேடுக',
+    askAiAboutDomain: 'இந்த பிரிவு பற்றி AI ஆசிரியரிடம் கேட்க',
+
+    // Category Titles & Descriptions
+    catImpartialityTitle: 'நடுவுநிலைமை & சமத்துவம்',
+    catImpartialityDesc: 'எந்தவொரு சார்பும் இன்றி முழுமையான நடுவுநிலைமையையும் நீதித்துறை சமநிலையையும் பேணுதல்.',
+    catVeracityTitle: 'வாய்மை & உண்மை',
+    catVeracityDesc: 'சத்தியப்பிரமாணம், சாட்சிய நேர்மை மற்றும் பொய் சாட்சி எதிர்ப்பு சட்டங்களின் அடிப்படை.',
+    catProprietyTitle: 'ஒழுக்கமுடைமை & நெறிமுறை',
+    catProprietyDesc: 'வழக்கறிஞர் ஒழுக்க விதிகள் மற்றும் நிறுவன கண்ணியத்தைக் கடைப்பிடித்தல்.',
+    catSelfControlTitle: 'அடக்கமுடைமை & சுயகட்டுப்பாடு',
+    catSelfControlDesc: 'பேச்சு கட்டுப்பாடு, வழக்கு விசாரணையின் போது உணர்ச்சி கட்டுப்பாடு மற்றும் நீதித்துறை நிதானம்.',
+    catCompassionTitle: 'அருளுடைமை & கருணை',
+    catCompassionDesc: 'குற்றவியல் நீதியில் மனிதநேய சிகிச்சை, மனித உரிமைகள் பாதுகாப்பு மற்றும் கருணை மனுக்கள்.',
+    catGovernanceTitle: 'செங்கோன்மை & நல்லாட்சி',
+    catGovernanceDesc: 'அரசியலமைப்பு ஆட்சி, சட்டத்தின் ஆட்சி மற்றும் நிர்வாக நீதி.',
   },
   hi: {
     // Brand & App
@@ -197,6 +305,8 @@ export const TRANSLATIONS: Record<Language, Record<string, string>> = {
     aiTutorFeature: 'AI सहायक गुरु',
     livePreview: 'लाइव पूर्वावलोकन',
     solveScenarioNow: 'केस सुलझाएं →',
+    scenario3Title: 'केस: हितों का टकराव',
+    scenario3Desc: '"वरिष्ठ अधिवक्ता को पता चलता है कि प्रतिद्वंद्वी फर्म का मालिक सगा भाई है..."',
     
     // Section Titles
     educationalArchitecture: 'शैक्षणिक वास्तुकला',
@@ -212,15 +322,28 @@ export const TRANSLATIONS: Record<Language, Record<string, string>> = {
     decisionMaking: 'निर्णय लेने की क्षमता',
     masteryProfile: 'दक्षता प्रोफ़ाइल',
     statutoryGrounds: 'वैधानिक आधार',
+    levelPractitioner: 'स्तर {level} अभ्यासी',
+    daysCount: '{days} दिन',
+    bestStreakText: 'सर्वश्रेष्ठ श्रृंखला: {days} दिन',
     
     // Dilemma & Recommendation
     todaysDilemma: 'आज की कानूनी दुविधा',
+    scenarioNum: 'केस {current}/10',
+    topicLabel: 'विषय:',
+    difficultyLabel: 'कठिनाई',
     launchSimulation: 'पूर्ण सिमुलेशन शुरू करें',
     reviewDilemma: 'दुविधा की समीक्षा करें',
     yourSkillsMastery: 'आपकी कौशल दक्षता',
     analyticsBtn: 'विश्लेषण →',
     recommendedKural: 'अनुशंसित कुरल',
     exploreVirtue: 'सद्गुण (अरम) खोजें →',
+    kuralQuote34: '"मन में कोई पाप न होना ही सम्पूर्ण धर्म है; अन्य सभी बातें केवल बाहरी दिखावा हैं।',
+    kuralTamil34: '"மனத்துக்கண் மாசிலன் ஆதல் அனைத்தறன் ஆகுல நீர பிற."',
+    
+    // Pillar Cards
+    kuralQuestPillarDesc: 'नैतिक अवधारणा और पाल के अनुसार वर्गीकृत 1,330 छंदों का अन्वेषण करें।',
+    scenarioChallengePillarDesc: 'इंटरैक्टिव वास्तविक दुनिया की दुविधाओं के लिए कानूनी और नैतिक सिद्धांतों को लागू करें।',
+    aiTutorPillarDesc: 'पूर्ण स्पष्टीकरण निशानों के साथ दोहरा-ग्रंथ मार्गदर्शन।',
     
     // AI Insights
     aiInsightsTitle: 'AI शिक्षण एवं क्षमता अंतर्दृष्टि',
@@ -234,5 +357,44 @@ export const TRANSLATIONS: Record<Language, Record<string, string>> = {
     online: 'ऑनलाइन',
     activeJourney: 'सक्रिय यात्रा',
     filterNodes: 'नोड्स फ़िल्टर करें:',
+
+    // Scenario Challenge Page
+    scenarioChallengeHeaderTitle: 'इंटरैक्टिव केस चुनौती',
+    scenarioChallengeHeaderSub: 'जटिल नैतिक संघर्षों, संवैधानिक प्रश्नों और व्यावसायिक कानूनी नीतिशास्त्र से जुड़ें।',
+    previousScenario: 'पिछला',
+    nextScenario: 'अगला',
+    submitDecision: 'नैतिक निर्णय सबमिट करें',
+    evaluatingFeedback: 'नैतिक और कानूनी तर्कों का मूल्यांकन किया जा रहा है...',
+    viewTraceDetails: '8-चरणीय तर्क विश्लेषण देखें',
+    whyThisKural: 'यह कुरल क्यों?',
+    whyThisStatute: 'वैधानिक संदर्भ',
+    ethicalHint: 'नैतिक चिंतन संकेत',
+    indianLegalContext: 'भारतीय कानूनी संदर्भ',
+
+    // Ethics Library Page
+    canonicalDomains: '12 मुख्य नैतिक क्षेत्र',
+    ethicsLibraryTitle: 'शास्त्रीय नीतिशास्त्र पुस्तकालय',
+    ethicsLibrarySub: 'तिरुक्कुरल में संरचित 12 नैतिक स्तंभों का अन्वेषण करें और देखें कि वे भारतीय वैधानिक और संवैधानिक नीतिशास्त्र का आधार कैसे बनते हैं।',
+    kuralsCountTag: '{count} कुरल',
+    domainMastery: 'क्षेत्र दक्षता',
+    viewDetailsLaws: 'विवरण और कानून देखें →',
+    ethicalBreakdown: 'नैतिक क्षेत्र विवरण',
+    corePrinciples: 'मुख्य कानूनी-नैतिक सिद्धांत:',
+    searchRelatedKurals: 'संबंधित कुरल खोजें',
+    askAiAboutDomain: 'इस क्षेत्र के बारे में AI ट्यूटर से पूछें',
+
+    // Category Titles & Descriptions
+    catImpartialityTitle: 'निष्पक्षता एवं समता',
+    catImpartialityDesc: 'बिना किसी पूर्वाग्रह या व्यक्तिगत हित के पूर्ण तटस्थता और न्यायिक संतुलन बनाए रखना।',
+    catVeracityTitle: 'सत्यता एवं ईमानदारी',
+    catVeracityDesc: 'शपथ साक्ष्य, साक्ष्य अखंडता और झूठी गवाही विरोधी कानूनों की नींव।',
+    catProprietyTitle: 'आचरण की सत्यनिष्ठा',
+    catProprietyDesc: 'व्यावसायिक आचार संहिता, अधिवक्ता कर्तव्यों और संस्थागत गरिमा का पालन।',
+    catSelfControlTitle: 'आत्म-नियंत्रण एवं संयम',
+    catSelfControlDesc: 'वाणी पर संयम, मुकदमेबाजी के दौरान भावनात्मक नियंत्रण और न्यायिक स्वभाव।',
+    catCompassionTitle: 'दया एवं परोपकार',
+    catCompassionDesc: 'आपराधिक न्याय में मानवीय व्यवहार, मानव अधिकार संरक्षण और दया याचिकाएं।',
+    catGovernanceTitle: 'धर्मपरायण शासन',
+    catGovernanceDesc: 'संवैधानिक शासन, कानून का शासन, गैर-मनमानी और प्रशासनिक न्याय।',
   },
 };

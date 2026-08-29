@@ -25,6 +25,8 @@ import { HowAiReasonedModal } from '../components/common/HowAiReasonedModal';
 import { WhyKuralModal } from '../components/common/WhyKuralModal';
 import { WhyLegalModal } from '../components/common/WhyLegalModal';
 
+import { VoiceDictationButton } from '../components/common/VoiceDictationButton';
+
 const PRESET_QUERIES = [
   'Someone insulted me and I want revenge. What should I do?',
   'My manager asked me to hide a safety audit violation before inspection.',
@@ -142,14 +144,17 @@ export const ResearchDemoPage: React.FC = () => {
           }}
           className="flex gap-3 pt-2"
         >
-          <div className="relative flex-1">
+          <div className="relative flex-1 flex items-center">
             <input
               type="text"
               value={customQuery}
               onChange={(e) => setCustomQuery(e.target.value)}
               placeholder="Or type a custom moral, civic, or statutory question..."
-              className="w-full bg-slate-950 border border-slate-700 rounded-xl px-4 py-3 text-sm text-white placeholder-slate-500 focus:outline-none focus:border-indigo-500 transition-colors"
+              className="w-full bg-slate-950 border border-slate-700 rounded-xl pl-4 pr-12 py-3 text-sm text-white placeholder-slate-500 focus:outline-none focus:border-indigo-500 transition-colors"
             />
+            <div className="absolute right-3 z-20 flex items-center">
+              <VoiceDictationButton currentValue={customQuery} onTranscript={(text) => setCustomQuery(text)} />
+            </div>
           </div>
           <button
             type="submit"

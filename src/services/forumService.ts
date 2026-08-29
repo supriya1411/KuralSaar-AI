@@ -25,6 +25,7 @@ export const forumService = {
     authorRole: string;
     authorAvatar: string;
     tags?: string[];
+    audioUrl?: string;
   }): Promise<ForumPost | null> {
     try {
       const res = await fetch('/api/forum', {
@@ -37,6 +38,31 @@ export const forumService = {
       return json.data;
     } catch (err) {
       console.error('[forumService] Failed to create post:', err);
+      return null;
+    }
+  },
+
+  async createReply(
+    postId: string,
+    reply: {
+      content: string;
+      authorName: string;
+      authorRole: string;
+      authorAvatar: string;
+      audioUrl?: string;
+    }
+  ): Promise<ForumPost | null> {
+    try {
+      const res = await fetch(`/api/forum/${postId}/reply`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(reply),
+      });
+      if (!res.ok) throw new Error(`HTTP ${res.status}`);
+      const json = await res.json();
+      return json.data;
+    } catch (err) {
+      console.error('[forumService] Failed to create reply:', err);
       return null;
     }
   },

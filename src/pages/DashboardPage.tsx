@@ -29,6 +29,7 @@ export const DashboardPage: React.FC = () => {
     setActiveTab,
     setSelectedScenarioNumber,
     openKuralModalByNumber,
+    language,
     t,
   } = useApp();
 
@@ -41,16 +42,16 @@ export const DashboardPage: React.FC = () => {
     const load = async () => {
       const kurals = await kuralService.getRecommendedKurals(3);
       setRecommendedKurals(kurals);
-      const scen = await scenarioService.getTodayScenario();
+      const scen = await scenarioService.getTodayScenario(language);
       setTodayScenario(scen);
       if (scen && scen.options.length > 1) {
         setSelectedOptionId(scen.options[1].id);
       }
-      const insights = await progressService.getAiLearningInsights();
+      const insights = await progressService.getAiLearningInsights(language);
       setAiInsights(insights);
     };
     load();
-  }, []);
+  }, [language]);
 
   return (
     <div className="space-y-8 animate-in fade-in duration-200 pb-12">
@@ -128,7 +129,7 @@ export const DashboardPage: React.FC = () => {
                 {t('livePreview')}
               </span>
               <span className="bg-slate-100 text-slate-700 font-bold text-xs px-2.5 py-1 rounded-md border border-slate-200">
-                Scenario 3
+                {t('scenarioNum').replace('{current}', '3')}
               </span>
             </div>
 
@@ -143,10 +144,10 @@ export const DashboardPage: React.FC = () => {
             </div>
 
             <h3 className="text-sm font-extrabold text-slate-900 leading-tight">
-              Scenario: Conflict of Interest
+              {t('scenario3Title')}
             </h3>
             <p className="text-xs text-slate-500 italic mt-1 leading-normal font-medium">
-              "Senior advocate discovers rival firm is owned by a close family member..."
+              {t('scenario3Desc')}
             </p>
           </div>
 
@@ -180,52 +181,52 @@ export const DashboardPage: React.FC = () => {
         {/* Metric 1: XP Points */}
         <div className="bg-white p-4 rounded-xl border border-slate-200 shadow-2xs hover:border-amber-400 transition-all">
           <span className="text-[10px] font-extrabold text-slate-400 uppercase tracking-wider">
-            XP Points
+            {t('xpPoints')}
           </span>
           <p className="text-2xl font-black text-[#071B3A]">
             {userProgress.xp.toLocaleString()}
           </p>
           <span className="text-[10px] text-amber-600 font-bold">
-            Level {userProgress.level} Practitioner
+            {t('levelPractitioner').replace('{level}', userProgress.level.toString())}
           </span>
         </div>
 
         {/* Metric 2: Streak Count */}
         <div className="bg-white p-4 rounded-xl border border-slate-200 shadow-2xs hover:border-amber-400 transition-all">
           <span className="text-[10px] font-extrabold text-slate-400 uppercase tracking-wider">
-            Streak Count
+            {t('streakCount')}
           </span>
           <p className="text-2xl font-black text-amber-500">
-            🔥 {userProgress.streakDays} Days
+            🔥 {t('daysCount').replace('{days}', userProgress.streakDays.toString())}
           </p>
           <span className="text-[10px] text-slate-400 font-medium">
-            Best streak: {userProgress.bestStreak} days
+            {t('bestStreakText').replace('{days}', userProgress.bestStreak.toString())}
           </span>
         </div>
 
         {/* Metric 3: Ethical Reasoning */}
         <div className="bg-white p-4 rounded-xl border border-slate-200 shadow-2xs hover:border-blue-400 transition-all">
           <span className="text-[10px] font-extrabold text-slate-400 uppercase tracking-wider">
-            Ethical Reasoning
+            {t('ethicalReasoning')}
           </span>
           <p className="text-2xl font-black text-blue-700">
             {userProgress.skills.ethicalReasoning}%
           </p>
           <span className="text-[10px] text-emerald-600 font-bold">
-            Mastery Profile
+            {t('masteryProfile')}
           </span>
         </div>
 
         {/* Metric 4: Legal Awareness */}
         <div className="bg-white p-4 rounded-xl border border-slate-200 shadow-2xs hover:border-blue-400 transition-all">
           <span className="text-[10px] font-extrabold text-slate-400 uppercase tracking-wider">
-            Legal Awareness
+            {t('legalAwareness')}
           </span>
           <p className="text-2xl font-black text-blue-600">
             {userProgress.skills.legalAwareness}%
           </p>
           <span className="text-[10px] text-blue-600 font-bold">
-            Statutory Grounds
+            {t('statutoryGrounds')}
           </span>
         </div>
       </div>
@@ -239,14 +240,14 @@ export const DashboardPage: React.FC = () => {
                 <Sparkles className="w-4 h-4 text-amber-600" />
               </div>
               <span className="text-xs font-extrabold text-[#071B3A] uppercase tracking-wider">
-                AI Learning & Competency Insights
+                {t('aiInsightsTitle')}
               </span>
             </div>
             <button
               onClick={() => setActiveTab('ai-tutor')}
               className="text-xs text-blue-600 hover:text-blue-800 font-bold cursor-pointer"
             >
-              Consult AI Tutor →
+              {t('consultAiTutor')}
             </button>
           </div>
 
@@ -256,14 +257,14 @@ export const DashboardPage: React.FC = () => {
 
           <div className="flex flex-wrap items-center justify-between gap-3 pt-2 border-t border-slate-100 text-xs">
             <div className="flex items-center gap-2">
-              <span className="text-slate-500 font-bold">Recommended Action:</span>
+              <span className="text-slate-500 font-bold">{t('recommendedAction')}</span>
               <span className="text-[#071B3A] font-extrabold">{aiInsights.recommendedAction}</span>
             </div>
             <button
               onClick={() => openKuralModalByNumber(aiInsights.suggestedKuralNumber)}
               className="text-xs font-bold text-blue-600 hover:underline cursor-pointer"
             >
-              Review Kural {aiInsights.suggestedKuralNumber}
+              {t('reviewKural')} {aiInsights.suggestedKuralNumber}
             </button>
           </div>
         </div>
@@ -276,10 +277,10 @@ export const DashboardPage: React.FC = () => {
           <div className="lg:col-span-8 bg-white border border-slate-200 rounded-2xl shadow-2xs overflow-hidden">
             <div className="bg-slate-50 px-6 py-3.5 flex items-center justify-between border-b border-slate-200">
               <span className="text-[#071B3A] text-xs font-black uppercase tracking-widest">
-                Today's Legal Dilemma
+                {t('todaysDilemma')}
               </span>
               <span className="bg-amber-100 text-amber-900 border border-amber-300 text-[10px] font-black px-2.5 py-0.5 rounded-full">
-                Scenario {todayScenario.number}/10
+                {t('scenarioNum').replace('{current}', todayScenario.number.toString())}
               </span>
             </div>
 
@@ -290,15 +291,15 @@ export const DashboardPage: React.FC = () => {
                     {todayScenario.title}
                   </h3>
                   <p className="text-xs text-slate-500 font-medium mt-0.5">
-                    Topic: {todayScenario.category}
+                    {t('topicLabel')} {todayScenario.category}
                   </p>
                 </div>
                 <div className="flex flex-col items-end">
                   <span className="text-[10px] font-extrabold text-slate-400 uppercase">
-                    Difficulty
+                    {t('difficultyLabel')}
                   </span>
                   <span className="text-amber-600 font-bold text-xs">
-                    {todayScenario.difficulty}
+                    {todayScenario.difficulty === 'Medium' ? t('medium') : todayScenario.difficulty === 'Hard' ? t('hard') : t('easy')}
                   </span>
                 </div>
               </div>
@@ -355,7 +356,7 @@ export const DashboardPage: React.FC = () => {
                   }}
                   className="px-6 py-2.5 bg-[#071B3A] hover:bg-[#0A2540] text-white rounded-xl text-sm font-bold shadow-2xs transition-colors cursor-pointer"
                 >
-                  Launch Full Simulation
+                  {t('launchSimulation')}
                 </button>
                 <button
                   onClick={() => {
@@ -364,7 +365,7 @@ export const DashboardPage: React.FC = () => {
                   }}
                   className="px-6 py-2.5 border border-slate-300 text-slate-700 rounded-xl text-sm font-bold hover:bg-slate-50 transition-colors cursor-pointer"
                 >
-                  Review Dilemma
+                  {t('reviewDilemma')}
                 </button>
               </div>
             </div>
@@ -377,20 +378,20 @@ export const DashboardPage: React.FC = () => {
           <div className="bg-white border border-slate-200 rounded-2xl p-5 shadow-2xs space-y-4">
             <div className="flex items-center justify-between">
               <h4 className="text-xs font-extrabold text-slate-400 uppercase tracking-widest">
-                Your Skills Mastery
+                {t('yourSkillsMastery')}
               </h4>
               <button
                 onClick={() => setActiveTab('my-progress')}
                 className="text-[11px] font-bold text-blue-600 hover:underline cursor-pointer"
               >
-                Analytics →
+                {t('analyticsBtn')}
               </button>
             </div>
 
             <div className="space-y-4">
               <div>
                 <div className="flex justify-between text-[11px] mb-1">
-                  <span className="font-bold text-slate-700">Ethical Reasoning</span>
+                  <span className="font-bold text-slate-700">{t('ethicalReasoning')}</span>
                   <span className="text-blue-700 font-extrabold">{userProgress.skills.ethicalReasoning}%</span>
                 </div>
                 <div className="h-2 w-full bg-slate-100 rounded-full overflow-hidden">
@@ -403,7 +404,7 @@ export const DashboardPage: React.FC = () => {
 
               <div>
                 <div className="flex justify-between text-[11px] mb-1">
-                  <span className="font-bold text-slate-700">Legal Awareness</span>
+                  <span className="font-bold text-slate-700">{t('legalAwareness')}</span>
                   <span className="text-blue-600 font-extrabold">{userProgress.skills.legalAwareness}%</span>
                 </div>
                 <div className="h-2 w-full bg-slate-100 rounded-full overflow-hidden">
@@ -416,7 +417,7 @@ export const DashboardPage: React.FC = () => {
 
               <div>
                 <div className="flex justify-between text-[11px] mb-1">
-                  <span className="font-bold text-slate-700">Critical Thinking</span>
+                  <span className="font-bold text-slate-700">{t('criticalThinking')}</span>
                   <span className="text-amber-600 font-extrabold">{userProgress.skills.criticalThinking}%</span>
                 </div>
                 <div className="h-2 w-full bg-slate-100 rounded-full overflow-hidden">
@@ -429,7 +430,7 @@ export const DashboardPage: React.FC = () => {
 
               <div>
                 <div className="flex justify-between text-[11px] mb-1">
-                  <span className="font-bold text-slate-700">Decision Making</span>
+                  <span className="font-bold text-slate-700">{t('decisionMaking')}</span>
                   <span className="text-emerald-600 font-extrabold">{userProgress.skills.prosocialDecisionMaking}%</span>
                 </div>
                 <div className="h-2 w-full bg-slate-100 rounded-full overflow-hidden">
@@ -446,21 +447,21 @@ export const DashboardPage: React.FC = () => {
           <div className="bg-white border border-slate-200 rounded-2xl p-5 shadow-2xs text-slate-900 space-y-3">
             <div className="flex items-center justify-between">
               <h4 className="text-xs font-black text-amber-900 bg-amber-100 px-2.5 py-0.5 rounded-full border border-amber-300 uppercase tracking-wider">
-                Recommended Kural
+                {t('recommendedKural')}
               </h4>
-              <span className="text-xs font-bold text-slate-500">Kural #34</span>
+              <span className="text-xs font-bold text-slate-500">{t('kuralNumFormat').replace('{number}', '34')}</span>
             </div>
             <p className="text-base font-tamil font-bold text-blue-900 leading-snug">
-              "மனத்துக்கண் மாசிலன் ஆதல் அனைத்தறன் ஆகுல நீர பிற."
+              {t('kuralTamil34')}
             </p>
             <p className="text-xs text-slate-600 leading-relaxed font-medium">
-              "To be pure in mind is as much as all righteousness; all else is but empty display."
+              {t('kuralQuote34')}
             </p>
             <button
               onClick={() => openKuralModalByNumber(34)}
               className="w-full py-2.5 bg-slate-100 hover:bg-slate-200 transition-colors rounded-xl text-xs font-bold border border-slate-200 text-[#071B3A] text-center block cursor-pointer"
             >
-              Explore Virtue (Aram) →
+              {t('exploreVirtue')}
             </button>
           </div>
         </div>
@@ -476,10 +477,10 @@ export const DashboardPage: React.FC = () => {
             📜
           </div>
           <h4 className="text-base font-bold text-[#071B3A] group-hover:text-blue-600 transition-colors font-heading">
-            Kural Quest
+            {t('kuralQuest')}
           </h4>
           <p className="text-xs text-slate-500 leading-relaxed">
-            Explore 1,330 couplets categorized by moral concept and Paal.
+            {t('kuralQuestPillarDesc')}
           </p>
         </div>
 
@@ -491,10 +492,10 @@ export const DashboardPage: React.FC = () => {
             ⚖️
           </div>
           <h4 className="text-base font-bold text-[#071B3A] group-hover:text-blue-600 transition-colors font-heading">
-            Scenario Challenge
+            {t('scenarioChallenge')}
           </h4>
           <p className="text-xs text-slate-500 leading-relaxed">
-            Apply legal & ethical principles to interactive real-world dilemmas.
+            {t('scenarioChallengePillarDesc')}
           </p>
         </div>
 
@@ -506,10 +507,10 @@ export const DashboardPage: React.FC = () => {
             🤖
           </div>
           <h4 className="text-base font-bold text-[#071B3A] group-hover:text-blue-600 transition-colors font-heading">
-            AI Legal-Ethics Tutor
+            {t('aiTutor')}
           </h4>
           <p className="text-xs text-slate-500 leading-relaxed">
-            Grounded dual-corpus mentoring with full explainability traces.
+            {t('aiTutorPillarDesc')}
           </p>
         </div>
       </div>

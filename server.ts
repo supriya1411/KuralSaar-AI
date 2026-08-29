@@ -48,7 +48,7 @@ async function startServer() {
 
   // Vite middleware for development vs Static serving for production
   const distIndex = path.join(process.cwd(), 'dist', 'index.html');
-  const isProductionMode = process.env.NODE_ENV === 'production' || fs.existsSync(distIndex);
+  const isProductionMode = process.env.NODE_ENV === 'production';
 
   if (!isProductionMode) {
     // Intercept /@vite/client to provide a resilient, zero-error HMR client in cloud preview/container environments

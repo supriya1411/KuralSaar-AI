@@ -1,4 +1,4 @@
-import { LegalConcept, EthicalConcept, RetrievalResult } from '../types';
+import { LegalConcept, EthicalConcept, RetrievalResult, RetrievedKuralMatch } from '../types';
 
 export const DEFAULT_ETHICS_CATEGORIES: EthicalConcept[] = [
   {

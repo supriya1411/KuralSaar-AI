@@ -1,42 +1,47 @@
 import { Scenario, RetrievalResult } from '../types';
+import { getLocalizedScenario } from '../i18n/scenarioLocalizations';
+import { Language } from '../i18n/translations';
 
 export const scenarioService = {
-  async getAllScenarios(): Promise<RetrievalResult<Scenario>> {
+  async getAllScenarios(lang: Language = 'en'): Promise<RetrievalResult<Scenario>> {
     try {
       const res = await fetch('/api/scenarios');
       if (res.ok) {
         const json = await res.json();
         if (json.success && Array.isArray(json.data)) {
-          const transformed: Scenario[] = json.data.map((item: any) => ({
-            id: item.id,
-            number: item.number,
-            title: item.title,
-            difficulty: item.difficulty,
-            category: item.category,
-            summary: item.description?.slice(0, 120) + '...',
-            description: item.description,
-            question: item.question,
-            options: item.options || [],
-            correctOptionId: item.correctAnswer || item.correctOptionId || 'B',
-            xpReward: item.difficulty === 'Hard' ? 150 : item.difficulty === 'Medium' ? 100 : 75,
-            thinkEthicallyHint: item.thinkEthicallyHint,
-            ethicalConcepts: item.ethicalConcepts || [],
-            legalConcepts: item.legalConcepts || [],
-            skillsImproved: item.skillsImproved || [],
-            relatedKuralNumber: item.relatedKuralIds?.[0] || item.relatedKuralNumber || 118,
-            legalPerspective: item.legalPerspective || {
-              title: 'Indian Legal Context',
-              statutes: ['Statutory Indian Law'],
-              explanation: 'Educational reference.',
-              precedentOrCode: 'Section Reference',
-              isDisclaimerDemo: true
-            },
-            ethicalPerspective: item.ethicalPerspective || {
-              title: 'Thirukkural Ethical Foundation',
-              principles: item.ethicalConcepts || ['Aram'],
-              deepDive: 'Ethical wisdom grounded in classical texts.'
-            }
-          }));
+          const transformed: Scenario[] = json.data.map((item: any) => {
+            const raw: Scenario = {
+              id: item.id,
+              number: item.number,
+              title: item.title,
+              difficulty: item.difficulty,
+              category: item.category,
+              summary: item.description?.slice(0, 120) + '...',
+              description: item.description,
+              question: item.question,
+              options: item.options || [],
+              correctOptionId: item.correctAnswer || item.correctOptionId || 'B',
+              xpReward: item.difficulty === 'Hard' ? 150 : item.difficulty === 'Medium' ? 100 : 75,
+              thinkEthicallyHint: item.thinkEthicallyHint,
+              ethicalConcepts: item.ethicalConcepts || [],
+              legalConcepts: item.legalConcepts || [],
+              skillsImproved: item.skillsImproved || [],
+              relatedKuralNumber: item.relatedKuralIds?.[0] || item.relatedKuralNumber || 118,
+              legalPerspective: item.legalPerspective || {
+                title: 'Indian Legal Context',
+                statutes: ['Statutory Indian Law'],
+                explanation: 'Educational reference.',
+                precedentOrCode: 'Section Reference',
+                isDisclaimerDemo: true
+              },
+              ethicalPerspective: item.ethicalPerspective || {
+                title: 'Thirukkural Ethical Foundation',
+                principles: item.ethicalConcepts || ['Aram'],
+                deepDive: 'Ethical wisdom grounded in classical texts.'
+              }
+            };
+            return getLocalizedScenario(raw, lang) as Scenario;
+          });
 
           return {
             data: transformed,
@@ -58,14 +63,14 @@ export const scenarioService = {
     };
   },
 
-  async getScenarioById(id: string): Promise<Scenario | null> {
+  async getScenarioById(id: string, lang: Language = 'en'): Promise<Scenario | null> {
     try {
       const res = await fetch(`/api/scenarios/${id}`);
       if (res.ok) {
         const json = await res.json();
         if (json.success && json.data) {
           const item = json.data;
-          return {
+          const raw: Scenario = {
             id: item.id,
             number: item.number,
             title: item.title,
@@ -85,6 +90,7 @@ export const scenarioService = {
             legalPerspective: item.legalPerspective,
             ethicalPerspective: item.ethicalPerspective
           };
+          return getLocalizedScenario(raw, lang) as Scenario;
         }
       }
     } catch (err) {
@@ -93,14 +99,14 @@ export const scenarioService = {
     return null;
   },
 
-  async getScenarioByNumber(num: number): Promise<Scenario | null> {
-    const list = await this.getAllScenarios();
+  async getScenarioByNumber(num: number, lang: Language = 'en'): Promise<Scenario | null> {
+    const list = await this.getAllScenarios(lang);
     const found = list.data.find((s) => s.number === num);
     return found || null;
   },
 
-  async getTodayScenario(): Promise<Scenario | null> {
-    const list = await this.getAllScenarios();
+  async getTodayScenario(lang: Language = 'en'): Promise<Scenario | null> {
+    const list = await this.getAllScenarios(lang);
     return list.data[0] || null;
   },
 

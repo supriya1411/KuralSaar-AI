@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useApp } from '../context/AppContext';
 import { KnowledgeNode, KnowledgeEdge } from '../types';
 import { knowledgeGraphService } from '../services/knowledgeGraphService';
+import { StepAiTutorModal } from '../components/common/StepAiTutorModal';
 import {
   Network,
   Info,
@@ -12,6 +13,8 @@ import {
   ZoomIn,
   ZoomOut,
   Maximize2,
+  Minimize2,
+  X,
   Compass,
   FileText,
   CheckCircle2,
@@ -110,6 +113,18 @@ export const KnowledgeGraphPage: React.FC = () => {
   const [activeStepNumber, setActiveStepNumber] = useState<number>(1);
   const [filterType, setFilterType] = useState<string>('All');
   const [zoomLevel, setZoomLevel] = useState<number>(1);
+  const [isFullscreen, setIsFullscreen] = useState<boolean>(false);
+
+  // In-Card AI Tutor Chatbot Modal State
+  const [tutorModalOpen, setTutorModalOpen] = useState(false);
+  const [tutorTopic, setTutorTopic] = useState('');
+  const [tutorContextTitle, setTutorContextTitle] = useState('');
+
+  const openStepTutorModal = (topic: string, contextTitle: string = 'Ethical & Legal Inquiry') => {
+    setTutorTopic(topic);
+    setTutorContextTitle(contextTitle);
+    setTutorModalOpen(true);
+  };
 
   useEffect(() => {
     const fetchGraph = async () => {
@@ -125,18 +140,20 @@ export const KnowledgeGraphPage: React.FC = () => {
 
   const getNodeColor = (type: KnowledgeNode['type']) => {
     switch (type) {
-      case 'Question':
-        return { bg: 'bg-amber-100', border: 'border-amber-400', text: 'text-amber-900' };
-      case 'EthicalConcept':
-        return { bg: 'bg-indigo-100', border: 'border-indigo-400', text: 'text-indigo-900' };
+      case 'Chapter':
+        return { bg: 'bg-slate-100/90', border: 'border-slate-300', text: 'text-slate-950', typeText: 'text-slate-600' };
       case 'Kural':
-        return { bg: 'bg-emerald-100', border: 'border-emerald-400', text: 'text-emerald-900' };
+        return { bg: 'bg-amber-50/90', border: 'border-amber-300', text: 'text-amber-950', typeText: 'text-amber-700' };
+      case 'EthicalConcept':
+        return { bg: 'bg-blue-50/90', border: 'border-blue-300', text: 'text-blue-950', typeText: 'text-blue-700' };
       case 'LegalConcept':
-        return { bg: 'bg-blue-100', border: 'border-blue-400', text: 'text-blue-900' };
+        return { bg: 'bg-indigo-50/90', border: 'border-indigo-300', text: 'text-indigo-950', typeText: 'text-indigo-700' };
       case 'Scenario':
-        return { bg: 'bg-purple-100', border: 'border-purple-400', text: 'text-purple-900' };
+        return { bg: 'bg-emerald-50/90', border: 'border-emerald-300', text: 'text-emerald-950', typeText: 'text-emerald-700' };
+      case 'Question':
+        return { bg: 'bg-purple-50/90', border: 'border-purple-300', text: 'text-purple-950', typeText: 'text-purple-700' };
       default:
-        return { bg: 'bg-slate-100', border: 'border-slate-300', text: 'text-slate-800' };
+        return { bg: 'bg-slate-50', border: 'border-slate-200', text: 'text-slate-900', typeText: 'text-slate-500' };
     }
   };
 
@@ -310,11 +327,11 @@ export const KnowledgeGraphPage: React.FC = () => {
                 <button
                   onClick={(e) => {
                     e.stopPropagation();
-                    setActiveTab('ai-tutor');
+                    openStepTutorModal(activePathway.steps.ethicalPrinciple, 'Step 2: Ethical Principle');
                   }}
-                  className="w-full py-2 text-xs font-bold text-indigo-950 bg-white hover:bg-indigo-100 border border-indigo-300 rounded-lg transition-colors cursor-pointer text-center mt-3"
+                  className="w-full py-2 text-xs font-bold text-indigo-950 bg-white hover:bg-indigo-100 border border-indigo-300 rounded-lg transition-colors cursor-pointer text-center mt-3 shadow-2xs"
                 >
-                  Explore Ethics in Tutor →
+                  Explore Ethics in AI Tutor Card →
                 </button>
               </div>
 
@@ -345,11 +362,11 @@ export const KnowledgeGraphPage: React.FC = () => {
                 <button
                   onClick={(e) => {
                     e.stopPropagation();
-                    setActiveTab('ethics-library');
+                    openStepTutorModal(activePathway.steps.legalStatute, 'Step 3: Statutory Law');
                   }}
-                  className="w-full py-2 text-xs font-bold text-blue-950 bg-white hover:bg-blue-100 border border-blue-300 rounded-lg transition-colors cursor-pointer text-center mt-3"
+                  className="w-full py-2 text-xs font-bold text-blue-950 bg-white hover:bg-blue-100 border border-blue-300 rounded-lg transition-colors cursor-pointer text-center mt-3 shadow-2xs"
                 >
-                  View Legal Statutes →
+                  Explore Law in AI Tutor Card →
                 </button>
               </div>
 
@@ -444,8 +461,17 @@ export const KnowledgeGraphPage: React.FC = () => {
                     </button>
                   )}
                   <button
-                    onClick={() => setActiveTab('ai-tutor')}
-                    className="w-full py-2.5 text-xs font-bold text-slate-700 bg-white hover:bg-slate-100 border border-slate-200 rounded-xl transition-colors cursor-pointer text-center"
+                    onClick={() => {
+                      const topic = activeStepNumber === 1
+                        ? activePathway.steps.kuralTitle
+                        : activeStepNumber === 2
+                        ? activePathway.steps.ethicalPrinciple
+                        : activeStepNumber === 3
+                        ? activePathway.steps.legalStatute
+                        : activePathway.steps.scenarioTitle;
+                      openStepTutorModal(topic, `Pathway Step ${activeStepNumber}`);
+                    }}
+                    className="w-full py-2.5 text-xs font-bold text-slate-700 bg-white hover:bg-slate-100 border border-slate-200 rounded-xl transition-colors cursor-pointer text-center shadow-2xs"
                   >
                     Ask AI Tutor About This Step
                   </button>
@@ -500,11 +526,19 @@ export const KnowledgeGraphPage: React.FC = () => {
                   <ZoomIn className="w-4 h-4" />
                 </button>
                 <button
-                  onClick={() => setZoomLevel(1)}
-                  className="p-1.5 bg-white hover:bg-slate-100 border border-slate-200 rounded-lg text-slate-600 cursor-pointer"
-                  title="Reset Zoom"
+                  onClick={() => setIsFullscreen(true)}
+                  className="p-1.5 bg-white hover:bg-slate-100 border border-slate-200 rounded-lg text-slate-700 cursor-pointer transition-colors shadow-2xs"
+                  title="Full Screen View (Expand Graph)"
                 >
-                  <Maximize2 className="w-4 h-4" />
+                  <Maximize2 className="w-4 h-4 text-blue-600" />
+                </button>
+                <button
+                  onClick={() => setIsFullscreen(true)}
+                  className="px-3 py-1.5 bg-[#071B3A] hover:bg-[#0A2540] text-white rounded-xl cursor-pointer flex items-center gap-1.5 text-xs font-extrabold shadow-2xs transition-all"
+                  title="Open Full Screen Visual"
+                >
+                  <Maximize2 className="w-3.5 h-3.5 text-amber-400" />
+                  <span>Full Screen Visual</span>
                 </button>
               </div>
             </div>
@@ -583,7 +617,7 @@ export const KnowledgeGraphPage: React.FC = () => {
                               : 'hover:scale-102 hover:shadow-xs z-10'
                           }`}
                         >
-                          <span className="text-[9px] font-black uppercase tracking-wider block opacity-70 mb-0.5">
+                          <span className={`text-[9px] font-extrabold uppercase tracking-wider block mb-0.5 ${color.typeText}`}>
                             {node.type}
                           </span>
                           <h4 className={`text-xs font-bold leading-tight ${color.text} line-clamp-2`}>
@@ -677,8 +711,12 @@ export const KnowledgeGraphPage: React.FC = () => {
                   )}
 
                   <button
-                    onClick={() => setActiveTab('ai-tutor')}
-                    className="w-full py-2.5 text-xs font-bold text-slate-700 bg-slate-100 hover:bg-slate-200 rounded-xl transition-colors flex items-center justify-center gap-1.5 cursor-pointer"
+                    onClick={() => {
+                      if (selectedNode) {
+                        openStepTutorModal(selectedNode.details.title || selectedNode.label, `${selectedNode.type} Node Inquiry`);
+                      }
+                    }}
+                    className="w-full py-2.5 text-xs font-bold text-slate-700 bg-slate-100 hover:bg-slate-200 rounded-xl transition-colors flex items-center justify-center gap-1.5 cursor-pointer shadow-2xs"
                   >
                     <Sparkles className="w-3.5 h-3.5 text-amber-500" />
                     Ask AI Tutor About This Node
@@ -694,6 +732,237 @@ export const KnowledgeGraphPage: React.FC = () => {
           </div>
         </div>
       )}
+
+      {/* ========================================================================= */}
+      {/* 100% FULL SCREEN GRAPH VISUAL MODAL OVERLAY */}
+      {/* ========================================================================= */}
+      {isFullscreen && (
+        <div className="fixed inset-0 z-50 bg-white text-slate-900 flex flex-col p-4 sm:p-6 animate-in zoom-in-95 duration-200 select-none">
+          {/* Top Fullscreen Header Control Bar */}
+          <div className="flex flex-wrap items-center justify-between gap-4 pb-4 border-b border-slate-200 shrink-0">
+            <div className="flex items-center gap-3">
+              <div className="w-9 h-9 bg-blue-50 border border-blue-200 rounded-xl flex items-center justify-center font-bold text-blue-700 shadow-2xs">
+                <Network className="w-5 h-5 text-blue-600" />
+              </div>
+              <div>
+                <h2 className="text-lg font-extrabold font-heading text-[#071B3A] flex items-center gap-2">
+                  Full Screen Knowledge Graph & Semantic Map
+                </h2>
+                <p className="text-xs text-slate-500 font-medium">
+                  Showing all {filteredNodes.length} nodes & connections across Thirukkural Chapters, Kurals, Ethical Concepts, and Indian Legal Statutes.
+                </p>
+              </div>
+            </div>
+
+            <div className="flex items-center gap-3">
+              <div className="flex items-center gap-2 bg-slate-100 px-3 py-1.5 rounded-xl border border-slate-200">
+                <span className="text-xs font-extrabold text-slate-700">Filter Nodes:</span>
+                <select
+                  value={filterType}
+                  onChange={(e) => setFilterType(e.target.value)}
+                  className="px-2.5 py-1 text-xs bg-white text-slate-800 border border-slate-200 rounded-lg font-bold focus:outline-none focus:ring-2 focus:ring-blue-500/20"
+                >
+                  <option value="All">All Types ({nodes.length})</option>
+                  <option value="Question">Questions</option>
+                  <option value="EthicalConcept">Ethical Concepts</option>
+                  <option value="Kural">Thirukkurals</option>
+                  <option value="LegalConcept">Legal Statutes</option>
+                  <option value="Scenario">Scenarios</option>
+                </select>
+              </div>
+
+              <div className="flex items-center gap-1.5 bg-slate-100 p-1.5 rounded-xl border border-slate-200">
+                <button
+                  onClick={() => setZoomLevel((prev) => Math.max(0.7, prev - 0.1))}
+                  className="p-1.5 bg-white hover:bg-slate-50 rounded-lg text-slate-700 border border-slate-200 cursor-pointer transition-colors"
+                  title="Zoom Out"
+                >
+                  <ZoomOut className="w-4 h-4" />
+                </button>
+                <span className="text-xs font-bold text-slate-800 min-w-12 text-center">
+                  {Math.round(zoomLevel * 100)}%
+                </span>
+                <button
+                  onClick={() => setZoomLevel((prev) => Math.min(1.6, prev + 0.1))}
+                  className="p-1.5 bg-white hover:bg-slate-50 rounded-lg text-slate-700 border border-slate-200 cursor-pointer transition-colors"
+                  title="Zoom In"
+                >
+                  <ZoomIn className="w-4 h-4" />
+                </button>
+                <button
+                  onClick={() => setZoomLevel(1)}
+                  className="px-2.5 py-1 bg-white hover:bg-slate-50 border border-slate-200 rounded-lg text-xs font-bold text-slate-700 cursor-pointer transition-colors"
+                >
+                  Reset
+                </button>
+              </div>
+
+              <button
+                onClick={() => setIsFullscreen(false)}
+                className="px-4 py-2 bg-red-600 hover:bg-red-700 text-white font-extrabold text-xs rounded-xl flex items-center gap-1.5 shadow-md cursor-pointer transition-all"
+              >
+                <Minimize2 className="w-4 h-4" />
+                <span>Exit Full Screen</span>
+              </button>
+            </div>
+          </div>
+
+          {/* Full Screen Canvas Stage */}
+          <div className="flex-1 flex gap-4 mt-4 overflow-hidden">
+            {/* SVG Graph Canvas (Main Viewport) */}
+            <div className="flex-1 bg-slate-50/70 rounded-2xl border border-slate-200 p-4 overflow-auto custom-scrollbar relative shadow-inner">
+              {(() => {
+                const maxCanvasY = Math.max(700, ...filteredNodes.map((n) => (n.y || 0) + 140));
+                return (
+                  <div
+                    style={{
+                      transform: `scale(${zoomLevel})`,
+                      transformOrigin: 'top left',
+                      width: '1420px',
+                      height: `${maxCanvasY}px`,
+                    }}
+                    className="relative select-none"
+                  >
+                    <svg className="w-full h-full absolute inset-0 pointer-events-none">
+                      {edges.map((edge) => {
+                        const src = nodes.find((n) => n.id === edge.source);
+                        const tgt = nodes.find((n) => n.id === edge.target);
+                        if (!src || !tgt || src.x === undefined || tgt.x === undefined) return null;
+
+                        const isEdgeActive =
+                          selectedNode?.id === edge.source || selectedNode?.id === edge.target;
+
+                        return (
+                          <g key={edge.id}>
+                            <line
+                              x1={src.x + 65}
+                              y1={(src.y || 100) + 24}
+                              x2={tgt.x + 65}
+                              y2={(tgt.y || 100) + 24}
+                              stroke={isEdgeActive ? '#1E3A8A' : '#CBD5E1'}
+                              strokeWidth={isEdgeActive ? 3.5 : 1.5}
+                              strokeDasharray={isEdgeActive ? '5 3' : 'none'}
+                              opacity={isEdgeActive ? 1 : 0.6}
+                            />
+                            {edge.label && (
+                              <text
+                                x={(src.x + tgt.x + 130) / 2}
+                                y={((src.y || 100) + (tgt.y || 100) + 48) / 2 - 4}
+                                fill={isEdgeActive ? '#071B3A' : '#64748B'}
+                                fontSize="9"
+                                fontWeight="bold"
+                                textAnchor="middle"
+                              >
+                                {edge.label}
+                              </text>
+                            )}
+                          </g>
+                        );
+                      })}
+                    </svg>
+
+                    {/* Render Fullscreen Nodes */}
+                    {filteredNodes.map((node) => {
+                      const color = getNodeColor(node.type);
+                      const isSelected = selectedNode?.id === node.id;
+
+                      return (
+                        <div
+                          key={node.id}
+                          onClick={() => setSelectedNode(node)}
+                          style={{
+                            left: `${node.x || 50}px`,
+                            top: `${node.y || 100}px`,
+                          }}
+                          className={`absolute w-36 p-3 rounded-xl border-2 transition-all cursor-pointer shadow-xs text-center ${
+                            color.bg
+                          } ${color.border} ${
+                            isSelected
+                              ? 'ring-4 ring-blue-500/40 scale-108 shadow-md z-30 font-bold'
+                              : 'hover:scale-104 hover:shadow-xs z-10'
+                          }`}
+                        >
+                          <span className={`text-[9px] font-extrabold uppercase tracking-wider block mb-0.5 ${color.typeText}`}>
+                            {node.type}
+                          </span>
+                          <h4 className={`text-xs font-bold leading-tight ${color.text} line-clamp-2`}>
+                            {node.label}
+                          </h4>
+                        </div>
+                      );
+                    })}
+                  </div>
+                );
+              })()}
+            </div>
+
+            {/* Selected Node Drawer inside Fullscreen */}
+            {selectedNode && (
+              <div className="w-80 bg-white border border-slate-200 rounded-2xl p-5 space-y-4 shadow-xl overflow-y-auto shrink-0 animate-in slide-in-from-right-10 duration-200">
+                <div className="flex items-center justify-between pb-2 border-b border-slate-100">
+                  <span className="px-2.5 py-0.5 text-xs font-extrabold bg-blue-100 text-blue-950 rounded-md border border-blue-200">
+                    {selectedNode.type}
+                  </span>
+                  <button
+                    onClick={() => setSelectedNode(null)}
+                    className="text-xs text-slate-400 hover:text-slate-700 p-1 cursor-pointer"
+                  >
+                    <X className="w-4 h-4" />
+                  </button>
+                </div>
+
+                <div>
+                  <h3 className="text-base font-extrabold text-[#071B3A] leading-tight font-heading">
+                    {selectedNode.details.title}
+                  </h3>
+                  {selectedNode.details.subtitle && (
+                    <p className="text-xs text-blue-700 font-tamil font-bold mt-1">
+                      {selectedNode.details.subtitle}
+                    </p>
+                  )}
+                </div>
+
+                <div className="p-3.5 bg-slate-50 rounded-xl border border-slate-200 text-xs text-slate-700 leading-relaxed font-medium">
+                  <span className="font-extrabold text-slate-900 block mb-1">Deep Description:</span>
+                  <p>{selectedNode.details.description}</p>
+                </div>
+
+                {selectedNode.type === 'Kural' && (
+                  <button
+                    onClick={() => {
+                      const num = parseInt(selectedNode.label.replace('Kural ', ''), 10) || 131;
+                      openKuralModalByNumber(num);
+                    }}
+                    className="w-full py-2.5 text-xs font-bold text-white bg-[#071B3A] hover:bg-[#0A2540] rounded-xl transition-colors cursor-pointer text-center block shadow-2xs"
+                  >
+                    Open Kural #{selectedNode.label.replace('Kural ', '')} Detail →
+                  </button>
+                )}
+
+                {selectedNode.type === 'Scenario' && (
+                  <button
+                    onClick={() => {
+                      setIsFullscreen(false);
+                      setSelectedScenarioNumber(3);
+                      setActiveTab('scenario-challenge');
+                    }}
+                    className="w-full py-2.5 text-xs font-bold text-white bg-emerald-600 hover:bg-emerald-700 rounded-xl transition-colors cursor-pointer text-center block shadow-2xs"
+                  >
+                    Launch Scenario Challenge →
+                  </button>
+                )}
+              </div>
+            )}
+          </div>
+        </div>
+      )}
+      {/* Interactive In-Card AI Tutor Chatbot Modal Overlay */}
+      <StepAiTutorModal
+        isOpen={tutorModalOpen}
+        onClose={() => setTutorModalOpen(false)}
+        initialTopic={tutorTopic}
+        contextTitle={tutorContextTitle}
+      />
     </div>
   );
 };

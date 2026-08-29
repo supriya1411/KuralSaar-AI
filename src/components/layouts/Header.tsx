@@ -11,6 +11,7 @@ import {
   Search,
   Bell,
 } from 'lucide-react';
+import { VoiceDictationButton } from '../common/VoiceDictationButton';
 
 interface Props {
   onMobileMenuToggle: () => void;
@@ -40,53 +41,53 @@ export const Header: React.FC<Props> = ({ onMobileMenuToggle }) => {
         };
       case 'scenario-challenge':
         return {
-          title: 'Scenario Challenge',
-          subtitle: 'Apply legal knowledge, ethics and Thirukkural wisdom to real-life situations.',
+          title: t('scenarioChallenge'),
+          subtitle: t('scenarioChallengeHeaderSub'),
         };
       case 'kural-quest':
         return {
-          title: 'Kural Quest',
-          subtitle: 'Explore 1330 ethical couplets paired with modern legal jurisprudence.',
+          title: t('kuralQuest'),
+          subtitle: t('kuralQuestPillarDesc'),
         };
       case 'ethics-library':
         return {
-          title: 'Ethics Library',
-          subtitle: 'Foundational categories of moral philosophy and classical Indian statecraft.',
+          title: t('ethicsLibrary'),
+          subtitle: t('architectureSub'),
         };
       case 'ai-tutor':
         return {
-          title: 'AI Legal-Ethics Tutor',
-          subtitle: 'Ask ethical dilemmas and examine legal-philosophical syntheses.',
+          title: t('aiTutor'),
+          subtitle: t('aiTutorPillarDesc'),
         };
       case 'knowledge-graph':
         return {
-          title: 'Interactive Knowledge Graph',
-          subtitle: 'Explore dynamic connections between ethical concepts, Kurals, and legal statutes.',
+          title: t('knowledgeGraph'),
+          subtitle: t('heroDesc'),
         };
       case 'leaderboard':
         return {
-          title: 'Ethics Leaderboard',
-          subtitle: 'Compare ethical accuracy, streak milestones, and scenario mastery.',
+          title: t('leaderboard'),
+          subtitle: t('architectureSub'),
         };
       case 'my-progress':
         return {
-          title: 'My Progress & Analytics',
-          subtitle: 'Track your skill improvements, accuracy rates, and learning curve.',
+          title: t('myProgress'),
+          subtitle: t('architectureSub'),
         };
       case 'rewards':
         return {
-          title: 'Badges & Rewards',
-          subtitle: 'Earn achievements, unlock badges, and certify your ethical reasoning.',
+          title: t('rewards'),
+          subtitle: t('architectureSub'),
         };
       case 'discussion-forum':
         return {
-          title: 'Discussion Forum',
-          subtitle: 'Debate classical dilemmas and modern legal ethics with peers.',
+          title: t('discussionForum'),
+          subtitle: t('slogan'),
         };
       default:
         return {
-          title: 'KuralSaar AI',
-          subtitle: 'Learn Law. Live Ethics. Think Responsibly.',
+          title: t('appName'),
+          subtitle: t('slogan'),
         };
     }
   };
@@ -105,14 +106,14 @@ export const Header: React.FC<Props> = ({ onMobileMenuToggle }) => {
           <Menu className="w-5 h-5" />
         </button>
 
-        {/* Sleek Search Input */}
-        <div className="relative w-48 sm:w-72">
-          <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+        {/* Google-Style Search Input with Voice Mic */}
+        <div className="relative w-52 sm:w-80 md:w-96 flex items-center">
+          <div className="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none z-10">
             <Search className="w-4 h-4 text-slate-400" />
           </div>
           <input
             type="text"
-            placeholder="Search law or ethics..."
+            placeholder={t('searchPlaceholder')}
             value={searchGlobalQuery}
             onChange={(e) => {
               setSearchGlobalQuery(e.target.value);
@@ -120,8 +121,19 @@ export const Header: React.FC<Props> = ({ onMobileMenuToggle }) => {
                 setActiveTab('kural-quest');
               }
             }}
-            className="block w-full pl-9 pr-3 py-1.5 border border-slate-200 rounded-lg bg-slate-50/80 text-sm text-slate-800 placeholder-slate-400 focus:bg-white focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-600 transition-all font-medium"
+            className="block w-full pl-10 pr-11 py-2 border border-slate-200 rounded-full bg-slate-50/90 text-sm text-slate-800 placeholder-slate-400 focus:bg-white focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-600 transition-all font-medium shadow-2xs"
           />
+          <div className="absolute right-2.5 z-20 flex items-center">
+            <VoiceDictationButton
+              currentValue={searchGlobalQuery}
+              onTranscript={(text) => {
+                setSearchGlobalQuery(text);
+                if (activeTab !== 'kural-quest' && text.trim().length > 0) {
+                  setActiveTab('kural-quest');
+                }
+              }}
+            />
+          </div>
         </div>
       </div>
 

@@ -1,4 +1,5 @@
 import { UserProgress, Badge, LeaderboardUser } from '../types';
+import { Language } from '../i18n/translations';
 
 const STORAGE_KEY = 'justice_ai_user_progress_v1';
 
@@ -105,17 +106,50 @@ export const progressService = {
     }
   },
 
-  async getAiLearningInsights(): Promise<import('../types').AiLearningInsight | null> {
+  async getAiLearningInsights(lang: Language = 'en'): Promise<import('../types').AiLearningInsight | null> {
     try {
       const res = await fetch('/api/progress/insights');
       if (res.ok) {
         const json = await res.json();
         if (json.success && json.data) {
-          return json.data;
+          const d = json.data;
+          if (lang === 'ta') {
+            return {
+              ...d,
+              summary: 'உங்கள் செயல்திறன் சட்ட விழிப்புணர்வில் (100% தேர்ச்சி) வலுவான பகுப்பாய்வு திறனைக் காட்டுகிறது, தொடர்ச்சியாக 5 நாட்கள் கற்றல் நிறைவு பெற்றுள்ளது.',
+              recommendedAction: 'நடுவுநிலைமை குறித்து குறள் 118-ஐப் பார்த்து, வழக்கு சவால் #2-ஐ முயற்சிக்கவும்.'
+            };
+          } else if (lang === 'hi') {
+            return {
+              ...d,
+              summary: 'आपका प्रदर्शन कानूनी जागरूकता (100% दक्षता) में मजबूत विश्लेषणात्मक क्षमता दिखाता है, और 5 दिनों की निरंतरता बनी हुई है।',
+              recommendedAction: 'निष्पक्षता पर कुरल 118 की समीक्षा करें और केस परिदृश्य #2 का प्रयास करें।'
+            };
+          }
+          return d;
         }
       }
     } catch (err) {
       console.warn('[progressService] getAiLearningInsights error:', err);
+    }
+    if (lang === 'ta') {
+      return {
+        summary: 'உங்கள் செயல்திறன் சட்ட விழிப்புணர்வில் (100% தேர்ச்சி) வலுவான பகுப்பாய்வு திறனைக் காட்டுகிறது.',
+        strengths: ['அரசியலமைப்பு கோட்பாடுகளில் அதிக பகுப்பாய்வு துல்லியம்'],
+        improvementAreas: ['நிறுவன அறநெறியில் கூடுதல் சட்டப் பார்வை'],
+        recommendedAction: 'நடுவுநிலைமை குறித்து குறள் 118-ஐப் பார்த்து வழக்கு #2-ஐ முயற்சிக்கவும்.',
+        suggestedKuralNumber: 118,
+        suggestedScenarioId: 'scen-2'
+      };
+    } else if (lang === 'hi') {
+      return {
+        summary: 'आपका प्रदर्शन कानूनी जागरूकता (100% दक्षता) में मजबूत विश्लेषणात्मक क्षमता दिखाता है।',
+        strengths: ['संवैधानिक सिद्धांतों पर उच्च विश्लेषणात्मक सटीकता'],
+        improvementAreas: ['कॉर्पोरेट नीतिशास्त्र में अधिक वैधानिक अनुभव'],
+        recommendedAction: 'निष्पक्षता पर कुरल 118 की समीक्षा करें और केस #2 का प्रयास करें।',
+        suggestedKuralNumber: 118,
+        suggestedScenarioId: 'scen-2'
+      };
     }
     return {
       summary: 'Your performance demonstrates balanced discernment between statutory duty and ethical conscience.',
@@ -123,7 +157,7 @@ export const progressService = {
       improvementAreas: ['Deepen statutory exposure in corporate ethics'],
       recommendedAction: 'Explore Kural 118 on Impartiality and practice Scenario #2.',
       suggestedKuralNumber: 118,
-      suggestedScenarioId: 'SCEN-002'
+      suggestedScenarioId: 'scen-2'
     };
   },
 

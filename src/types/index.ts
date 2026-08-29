@@ -328,6 +328,8 @@ export interface ForumPost {
   replyCount: number;
   timestamp: string;
   tags: string[];
+  audioUrl?: string;
+  replies?: DiscussionReply[];
 }
 
 export interface LeaderboardEntry {
@@ -356,6 +358,7 @@ export interface DiscussionReply {
   upvotes: number;
   ethicalAngle?: string;
   citedKural?: number;
+  audioUrl?: string;
 }
 
 export interface DiscussionTopic {
@@ -373,6 +376,7 @@ export interface DiscussionTopic {
   relatedKural?: number;
   relatedLegalConcept?: string;
   replies: DiscussionReply[];
+  audioUrl?: string;
 }
 
 export type ActiveTab = 

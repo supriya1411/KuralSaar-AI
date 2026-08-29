@@ -23,6 +23,8 @@ import {
   FileText
 } from 'lucide-react';
 
+import { VoiceDictationButton } from '../components/common/VoiceDictationButton';
+
 const SUGGESTED_QUESTIONS = [
   'Someone insulted me and I want revenge. What should I do?',
   'My manager asked me to hide a safety report violation.',
@@ -109,25 +111,35 @@ export const AiTutorPage: React.FC = () => {
       </div>
 
       {/* Input Box */}
-      <div className="p-4 bg-white rounded-2xl border border-slate-200 shadow-2xs space-y-3">
+      <div className="p-4 sm:p-5 bg-white rounded-2xl border border-slate-200/80 shadow-xs space-y-3">
         <form
           onSubmit={(e) => {
             e.preventDefault();
             handleAsk(query);
           }}
-          className="flex items-center gap-3"
+          className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3"
         >
-          <input
-            type="text"
-            placeholder="Type your ethical dilemma or legal query here (e.g. 'Someone insulted me and I want revenge. What should I do?')..."
-            value={query}
-            onChange={(e) => setQuery(e.target.value)}
-            className="flex-1 px-4 py-3 text-sm bg-slate-50 border border-slate-200 rounded-xl focus:bg-white focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-600 text-slate-900 font-medium"
-          />
+          {/* Animated Gradient Border Box */}
+          <div className="relative flex-1 group rounded-2xl p-[2px] bg-gradient-to-r from-amber-400 via-blue-500 to-indigo-600 focus-within:from-amber-500 focus-within:via-blue-600 focus-within:to-indigo-700 shadow-xs focus-within:shadow-[0_0_20px_rgba(59,130,246,0.25)] transition-all duration-300">
+            <div className="relative flex items-center bg-slate-50 group-focus-within:bg-white rounded-[14px] transition-colors">
+              <Sparkles className="w-4 h-4 text-amber-500 absolute left-3.5 pointer-events-none shrink-0" />
+              <input
+                type="text"
+                placeholder="Type your ethical dilemma or legal query here (e.g. 'Someone insulted me and I want revenge. What should I do?')..."
+                value={query}
+                onChange={(e) => setQuery(e.target.value)}
+                className="w-full pl-10 pr-12 py-3.5 text-sm bg-transparent border-0 outline-none text-slate-900 placeholder:text-slate-400 font-medium"
+              />
+              <div className="absolute right-3 z-20 flex items-center">
+                <VoiceDictationButton currentValue={query} onTranscript={(text) => setQuery(text)} />
+              </div>
+            </div>
+          </div>
+
           <button
             type="submit"
             disabled={!query.trim() || isLoading}
-            className="inline-flex items-center gap-2 px-6 py-3 text-xs font-extrabold text-white bg-[#071B3A] hover:bg-[#0A2540] disabled:opacity-50 rounded-xl shadow-2xs transition-all shrink-0 cursor-pointer"
+            className="inline-flex items-center justify-center gap-2 px-6 py-3.5 text-xs font-extrabold text-white bg-[#071B3A] hover:bg-[#0A2540] disabled:opacity-50 rounded-2xl shadow-xs hover:shadow-md transition-all shrink-0 cursor-pointer border border-blue-900/30"
           >
             {isLoading ? (
               <RefreshCw className="w-4 h-4 animate-spin" />
