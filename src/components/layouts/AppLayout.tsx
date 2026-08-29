@@ -38,7 +38,7 @@ export const AppLayout: React.FC<Props> = ({ children }) => {
             onClick={() => setIsMobileMenuOpen(false)}
           />
           <div className="relative z-10 flex flex-col h-full w-72 bg-[#0E1330] shadow-2xl">
-            <Sidebar />
+            <Sidebar onItemClick={() => setIsMobileMenuOpen(false)} />
           </div>
         </div>
       )}

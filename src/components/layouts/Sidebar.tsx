@@ -15,12 +15,8 @@ import {
   MessagesSquare,
   ChevronLeft,
   ChevronRight,
-  Cpu,
-  ExternalLink,
+  Globe,
 } from 'lucide-react';
-
-import { Globe } from 'lucide-react';
-import { Language } from '../../i18n/translations';
 
 interface NavItem {
   id: ActiveTab;
@@ -42,10 +38,16 @@ const NAV_ITEMS: NavItem[] = [
   { id: 'discussion-forum', labelKey: 'discussionForum', icon: MessagesSquare },
 ];
 
-export const Sidebar: React.FC = () => {
+interface SidebarProps {
+  onItemClick?: () => void;
+}
+
+export const Sidebar: React.FC<SidebarProps> = ({ onItemClick }) => {
   const {
     activeTab,
     setActiveTab,
+    selectedScenarioNumber,
+    setSelectedScenarioNumber,
     isSidebarCollapsed,
     setIsSidebarCollapsed,
     openKuralModalByNumber,
@@ -54,6 +56,16 @@ export const Sidebar: React.FC = () => {
     setLanguage,
     t,
   } = useApp();
+
+  const handleNavClick = (tabId: ActiveTab) => {
+    if (tabId === 'scenario-challenge') {
+      setSelectedScenarioNumber(selectedScenarioNumber || 1);
+    }
+    setActiveTab(tabId);
+    if (onItemClick) {
+      onItemClick();
+    }
+  };
 
   return (
     <aside
@@ -64,7 +76,7 @@ export const Sidebar: React.FC = () => {
       {/* Brand Header */}
       <div className="p-5 flex items-center justify-between border-b border-slate-800/80 shrink-0">
         <div
-          onClick={() => setActiveTab('dashboard')}
+          onClick={() => handleNavClick('dashboard')}
           className="flex items-center gap-3 cursor-pointer group"
         >
           {/* Royal Blue Shield Logo Badge */}
@@ -86,6 +98,7 @@ export const Sidebar: React.FC = () => {
 
         {/* Collapse button (Desktop) */}
         <button
+          type="button"
           onClick={() => setIsSidebarCollapsed(!isSidebarCollapsed)}
           className="hidden md:flex p-1.5 rounded-lg text-slate-400 hover:text-white hover:bg-slate-800/80 transition-colors cursor-pointer"
           title={isSidebarCollapsed ? 'Expand sidebar' : 'Collapse sidebar'}
@@ -114,7 +127,8 @@ export const Sidebar: React.FC = () => {
                 </div>
               )}
               <button
-                onClick={() => setActiveTab(item.id)}
+                type="button"
+                onClick={() => handleNavClick(item.id)}
                 className={`w-full flex items-center gap-3 px-3.5 py-2.5 rounded-xl font-bold text-xs sm:text-sm transition-all duration-150 group relative cursor-pointer ${
                   isActive
                     ? 'bg-[#1E3A8A] text-white shadow-md shadow-blue-950/50 font-extrabold border-l-4 border-blue-400'
@@ -171,6 +185,7 @@ export const Sidebar: React.FC = () => {
             </div>
             <div className="grid grid-cols-3 gap-1 p-0.5 bg-slate-900/80 rounded-lg">
               <button
+                type="button"
                 onClick={() => setLanguage('en')}
                 className={`py-1 text-[11px] font-extrabold rounded-md transition-all cursor-pointer ${
                   language === 'en'
@@ -181,6 +196,7 @@ export const Sidebar: React.FC = () => {
                 English
               </button>
               <button
+                type="button"
                 onClick={() => setLanguage('ta')}
                 className={`py-1 text-[11px] font-extrabold rounded-md transition-all cursor-pointer font-tamil ${
                   language === 'ta'
@@ -191,6 +207,7 @@ export const Sidebar: React.FC = () => {
                 தமிழ்
               </button>
               <button
+                type="button"
                 onClick={() => setLanguage('hi')}
                 className={`py-1 text-[11px] font-extrabold rounded-md transition-all cursor-pointer ${
                   language === 'hi'
@@ -225,6 +242,7 @@ export const Sidebar: React.FC = () => {
       {isSidebarCollapsed && (
         <div className="p-2 flex flex-col items-center gap-2 cursor-pointer border-t border-slate-800">
           <button
+            type="button"
             onClick={() => setLanguage(language === 'en' ? 'ta' : language === 'ta' ? 'hi' : 'en')}
             className="p-1 text-xs font-bold text-amber-400 hover:text-white"
             title="Switch Language"
