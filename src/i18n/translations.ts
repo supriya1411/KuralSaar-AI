@@ -77,6 +77,7 @@ export const TRANSLATIONS: Record<Language, Record<string, string>> = {
     exploreVirtue: 'Explore Virtue (Aram) →',
     kuralQuote34: '"To be pure in mind is as much as all righteousness; all else is but empty display."',
     kuralTamil34: '"மனத்துக்கண் மாசிலன் ஆதல் அனைத்தறன் ஆகுல நீர பிற."',
+    kuralNumFormat: 'Kural {number}',
     
     // Pillar Cards
     kuralQuestPillarDesc: 'Explore 1,330 couplets categorized by moral concept and Paal.',
@@ -195,6 +196,37 @@ export const TRANSLATIONS: Record<Language, Record<string, string>> = {
     searchRelatedKurals: 'Search Related Kurals',
     askAiAboutDomain: 'Ask AI Tutor About This Domain',
 
+    // Knowledge Graph Page
+    interactiveKnowledgeGraph: 'Interactive Knowledge Graph & Learning Journeys',
+    ethicalLegalMapTitle: 'Ethical-Legal Semantic Map',
+    semanticMapSub: 'Explore step-by-step how 2,000+ years of classical Thirukkural moral virtues flow directly into modern Indian statutory laws and courtroom case studies.',
+    guidedPathwaysEasy: 'Guided Pathways (Easy)',
+    fullNetworkGraph: 'Full Network Graph',
+    learningPathwayPrefix: 'Learning Pathway:',
+    clickStepToInspect: 'Click any step to inspect',
+    step1Tag: 'Step 1: Classical Verse',
+    step2Tag: 'Step 2: Ethical Principle',
+    step3Tag: 'Step 3: Statutory Law',
+    step4Tag: 'Step 4: Real Case Dilemma',
+    readFullVerse: 'Read Full Verse →',
+    exploreEthicsAiTutor: 'Explore Ethics in AI Tutor Card →',
+    exploreLawAiTutor: 'Explore Law in AI Tutor Card →',
+    solveScenarioBtn: 'Solve Scenario #{num} →',
+    inspectingStep: 'Inspecting Step {num}: {title}',
+    pathwayLabel: 'Pathway:',
+    openKuralModalBtn: 'Open Kural #{num} Detail Modal →',
+    askAiAboutStep: 'Ask AI Tutor About This Step',
+
+    // Pathways
+    pathJusticeTitle: 'Impartiality & Natural Justice',
+    pathJusticeDesc: 'How ancient Tamil impartiality rules mirror Article 21 and the Principles of Natural Justice.',
+    pathIntegrityTitle: 'Propriety of Conduct & Integrity',
+    pathIntegrityDesc: 'Tracing professional dignity from Kural 131 to the Prevention of Corruption Act.',
+    pathTruthTitle: 'Veracity, Oaths & Evidence',
+    pathTruthDesc: 'How truthfulness (Vaaimai) forms the core of evidentiary oaths and anti-perjury laws.',
+    pathGovernanceTitle: 'Righteous Governance & Leadership',
+    pathGovernanceDesc: 'Connecting statecraft (Sengonmai) with Judicial Review under Article 32 & 226.',
+
     // All 12 Ethics Library Categories Titles & Descriptions
     catImpartialityTitle: 'Impartiality & Equity',
     catImpartialityDesc: 'Maintaining absolute neutrality and judicial balance without bias or personal interest.',
@@ -297,6 +329,7 @@ export const TRANSLATIONS: Record<Language, Record<string, string>> = {
     exploreVirtue: 'அறத்தை ஆராய்க →',
     kuralQuote34: '"மனதில் குற்றம் இல்லாதிருப்பதே சிறந்த அறமாகும்; மற்றவையெல்லாம் வெறும் ஆரவாரமே."',
     kuralTamil34: '"மனத்துக்கண் மாசிலன் ஆதல் அனைத்தறன் ஆகுல நீர பிற."',
+    kuralNumFormat: 'குறள் {number}',
     
     // Pillar Cards
     kuralQuestPillarDesc: 'அறநெறி கருத்து மற்றும் பால்களின்படி வகைப்படுத்தப்பட்ட 1,330 குறள்களை ஆராய்க.',
@@ -415,6 +448,37 @@ export const TRANSLATIONS: Record<Language, Record<string, string>> = {
     searchRelatedKurals: 'தொடர்புடைய குறள்களைத் தேடுக',
     askAiAboutDomain: 'இந்த பிரிவு பற்றி AI ஆசிரியரிடம் கேட்க',
 
+    // Knowledge Graph Page
+    interactiveKnowledgeGraph: 'ஊடாடும் அறிவு வரைபடம் & கற்றல் பாதைகள்',
+    ethicalLegalMapTitle: 'அறநெறி-சட்ட வரைபடம்',
+    semanticMapSub: '2,000+ ஆண்டுகால திருக்குறள் அறநெறிகள் நவீன இந்திய சட்டங்கள் மற்றும் நீதிமன்ற வழக்கு ஆய்வுகளாக எவ்வாறு உருவாகின்றன என்பதை ஆராயுங்கள்.',
+    guidedPathwaysEasy: 'வழிகாட்டப்பட்ட பாதைகள் (எளிது)',
+    fullNetworkGraph: 'முழு வலையமைப்பு வரைபடம்',
+    learningPathwayPrefix: 'கற்றல் பாதை:',
+    clickStepToInspect: 'ஆய்வு செய்ய ஏதேனும் ஒரு படியைக் கிளிக் செய்க',
+    step1Tag: 'படி 1: திருக்குறள் வரி',
+    step2Tag: 'படி 2: அறநெறி கோட்பாடு',
+    step3Tag: 'படி 3: சட்டப்பிரிவு',
+    step4Tag: 'படி 4: நிஜ வழக்கு சவால்',
+    readFullVerse: 'முழு குறளையும் படிக்க →',
+    exploreEthicsAiTutor: 'AI ஆசிரியரிடம் அறநெறியை ஆராய்க →',
+    exploreLawAiTutor: 'AI ஆசிரியரிடம் சட்டத்தை ஆராய்க →',
+    solveScenarioBtn: 'வழக்கு #{num} ஐத் தீர்க்கவும் →',
+    inspectingStep: 'படி {num} ஆய்வு: {title}',
+    pathwayLabel: 'பாதை:',
+    openKuralModalBtn: 'குறள் #{num} விவரங்களைப் பார்க்க →',
+    askAiAboutStep: 'இந்த படி பற்றி AI ஆசிரியரிடம் கேட்க',
+
+    // Pathways in Tamil
+    pathJusticeTitle: 'நடுவுநிலைமை & இயற்கை நீதி',
+    pathJusticeDesc: 'பண்டைய தமிழ் நடுவுநிலைமை விதிகள் அரசியலமைப்பு பிரிவு 21 மற்றும் இயற்கை நீதி கோட்பாடுகளுடன் எவ்வாறு ஒத்துப் போகின்றன.',
+    pathIntegrityTitle: 'ஒழுக்கமுடைமை & நெறிமுறை',
+    pathIntegrityDesc: 'குறள் 131 இலிருந்து ஊழல் தடுப்புச் சட்டம் வரை தொழில்முறை கண்ணியத்தைக் கண்டறிதல்.',
+    pathTruthTitle: 'வாய்மை & சாட்சியம்',
+    pathTruthDesc: 'வாய்மை எவ்வாறு சாட்சிய சத்தியப்பிரமாணங்கள் மற்றும் பொய் சாட்சி எதிர்ப்பு சட்டங்களின் மையமாக அமைகிறது.',
+    pathGovernanceTitle: 'செங்கோன்மை & நல்லாட்சி',
+    pathGovernanceDesc: 'செங்கோன்மை அரசியலை அரசியலமைப்பு பிரிவு 32 & 226 இன் நீதித்துறை மறுஆய்வுடன் இணைத்தல்.',
+
     // All 12 Ethics Library Categories Titles & Descriptions in Tamil
     catImpartialityTitle: 'நடுவுநிலைமை & சமத்துவம்',
     catImpartialityDesc: 'எந்தவொரு சார்பும் இன்றி முழுமையான நடுவுநிலைமையையும் நீதித்துறை சமநிலையையும் பேணுதல்.',
@@ -517,6 +581,7 @@ export const TRANSLATIONS: Record<Language, Record<string, string>> = {
     exploreVirtue: 'सद्गुण (अरम) खोजें →',
     kuralQuote34: '"मन में कोई पाप न होना ही सम्पूर्ण धर्म है; अन्य सभी बातें केवल बाहरी दिखावा हैं।',
     kuralTamil34: '"மனத்துக்கண் மாசிலன் ஆதல் அனைத்தறன் ஆகுல நீர பிற."',
+    kuralNumFormat: 'कुरल {number}',
     
     // Pillar Cards
     kuralQuestPillarDesc: 'नैतिक अवधारणा और पाल के अनुसार वर्गीकृत 1,330 छंदों का अन्वेषण करें।',
@@ -634,6 +699,37 @@ export const TRANSLATIONS: Record<Language, Record<string, string>> = {
     corePrinciples: 'मुख्य कानूनी-नैतिक सिद्धांत:',
     searchRelatedKurals: 'संबंधित कुरल खोजें',
     askAiAboutDomain: 'इस क्षेत्र के बारे में AI ट्यूटर से पूछें',
+
+    // Knowledge Graph Page in Hindi
+    interactiveKnowledgeGraph: 'इंटरैक्टिव ज्ञान आरेख और सीखने की यात्राएं',
+    ethicalLegalMapTitle: 'नैतिक-कानूनी मानचित्र',
+    semanticMapSub: 'अन्वेषण करें कि 2,000+ वर्षों के तिरुक्कुरल नैतिक मूल्य आधुनिक भारतीय वैधानिक कानूनों और अदालती मामलों में कैसे प्रवाहित होते हैं।',
+    guidedPathwaysEasy: 'निर्देशित मार्ग (आसान)',
+    fullNetworkGraph: 'पूर्ण नेटवर्क आरेख',
+    learningPathwayPrefix: 'सीखने का मार्ग:',
+    clickStepToInspect: 'निरीक्षण करने के लिए किसी भी चरण पर क्लिक करें',
+    step1Tag: 'चरण 1: शास्त्रीय छंद',
+    step2Tag: 'चरण 2: नैतिक सिद्धांत',
+    step3Tag: 'चरण 3: वैधानिक कानून',
+    step4Tag: 'चरण 4: वास्तविक केस दुविधा',
+    readFullVerse: 'पूरा छंद पढ़ें →',
+    exploreEthicsAiTutor: 'AI गुरु से नीति खोजें →',
+    exploreLawAiTutor: 'AI गुरु से कानून खोजें →',
+    solveScenarioBtn: 'केस #{num} सुलझाएं →',
+    inspectingStep: 'चरण {num} का निरीक्षण: {title}',
+    pathwayLabel: 'मार्ग:',
+    openKuralModalBtn: 'कुरल #{num} विवरण देखें →',
+    askAiAboutStep: 'इस चरण के बारे में AI गुरु से पूछें',
+
+    // Pathways in Hindi
+    pathJusticeTitle: 'निष्पक्षता एवं प्राकृतिक न्याय',
+    pathJusticeDesc: 'प्राचीन तमिल निष्पक्षता नियम अनुच्छेद 21 और प्राकृतिक न्याय के सिद्धांतों को कैसे दर्शाते हैं।',
+    pathIntegrityTitle: 'आचरण की सत्यनिष्ठा एवं ईमानदारी',
+    pathIntegrityDesc: 'कुरल 131 से भ्रष्टाचार निवारण अधिनियम तक व्यावसायिक गरिमा का पता लगाना।',
+    pathTruthTitle: 'सत्यता, शपथ एवं साक्ष्य',
+    pathTruthDesc: 'सत्यता (वाइमई) साक्ष्य शपथ और झूठी गवाही विरोधी कानूनों का मूल कैसे बनाती है।',
+    pathGovernanceTitle: 'धर्मपरायण शासन एवं नेतृत्व',
+    pathGovernanceDesc: 'अनुच्छेद 32 और 226 के तहत न्यायिक समीक्षा के साथ शासन कला को जोड़ना।',
 
     // All 12 Ethics Library Categories Titles & Descriptions in Hindi
     catImpartialityTitle: 'निष्पक्षता एवं समता',

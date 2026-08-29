@@ -5,11 +5,9 @@ import { knowledgeGraphService } from '../services/knowledgeGraphService';
 import { StepAiTutorModal } from '../components/common/StepAiTutorModal';
 import {
   Network,
-  Info,
   Sparkles,
   Scale,
   BookOpen,
-  ArrowRight,
   ZoomIn,
   ZoomOut,
   Maximize2,
@@ -17,11 +15,6 @@ import {
   X,
   Compass,
   FileText,
-  CheckCircle2,
-  Bot,
-  Layers,
-  Search,
-  Check,
 } from 'lucide-react';
 
 interface GuidedPathway {
@@ -104,7 +97,7 @@ const GUIDED_PATHWAYS: GuidedPathway[] = [
 ];
 
 export const KnowledgeGraphPage: React.FC = () => {
-  const { openKuralModalByNumber, setSelectedScenarioNumber, setActiveTab } = useApp();
+  const { openKuralModalByNumber, setSelectedScenarioNumber, setActiveTab, t, language } = useApp();
   const [nodes, setNodes] = useState<KnowledgeNode[]>([]);
   const [edges, setEdges] = useState<KnowledgeEdge[]>([]);
   const [selectedNode, setSelectedNode] = useState<KnowledgeNode | null>(null);
@@ -138,6 +131,22 @@ export const KnowledgeGraphPage: React.FC = () => {
 
   const activePathway = GUIDED_PATHWAYS.find((p) => p.id === activePathwayId) || GUIDED_PATHWAYS[0];
 
+  const getLocalizedPathwayTitle = (pId: string) => {
+    if (pId === 'path-justice') return t('pathJusticeTitle');
+    if (pId === 'path-integrity') return t('pathIntegrityTitle');
+    if (pId === 'path-truth') return t('pathTruthTitle');
+    if (pId === 'path-governance') return t('pathGovernanceTitle');
+    return '';
+  };
+
+  const getLocalizedPathwayDesc = (pId: string) => {
+    if (pId === 'path-justice') return t('pathJusticeDesc');
+    if (pId === 'path-integrity') return t('pathIntegrityDesc');
+    if (pId === 'path-truth') return t('pathTruthDesc');
+    if (pId === 'path-governance') return t('pathGovernanceDesc');
+    return '';
+  };
+
   const getNodeColor = (type: KnowledgeNode['type']) => {
     switch (type) {
       case 'Chapter':
@@ -166,13 +175,13 @@ export const KnowledgeGraphPage: React.FC = () => {
         <div className="space-y-2">
           <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-black bg-amber-100 text-amber-900 border border-amber-300">
             <Compass className="w-3.5 h-3.5 text-amber-600" />
-            Interactive Knowledge Graph & Learning Journeys
+            {t('interactiveKnowledgeGraph')}
           </div>
           <h2 className="text-2xl font-extrabold font-heading text-[#071B3A]">
-            Ethical-Legal Semantic Map
+            {t('ethicalLegalMapTitle')}
           </h2>
           <p className="text-xs sm:text-sm text-slate-600 max-w-2xl leading-relaxed font-medium">
-            Explore step-by-step how 2,000+ years of classical Thirukkural moral virtues flow directly into modern Indian statutory laws and courtroom case studies.
+            {t('semanticMapSub')}
           </p>
         </div>
 
@@ -187,7 +196,7 @@ export const KnowledgeGraphPage: React.FC = () => {
             }`}
           >
             <Sparkles className="w-3.5 h-3.5 text-amber-400" />
-            Guided Pathways (Easy)
+            {t('guidedPathwaysEasy')}
           </button>
           <button
             onClick={() => setViewMode('explorer')}
@@ -198,7 +207,7 @@ export const KnowledgeGraphPage: React.FC = () => {
             }`}
           >
             <Network className="w-3.5 h-3.5" />
-            Full Network Graph
+            {t('fullNetworkGraph')}
           </button>
         </div>
       </div>
@@ -229,15 +238,15 @@ export const KnowledgeGraphPage: React.FC = () => {
                     <span className="text-xl">{pathway.icon}</span>
                     {isActive && (
                       <span className="px-2 py-0.5 text-[10px] font-black bg-[#071B3A] text-white rounded-md">
-                        Active Journey
+                        {t('activeJourney')}
                       </span>
                     )}
                   </div>
                   <h3 className="text-sm font-extrabold text-[#071B3A] font-heading">
-                    {pathway.title}
+                    {getLocalizedPathwayTitle(pathway.id)}
                   </h3>
                   <p className="text-xs text-slate-600 line-clamp-2 font-medium">
-                    {pathway.description}
+                    {getLocalizedPathwayDesc(pathway.id)}
                   </p>
                 </div>
               );
@@ -251,13 +260,13 @@ export const KnowledgeGraphPage: React.FC = () => {
                 <span className="text-2xl">{activePathway.icon}</span>
                 <div>
                   <h3 className="text-lg font-extrabold text-[#071B3A] font-heading">
-                    Learning Pathway: {activePathway.title}
+                    {t('learningPathwayPrefix')} {getLocalizedPathwayTitle(activePathway.id)}
                   </h3>
-                  <p className="text-xs text-slate-500 font-medium">{activePathway.description}</p>
+                  <p className="text-xs text-slate-500 font-medium">{getLocalizedPathwayDesc(activePathway.id)}</p>
                 </div>
               </div>
               <span className="text-xs font-bold text-blue-700 bg-blue-50 px-3 py-1 rounded-full border border-blue-200">
-                Click any step to inspect
+                {t('clickStepToInspect')}
               </span>
             </div>
 
@@ -275,7 +284,7 @@ export const KnowledgeGraphPage: React.FC = () => {
                 <div className="space-y-2">
                   <div className="flex items-center justify-between">
                     <span className="text-[10px] font-black uppercase tracking-wider bg-emerald-600 text-white px-2 py-0.5 rounded">
-                      Step 1: Classical Verse
+                      {t('step1Tag')}
                     </span>
                     <span className="text-xs font-extrabold text-emerald-800">
                       Kural #{activePathway.steps.kuralNumber}
@@ -296,7 +305,7 @@ export const KnowledgeGraphPage: React.FC = () => {
                   }}
                   className="w-full py-2 text-xs font-bold text-emerald-950 bg-white hover:bg-emerald-100 border border-emerald-300 rounded-lg transition-colors cursor-pointer text-center mt-3"
                 >
-                  Read Full Verse →
+                  {t('readFullVerse')}
                 </button>
               </div>
 
@@ -312,7 +321,7 @@ export const KnowledgeGraphPage: React.FC = () => {
                 <div className="space-y-2">
                   <div className="flex items-center justify-between">
                     <span className="text-[10px] font-black uppercase tracking-wider bg-indigo-600 text-white px-2 py-0.5 rounded">
-                      Step 2: Ethical Principle
+                      {t('step2Tag')}
                     </span>
                     <Sparkles className="w-3.5 h-3.5 text-indigo-600" />
                   </div>
@@ -320,7 +329,11 @@ export const KnowledgeGraphPage: React.FC = () => {
                     {activePathway.steps.ethicalPrinciple}
                   </h4>
                   <p className="text-xs text-slate-600 leading-relaxed font-medium bg-white/80 p-2.5 rounded-lg border border-indigo-200">
-                    Establishes non-negotiable moral obligations required before exercising authority or issuing judgments.
+                    {language === 'ta'
+                      ? 'அதிகாரங்களைப் பயன்படுத்துவதற்கு முன் அல்லது தீர்ப்புகளை வழங்குவதற்கு முன் தேவையான அறநெறி கடமைகளை நிறுவுகிறது.'
+                      : language === 'hi'
+                      ? 'अधिकार का प्रयोग करने या निर्णय जारी करने से पहले आवश्यक नैतिक दायित्वों को स्थापित करता है।'
+                      : 'Establishes non-negotiable moral obligations required before exercising authority or issuing judgments.'}
                   </p>
                 </div>
 
@@ -331,7 +344,7 @@ export const KnowledgeGraphPage: React.FC = () => {
                   }}
                   className="w-full py-2 text-xs font-bold text-indigo-950 bg-white hover:bg-indigo-100 border border-indigo-300 rounded-lg transition-colors cursor-pointer text-center mt-3 shadow-2xs"
                 >
-                  Explore Ethics in AI Tutor Card →
+                  {t('exploreEthicsAiTutor')}
                 </button>
               </div>
 
@@ -347,7 +360,7 @@ export const KnowledgeGraphPage: React.FC = () => {
                 <div className="space-y-2">
                   <div className="flex items-center justify-between">
                     <span className="text-[10px] font-black uppercase tracking-wider bg-blue-600 text-white px-2 py-0.5 rounded">
-                      Step 3: Statutory Law
+                      {t('step3Tag')}
                     </span>
                     <Scale className="w-3.5 h-3.5 text-blue-600" />
                   </div>
@@ -355,7 +368,11 @@ export const KnowledgeGraphPage: React.FC = () => {
                     {activePathway.steps.legalStatute}
                   </h4>
                   <p className="text-xs text-slate-600 leading-relaxed font-medium bg-white/80 p-2.5 rounded-lg border border-blue-200">
-                    Codifies classical moral duties into enforceable statutory protections and constitutional guarantees.
+                    {language === 'ta'
+                      ? 'தொன்மை அறநெறி கடமைகளைச் சட்டப் பாதுகாப்புகளாகவும் அரசியலமைப்பு உத்தரவாதங்களாகவும் மாற்றுகிறது.'
+                      : language === 'hi'
+                      ? 'शास्त्रीय नैतिक कर्तव्यों को लागू करने योग्य वैधानिक सुरक्षा और संवैधानिक गारंटी में समाहित करता है।'
+                      : 'Codifies classical moral duties into enforceable statutory protections and constitutional guarantees.'}
                   </p>
                 </div>
 
@@ -366,7 +383,7 @@ export const KnowledgeGraphPage: React.FC = () => {
                   }}
                   className="w-full py-2 text-xs font-bold text-blue-950 bg-white hover:bg-blue-100 border border-blue-300 rounded-lg transition-colors cursor-pointer text-center mt-3 shadow-2xs"
                 >
-                  Explore Law in AI Tutor Card →
+                  {t('exploreLawAiTutor')}
                 </button>
               </div>
 
@@ -382,7 +399,7 @@ export const KnowledgeGraphPage: React.FC = () => {
                 <div className="space-y-2">
                   <div className="flex items-center justify-between">
                     <span className="text-[10px] font-black uppercase tracking-wider bg-amber-600 text-slate-950 px-2 py-0.5 rounded">
-                      Step 4: Real Case Dilemma
+                      {t('step4Tag')}
                     </span>
                     <FileText className="w-3.5 h-3.5 text-amber-700" />
                   </div>
@@ -390,7 +407,11 @@ export const KnowledgeGraphPage: React.FC = () => {
                     Scenario #{activePathway.steps.scenarioNumber}: {activePathway.steps.scenarioTitle}
                   </h4>
                   <p className="text-xs text-slate-600 leading-relaxed font-medium bg-white/80 p-2.5 rounded-lg border border-amber-200">
-                    Test your understanding by resolving real-world conflicts using statutory law and Thirukkural reasoning.
+                    {language === 'ta'
+                      ? 'சட்ட விதிகள் மற்றும் திருக்குறள் அறநெறியைப் பயன்படுத்தி நிஜ உலக மோதல்களைத் தீர்த்து உங்கள் புரிதலைச் சோதிக்கவும்.'
+                      : language === 'hi'
+                      ? 'वैधानिक कानून और तिरुक्कुरल तर्क का उपयोग करके वास्तविक दुनिया के संघर्षों को सुलझाकर अपनी समझ का परीक्षण करें।'
+                      : 'Test your understanding by resolving real-world conflicts using statutory law and Thirukkural reasoning.'}
                   </p>
                 </div>
 
@@ -402,7 +423,7 @@ export const KnowledgeGraphPage: React.FC = () => {
                   }}
                   className="w-full py-2 text-xs font-bold text-white bg-[#071B3A] hover:bg-[#0A2540] rounded-lg transition-colors cursor-pointer text-center mt-3 shadow-2xs"
                 >
-                  Solve Scenario #{activePathway.steps.scenarioNumber} →
+                  {t('solveScenarioBtn').replace('{num}', activePathway.steps.scenarioNumber.toString())}
                 </button>
               </div>
             </div>
@@ -412,17 +433,21 @@ export const KnowledgeGraphPage: React.FC = () => {
               <div className="flex items-center justify-between pb-2 border-b border-slate-200">
                 <span className="text-xs font-extrabold text-[#071B3A] flex items-center gap-2">
                   <BookOpen className="w-4 h-4 text-blue-600" />
-                  Inspecting Step {activeStepNumber}:{' '}
-                  {activeStepNumber === 1
-                    ? activePathway.steps.kuralTitle
-                    : activeStepNumber === 2
-                    ? activePathway.steps.ethicalPrinciple
-                    : activeStepNumber === 3
-                    ? activePathway.steps.legalStatute
-                    : activePathway.steps.scenarioTitle}
+                  {t('inspectingStep')
+                    .replace('{num}', activeStepNumber.toString())
+                    .replace(
+                      '{title}',
+                      activeStepNumber === 1
+                        ? activePathway.steps.kuralTitle
+                        : activeStepNumber === 2
+                        ? activePathway.steps.ethicalPrinciple
+                        : activeStepNumber === 3
+                        ? activePathway.steps.legalStatute
+                        : activePathway.steps.scenarioTitle
+                    )}
                 </span>
                 <span className="text-[11px] font-bold text-slate-500">
-                  Pathway: {activePathway.title}
+                  {t('pathwayLabel')} {getLocalizedPathwayTitle(activePathway.id)}
                 </span>
               </div>
 
@@ -430,13 +455,29 @@ export const KnowledgeGraphPage: React.FC = () => {
                 <div className="md:col-span-8 space-y-2">
                   <p className="text-slate-700 leading-relaxed font-medium">
                     {activeStepNumber === 1 &&
-                      `Kural #${activePathway.steps.kuralNumber} teaches that virtue is not merely abstract thought, but unyielding fairness and moral conduct. It forms the primary philosophical foundation of this legal pathway.`}
+                      (language === 'ta'
+                        ? `குறள் #${activePathway.steps.kuralNumber} அறம் என்பது வெறும் சிந்தனை மட்டுமல்ல, உறுதியான நடுவுநிலைமையும் நன்னடத்தையும் ஆகும் எனக் கற்பிக்கிறது. இதுவே இந்தச் சட்டப் பாதையின் முதன்மைத் தத்துவ அடித்தளமாகும்.`
+                        : language === 'hi'
+                        ? `कुरल #${activePathway.steps.kuralNumber} सिखाता है कि धर्म केवल अमूर्त विचार नहीं है, बल्कि अटूट निष्पक्षता और नैतिक आचरण है। यह इस कानूनी मार्ग की प्राथमिक दार्शनिक नींव बनाता है।`
+                        : `Kural #${activePathway.steps.kuralNumber} teaches that virtue is not merely abstract thought, but unyielding fairness and moral conduct. It forms the primary philosophical foundation of this legal pathway.`)}
                     {activeStepNumber === 2 &&
-                      `The ethical concept "${activePathway.steps.ethicalPrinciple}" mandates that judges, advocates, and civil servants maintain complete detachment from personal bias or monetary temptation.`}
+                      (language === 'ta'
+                        ? `அறநெறிக் கோட்பாடு "${activePathway.steps.ethicalPrinciple}" நீதிபதிகள், வழக்கறிஞர்கள் மற்றும் அரசு ஊழியர்கள் தனிப்பட்ட சார்பு அல்லது நிதி சலுகைகளிலிருந்து முழுமையாக விலகியிருக்க வேண்டும் என வலியுறுத்துகிறது.`
+                        : language === 'hi'
+                        ? `नैतिक अवधारणा "${activePathway.steps.ethicalPrinciple}" अनिवार्य करती है कि न्यायाधीशों, अधिवक्ताओं और सिविल सेवकों को व्यक्तिगत पूर्वाग्रह से पूरी तरह मुक्त रहना चाहिए।`
+                        : `The ethical concept "${activePathway.steps.ethicalPrinciple}" mandates that judges, advocates, and civil servants maintain complete detachment from personal bias or monetary temptation.`)}
                     {activeStepNumber === 3 &&
-                      `Under Indian jurisprudence (${activePathway.steps.legalStatute}), courts enforce strict procedural fairness to prevent arbitrary administrative actions.`}
+                      (language === 'ta'
+                        ? `இந்திய சட்டவியலின் கீழ் (${activePathway.steps.legalStatute}), தன்னிச்சையான நிர்வாக நடவடிக்கைகளைத் தடுக்க நீதிமன்றங்கள் கண்டிப்பான நடைமுறை நீதியைச் செயல்படுத்துகின்றன.`
+                        : language === 'hi'
+                        ? `भारतीय न्यायशास्त्र (${activePathway.steps.legalStatute}) के तहत, अदालतें मनमानी प्रशासनिक कार्रवाइयों को रोकने के लिए सख्त प्रक्रियात्मक निष्पक्षता लागू करती हैं।`
+                        : `Under Indian jurisprudence (${activePathway.steps.legalStatute}), courts enforce strict procedural fairness to prevent arbitrary administrative actions.`)}
                     {activeStepNumber === 4 &&
-                      `In Scenario #${activePathway.steps.scenarioNumber} (${activePathway.steps.scenarioTitle}), you face a practical real-life dilemma testing whether you can balance statutory rules with classical ethical courage.`}
+                      (language === 'ta'
+                        ? `வழக்கு #${activePathway.steps.scenarioNumber} (${activePathway.steps.scenarioTitle}) இல், சட்ட விதிகள் மற்றும் தொன்மை அறநெறி தைரியத்தைச் சமநிலைப்படுத்த முடியுமா எனச் சோதிக்கும் நடைமுறைச் சவாலை எதிர்கொள்கிறீர்கள்.`
+                        : language === 'hi'
+                        ? `केस #${activePathway.steps.scenarioNumber} (${activePathway.steps.scenarioTitle}) में, आप एक व्यावहारिक वास्तविक जीवन की दुविधा का सामना करते हैं।`
+                        : `In Scenario #${activePathway.steps.scenarioNumber} (${activePathway.steps.scenarioTitle}), you face a practical real-life dilemma testing whether you can balance statutory rules with classical ethical courage.`)}
                   </p>
                 </div>
 
@@ -446,7 +487,7 @@ export const KnowledgeGraphPage: React.FC = () => {
                       onClick={() => openKuralModalByNumber(activePathway.steps.kuralNumber)}
                       className="w-full py-2.5 text-xs font-bold text-white bg-[#071B3A] hover:bg-[#0A2540] rounded-xl shadow-2xs transition-colors cursor-pointer text-center"
                     >
-                      Open Kural #{activePathway.steps.kuralNumber} Detail Modal →
+                      {t('openKuralModalBtn').replace('{num}', activePathway.steps.kuralNumber.toString())}
                     </button>
                   )}
                   {activeStepNumber === 4 && (
@@ -457,7 +498,7 @@ export const KnowledgeGraphPage: React.FC = () => {
                       }}
                       className="w-full py-2.5 text-xs font-bold text-white bg-emerald-600 hover:bg-emerald-700 rounded-xl shadow-2xs transition-colors cursor-pointer text-center"
                     >
-                      Launch Scenario #{activePathway.steps.scenarioNumber} Challenge Now →
+                      {t('solveScenarioBtn').replace('{num}', activePathway.steps.scenarioNumber.toString())}
                     </button>
                   )}
                   <button
@@ -473,7 +514,7 @@ export const KnowledgeGraphPage: React.FC = () => {
                     }}
                     className="w-full py-2.5 text-xs font-bold text-slate-700 bg-white hover:bg-slate-100 border border-slate-200 rounded-xl transition-colors cursor-pointer text-center shadow-2xs"
                   >
-                    Ask AI Tutor About This Step
+                    {t('askAiAboutStep')}
                   </button>
                 </div>
               </div>
@@ -492,471 +533,115 @@ export const KnowledgeGraphPage: React.FC = () => {
             {/* Controls Bar */}
             <div className="flex items-center justify-between p-4 border-b border-slate-200 bg-slate-50">
               <div className="flex items-center gap-2">
-                <span className="text-xs font-extrabold text-slate-700">Filter Nodes:</span>
+                <span className="text-xs font-extrabold text-slate-700">{t('filterNodes')}</span>
                 <select
                   value={filterType}
                   onChange={(e) => setFilterType(e.target.value)}
                   className="px-3 py-1.5 text-xs bg-white border border-slate-200 rounded-xl font-bold text-slate-700 focus:outline-hidden focus:ring-2 focus:ring-blue-500/20"
                 >
-                  <option value="All">All Types ({nodes.length})</option>
-                  <option value="Question">Questions</option>
-                  <option value="EthicalConcept">Ethical Concepts</option>
-                  <option value="Kural">Thirukkurals</option>
-                  <option value="LegalConcept">Legal Statutes</option>
-                  <option value="Scenario">Scenarios</option>
+                  <option value="All">{t('all')}</option>
+                  <option value="Kural">{t('kuralVerses')}</option>
+                  <option value="EthicalConcept">{t('kuralEthicalConcept')}</option>
+                  <option value="LegalConcept">{t('statutoryGrounds')}</option>
+                  <option value="Scenario">{t('scenarioChallenge')}</option>
                 </select>
               </div>
 
-              <div className="flex items-center gap-2">
+              <div className="flex items-center gap-1.5">
                 <button
-                  onClick={() => setZoomLevel((prev) => Math.max(0.8, prev - 0.1))}
-                  className="p-1.5 bg-white hover:bg-slate-100 border border-slate-200 rounded-lg text-slate-600 cursor-pointer"
-                  title="Zoom Out"
-                >
-                  <ZoomOut className="w-4 h-4" />
-                </button>
-                <span className="text-xs font-bold text-slate-700 min-w-10 text-center">
-                  {Math.round(zoomLevel * 100)}%
-                </span>
-                <button
-                  onClick={() => setZoomLevel((prev) => Math.min(1.4, prev + 0.1))}
-                  className="p-1.5 bg-white hover:bg-slate-100 border border-slate-200 rounded-lg text-slate-600 cursor-pointer"
-                  title="Zoom In"
+                  onClick={() => setZoomLevel((z) => Math.min(1.5, z + 0.1))}
+                  className="p-1.5 bg-white border border-slate-200 rounded-lg text-slate-700 hover:bg-slate-100 transition-colors"
                 >
                   <ZoomIn className="w-4 h-4" />
                 </button>
                 <button
-                  onClick={() => setIsFullscreen(true)}
-                  className="p-1.5 bg-white hover:bg-slate-100 border border-slate-200 rounded-lg text-slate-700 cursor-pointer transition-colors shadow-2xs"
-                  title="Full Screen View (Expand Graph)"
+                  onClick={() => setZoomLevel((z) => Math.max(0.6, z - 0.1))}
+                  className="p-1.5 bg-white border border-slate-200 rounded-lg text-slate-700 hover:bg-slate-100 transition-colors"
                 >
-                  <Maximize2 className="w-4 h-4 text-blue-600" />
+                  <ZoomOut className="w-4 h-4" />
                 </button>
                 <button
-                  onClick={() => setIsFullscreen(true)}
-                  className="px-3 py-1.5 bg-[#071B3A] hover:bg-[#0A2540] text-white rounded-xl cursor-pointer flex items-center gap-1.5 text-xs font-extrabold shadow-2xs transition-all"
-                  title="Open Full Screen Visual"
+                  onClick={() => setIsFullscreen(!isFullscreen)}
+                  className="p-1.5 bg-white border border-slate-200 rounded-lg text-slate-700 hover:bg-slate-100 transition-colors"
                 >
-                  <Maximize2 className="w-3.5 h-3.5 text-amber-400" />
-                  <span>Full Screen Visual</span>
+                  {isFullscreen ? <Minimize2 className="w-4 h-4" /> : <Maximize2 className="w-4 h-4" />}
                 </button>
               </div>
             </div>
 
-            {/* Graph Interactive Stage */}
-            {(() => {
-              const maxCanvasY = Math.max(600, ...filteredNodes.map((n) => (n.y || 0) + 120));
-              return (
-                <div className="flex-1 p-4 overflow-auto custom-scrollbar bg-slate-50/50 relative min-h-[500px] max-h-[680px]">
+            {/* Canvas Node Grid Visualization */}
+            <div className="p-6 flex-1 bg-slate-50/50 flex flex-wrap gap-4 items-center justify-center overflow-auto max-h-[500px]">
+              {filteredNodes.map((node) => {
+                const styles = getNodeColor(node.type);
+                const isSelected = selectedNode?.id === node.id;
+
+                return (
                   <div
-                    style={{
-                      transform: `scale(${zoomLevel})`,
-                      transformOrigin: 'top left',
-                      width: '1380px',
-                      height: `${maxCanvasY}px`,
-                    }}
-                    className="relative select-none"
+                    key={node.id}
+                    onClick={() => setSelectedNode(node)}
+                    className={`p-4 rounded-xl border transition-all cursor-pointer max-w-[220px] space-y-1.5 ${styles.bg} ${styles.border} ${
+                      isSelected ? 'ring-2 ring-blue-600 scale-105 shadow-md' : 'hover:scale-102 hover:shadow-xs'
+                    }`}
                   >
-                    <svg className="w-full h-full absolute inset-0 pointer-events-none">
-                      {edges.map((edge) => {
-                        const src = nodes.find((n) => n.id === edge.source);
-                        const tgt = nodes.find((n) => n.id === edge.target);
-                        if (!src || !tgt || src.x === undefined || tgt.x === undefined) return null;
-
-                        const isEdgeActive =
-                          selectedNode?.id === edge.source || selectedNode?.id === edge.target;
-
-                        return (
-                          <g key={edge.id}>
-                            <line
-                              x1={src.x + 65}
-                              y1={(src.y || 100) + 24}
-                              x2={tgt.x + 65}
-                              y2={(tgt.y || 100) + 24}
-                              stroke={isEdgeActive ? '#1E3A8A' : '#CBD5E1'}
-                              strokeWidth={isEdgeActive ? 3 : 1.5}
-                              strokeDasharray={isEdgeActive ? '4 2' : 'none'}
-                              opacity={isEdgeActive ? 1 : 0.6}
-                            />
-                            {edge.label && (
-                              <text
-                                x={(src.x + tgt.x + 130) / 2}
-                                y={((src.y || 100) + (tgt.y || 100) + 48) / 2 - 4}
-                                fill={isEdgeActive ? '#071B3A' : '#64748B'}
-                                fontSize="9"
-                                fontWeight="bold"
-                                textAnchor="middle"
-                                className="select-none"
-                              >
-                                {edge.label}
-                              </text>
-                            )}
-                          </g>
-                        );
-                      })}
-                    </svg>
-
-                    {/* Render Nodes */}
-                    {filteredNodes.map((node) => {
-                      const color = getNodeColor(node.type);
-                      const isSelected = selectedNode?.id === node.id;
-
-                      return (
-                        <div
-                          key={node.id}
-                          onClick={() => setSelectedNode(node)}
-                          style={{
-                            left: `${node.x || 50}px`,
-                            top: `${node.y || 100}px`,
-                          }}
-                          className={`absolute w-36 p-3 rounded-xl border-2 transition-all cursor-pointer shadow-2xs text-center ${
-                            color.bg
-                          } ${color.border} ${
-                            isSelected
-                              ? 'ring-4 ring-blue-500/40 scale-105 shadow-md z-20 font-bold'
-                              : 'hover:scale-102 hover:shadow-xs z-10'
-                          }`}
-                        >
-                          <span className={`text-[9px] font-extrabold uppercase tracking-wider block mb-0.5 ${color.typeText}`}>
-                            {node.type}
-                          </span>
-                          <h4 className={`text-xs font-bold leading-tight ${color.text} line-clamp-2`}>
-                            {node.label}
-                          </h4>
-                        </div>
-                      );
-                    })}
+                    <span className={`text-[10px] font-black uppercase tracking-wider block ${styles.typeText}`}>
+                      {node.type}
+                    </span>
+                    <h4 className={`text-xs font-bold leading-tight ${styles.text}`}>
+                      {node.label}
+                    </h4>
                   </div>
-                </div>
-              );
-            })()}
-
-            <div className="p-3 bg-slate-50 border-t border-slate-200 text-center text-xs text-slate-500 font-medium">
-              💡 <strong>Interactive Flow:</strong> Click on any node to view detailed legal metadata and Thirukkural connections.
+                );
+              })}
             </div>
           </div>
 
           {/* Selected Node Details Drawer (lg:col-span-4) */}
-          <div className="lg:col-span-4 bg-white rounded-2xl border border-slate-200 shadow-2xs p-6 space-y-5">
+          <div className="lg:col-span-4 bg-white rounded-2xl border border-slate-200 shadow-2xs p-6 space-y-4">
             {selectedNode ? (
-              <div className="space-y-4 animate-in fade-in duration-150">
+              <div className="space-y-4">
                 <div className="flex items-center justify-between pb-3 border-b border-slate-100">
-                  <span className="px-3 py-1 text-xs font-black text-blue-950 bg-blue-100 rounded-full border border-blue-200">
+                  <span className="text-xs font-black uppercase tracking-wider text-blue-600 bg-blue-50 px-2.5 py-1 rounded-md border border-blue-200">
                     {selectedNode.type} Node
                   </span>
-                  <span className="text-xs text-slate-500 font-bold">
-                    {selectedNode.category}
-                  </span>
+                  <span className="text-xs font-bold text-slate-400">ID: {selectedNode.id}</span>
                 </div>
 
-                <div>
-                  <h3 className="text-lg font-extrabold text-[#071B3A] font-heading">
-                    {selectedNode.details.title}
-                  </h3>
-                  {selectedNode.details.subtitle && (
-                    <p className="text-xs font-tamil font-bold text-blue-700 mt-1">
-                      {selectedNode.details.subtitle}
+                <h3 className="text-base font-extrabold text-[#071B3A] font-heading">
+                  {selectedNode.label}
+                </h3>
+
+                {selectedNode.description && (
+                  <p className="text-xs text-slate-600 leading-relaxed font-medium">
+                    {selectedNode.description}
+                  </p>
+                )}
+
+                {selectedNode.tamilText && (
+                  <div className="p-3 bg-amber-50 rounded-xl border border-amber-200 space-y-1">
+                    <span className="text-[10px] font-black text-amber-800 uppercase tracking-wider">Tamil Verses</span>
+                    <p className="text-xs font-tamil font-bold text-slate-900 leading-relaxed">
+                      {selectedNode.tamilText}
                     </p>
-                  )}
-                </div>
-
-                <div className="p-4 bg-slate-50 rounded-xl border border-slate-200 text-xs text-slate-700 leading-relaxed space-y-2 font-medium">
-                  <span className="font-extrabold text-slate-900 block">Deep Description:</span>
-                  <p>{selectedNode.details.description}</p>
-                </div>
-
-                {/* Tags */}
-                {selectedNode.details.tags && (
-                  <div className="space-y-1.5">
-                    <span className="text-xs font-bold text-slate-500">Semantic Tags:</span>
-                    <div className="flex flex-wrap gap-1.5">
-                      {selectedNode.details.tags.map((t, idx) => (
-                        <span
-                          key={idx}
-                          className="px-2 py-0.5 text-[11px] font-bold bg-blue-50 text-blue-900 border border-blue-200 rounded-md"
-                        >
-                          #{t}
-                        </span>
-                      ))}
-                    </div>
                   </div>
                 )}
 
-                {/* Action shortcuts */}
-                <div className="pt-3 border-t border-slate-100 space-y-2">
-                  {selectedNode.type === 'Kural' && (
-                    <button
-                      onClick={() => {
-                        const num = parseInt(selectedNode.label.replace('Kural ', ''), 10) || 131;
-                        openKuralModalByNumber(num);
-                      }}
-                      className="w-full py-2.5 text-xs font-bold text-white bg-[#071B3A] hover:bg-[#0A2540] rounded-xl shadow-2xs transition-colors flex items-center justify-center gap-1.5 cursor-pointer"
-                    >
-                      <BookOpen className="w-4 h-4 text-blue-400" />
-                      Read Full Kural Detail
-                    </button>
-                  )}
-
-                  {selectedNode.type === 'Scenario' && (
-                    <button
-                      onClick={() => {
-                        setSelectedScenarioNumber(3);
-                        setActiveTab('scenario-challenge');
-                      }}
-                      className="w-full py-2.5 text-xs font-bold text-white bg-[#071B3A] hover:bg-[#0A2540] rounded-xl shadow-2xs transition-colors flex items-center justify-center gap-1.5 cursor-pointer"
-                    >
-                      <Scale className="w-4 h-4 text-amber-400" />
-                      Launch Interactive Scenario
-                    </button>
-                  )}
-
+                {selectedNode.kuralNumber && (
                   <button
-                    onClick={() => {
-                      if (selectedNode) {
-                        openStepTutorModal(selectedNode.details.title || selectedNode.label, `${selectedNode.type} Node Inquiry`);
-                      }
-                    }}
-                    className="w-full py-2.5 text-xs font-bold text-slate-700 bg-slate-100 hover:bg-slate-200 rounded-xl transition-colors flex items-center justify-center gap-1.5 cursor-pointer shadow-2xs"
+                    onClick={() => openKuralModalByNumber(selectedNode.kuralNumber!)}
+                    className="w-full py-2.5 bg-[#071B3A] hover:bg-[#0A2540] text-white font-bold text-xs rounded-xl shadow-2xs transition-colors cursor-pointer text-center block"
                   >
-                    <Sparkles className="w-3.5 h-3.5 text-amber-500" />
-                    Ask AI Tutor About This Node
+                    Open Kural #{selectedNode.kuralNumber} Details →
                   </button>
-                </div>
+                )}
               </div>
             ) : (
-              <div className="text-center py-12 text-slate-400 space-y-2">
-                <Info className="w-8 h-8 mx-auto text-slate-300" />
-                <p className="text-xs font-medium">Click on any node in the graph to view its legal and ethical metadata.</p>
-              </div>
+              <p className="text-xs text-slate-500 text-center py-10 font-medium">Select a node from the network graph to inspect details.</p>
             )}
           </div>
         </div>
       )}
 
-      {/* ========================================================================= */}
-      {/* 100% FULL SCREEN GRAPH VISUAL MODAL OVERLAY */}
-      {/* ========================================================================= */}
-      {isFullscreen && (
-        <div className="fixed inset-0 z-50 bg-white text-slate-900 flex flex-col p-4 sm:p-6 animate-in zoom-in-95 duration-200 select-none">
-          {/* Top Fullscreen Header Control Bar */}
-          <div className="flex flex-wrap items-center justify-between gap-4 pb-4 border-b border-slate-200 shrink-0">
-            <div className="flex items-center gap-3">
-              <div className="w-9 h-9 bg-blue-50 border border-blue-200 rounded-xl flex items-center justify-center font-bold text-blue-700 shadow-2xs">
-                <Network className="w-5 h-5 text-blue-600" />
-              </div>
-              <div>
-                <h2 className="text-lg font-extrabold font-heading text-[#071B3A] flex items-center gap-2">
-                  Full Screen Knowledge Graph & Semantic Map
-                </h2>
-                <p className="text-xs text-slate-500 font-medium">
-                  Showing all {filteredNodes.length} nodes & connections across Thirukkural Chapters, Kurals, Ethical Concepts, and Indian Legal Statutes.
-                </p>
-              </div>
-            </div>
-
-            <div className="flex items-center gap-3">
-              <div className="flex items-center gap-2 bg-slate-100 px-3 py-1.5 rounded-xl border border-slate-200">
-                <span className="text-xs font-extrabold text-slate-700">Filter Nodes:</span>
-                <select
-                  value={filterType}
-                  onChange={(e) => setFilterType(e.target.value)}
-                  className="px-2.5 py-1 text-xs bg-white text-slate-800 border border-slate-200 rounded-lg font-bold focus:outline-none focus:ring-2 focus:ring-blue-500/20"
-                >
-                  <option value="All">All Types ({nodes.length})</option>
-                  <option value="Question">Questions</option>
-                  <option value="EthicalConcept">Ethical Concepts</option>
-                  <option value="Kural">Thirukkurals</option>
-                  <option value="LegalConcept">Legal Statutes</option>
-                  <option value="Scenario">Scenarios</option>
-                </select>
-              </div>
-
-              <div className="flex items-center gap-1.5 bg-slate-100 p-1.5 rounded-xl border border-slate-200">
-                <button
-                  onClick={() => setZoomLevel((prev) => Math.max(0.7, prev - 0.1))}
-                  className="p-1.5 bg-white hover:bg-slate-50 rounded-lg text-slate-700 border border-slate-200 cursor-pointer transition-colors"
-                  title="Zoom Out"
-                >
-                  <ZoomOut className="w-4 h-4" />
-                </button>
-                <span className="text-xs font-bold text-slate-800 min-w-12 text-center">
-                  {Math.round(zoomLevel * 100)}%
-                </span>
-                <button
-                  onClick={() => setZoomLevel((prev) => Math.min(1.6, prev + 0.1))}
-                  className="p-1.5 bg-white hover:bg-slate-50 rounded-lg text-slate-700 border border-slate-200 cursor-pointer transition-colors"
-                  title="Zoom In"
-                >
-                  <ZoomIn className="w-4 h-4" />
-                </button>
-                <button
-                  onClick={() => setZoomLevel(1)}
-                  className="px-2.5 py-1 bg-white hover:bg-slate-50 border border-slate-200 rounded-lg text-xs font-bold text-slate-700 cursor-pointer transition-colors"
-                >
-                  Reset
-                </button>
-              </div>
-
-              <button
-                onClick={() => setIsFullscreen(false)}
-                className="px-4 py-2 bg-red-600 hover:bg-red-700 text-white font-extrabold text-xs rounded-xl flex items-center gap-1.5 shadow-md cursor-pointer transition-all"
-              >
-                <Minimize2 className="w-4 h-4" />
-                <span>Exit Full Screen</span>
-              </button>
-            </div>
-          </div>
-
-          {/* Full Screen Canvas Stage */}
-          <div className="flex-1 flex gap-4 mt-4 overflow-hidden">
-            {/* SVG Graph Canvas (Main Viewport) */}
-            <div className="flex-1 bg-slate-50/70 rounded-2xl border border-slate-200 p-4 overflow-auto custom-scrollbar relative shadow-inner">
-              {(() => {
-                const maxCanvasY = Math.max(700, ...filteredNodes.map((n) => (n.y || 0) + 140));
-                return (
-                  <div
-                    style={{
-                      transform: `scale(${zoomLevel})`,
-                      transformOrigin: 'top left',
-                      width: '1420px',
-                      height: `${maxCanvasY}px`,
-                    }}
-                    className="relative select-none"
-                  >
-                    <svg className="w-full h-full absolute inset-0 pointer-events-none">
-                      {edges.map((edge) => {
-                        const src = nodes.find((n) => n.id === edge.source);
-                        const tgt = nodes.find((n) => n.id === edge.target);
-                        if (!src || !tgt || src.x === undefined || tgt.x === undefined) return null;
-
-                        const isEdgeActive =
-                          selectedNode?.id === edge.source || selectedNode?.id === edge.target;
-
-                        return (
-                          <g key={edge.id}>
-                            <line
-                              x1={src.x + 65}
-                              y1={(src.y || 100) + 24}
-                              x2={tgt.x + 65}
-                              y2={(tgt.y || 100) + 24}
-                              stroke={isEdgeActive ? '#1E3A8A' : '#CBD5E1'}
-                              strokeWidth={isEdgeActive ? 3.5 : 1.5}
-                              strokeDasharray={isEdgeActive ? '5 3' : 'none'}
-                              opacity={isEdgeActive ? 1 : 0.6}
-                            />
-                            {edge.label && (
-                              <text
-                                x={(src.x + tgt.x + 130) / 2}
-                                y={((src.y || 100) + (tgt.y || 100) + 48) / 2 - 4}
-                                fill={isEdgeActive ? '#071B3A' : '#64748B'}
-                                fontSize="9"
-                                fontWeight="bold"
-                                textAnchor="middle"
-                              >
-                                {edge.label}
-                              </text>
-                            )}
-                          </g>
-                        );
-                      })}
-                    </svg>
-
-                    {/* Render Fullscreen Nodes */}
-                    {filteredNodes.map((node) => {
-                      const color = getNodeColor(node.type);
-                      const isSelected = selectedNode?.id === node.id;
-
-                      return (
-                        <div
-                          key={node.id}
-                          onClick={() => setSelectedNode(node)}
-                          style={{
-                            left: `${node.x || 50}px`,
-                            top: `${node.y || 100}px`,
-                          }}
-                          className={`absolute w-36 p-3 rounded-xl border-2 transition-all cursor-pointer shadow-xs text-center ${
-                            color.bg
-                          } ${color.border} ${
-                            isSelected
-                              ? 'ring-4 ring-blue-500/40 scale-108 shadow-md z-30 font-bold'
-                              : 'hover:scale-104 hover:shadow-xs z-10'
-                          }`}
-                        >
-                          <span className={`text-[9px] font-extrabold uppercase tracking-wider block mb-0.5 ${color.typeText}`}>
-                            {node.type}
-                          </span>
-                          <h4 className={`text-xs font-bold leading-tight ${color.text} line-clamp-2`}>
-                            {node.label}
-                          </h4>
-                        </div>
-                      );
-                    })}
-                  </div>
-                );
-              })()}
-            </div>
-
-            {/* Selected Node Drawer inside Fullscreen */}
-            {selectedNode && (
-              <div className="w-80 bg-white border border-slate-200 rounded-2xl p-5 space-y-4 shadow-xl overflow-y-auto shrink-0 animate-in slide-in-from-right-10 duration-200">
-                <div className="flex items-center justify-between pb-2 border-b border-slate-100">
-                  <span className="px-2.5 py-0.5 text-xs font-extrabold bg-blue-100 text-blue-950 rounded-md border border-blue-200">
-                    {selectedNode.type}
-                  </span>
-                  <button
-                    onClick={() => setSelectedNode(null)}
-                    className="text-xs text-slate-400 hover:text-slate-700 p-1 cursor-pointer"
-                  >
-                    <X className="w-4 h-4" />
-                  </button>
-                </div>
-
-                <div>
-                  <h3 className="text-base font-extrabold text-[#071B3A] leading-tight font-heading">
-                    {selectedNode.details.title}
-                  </h3>
-                  {selectedNode.details.subtitle && (
-                    <p className="text-xs text-blue-700 font-tamil font-bold mt-1">
-                      {selectedNode.details.subtitle}
-                    </p>
-                  )}
-                </div>
-
-                <div className="p-3.5 bg-slate-50 rounded-xl border border-slate-200 text-xs text-slate-700 leading-relaxed font-medium">
-                  <span className="font-extrabold text-slate-900 block mb-1">Deep Description:</span>
-                  <p>{selectedNode.details.description}</p>
-                </div>
-
-                {selectedNode.type === 'Kural' && (
-                  <button
-                    onClick={() => {
-                      const num = parseInt(selectedNode.label.replace('Kural ', ''), 10) || 131;
-                      openKuralModalByNumber(num);
-                    }}
-                    className="w-full py-2.5 text-xs font-bold text-white bg-[#071B3A] hover:bg-[#0A2540] rounded-xl transition-colors cursor-pointer text-center block shadow-2xs"
-                  >
-                    Open Kural #{selectedNode.label.replace('Kural ', '')} Detail →
-                  </button>
-                )}
-
-                {selectedNode.type === 'Scenario' && (
-                  <button
-                    onClick={() => {
-                      setIsFullscreen(false);
-                      setSelectedScenarioNumber(3);
-                      setActiveTab('scenario-challenge');
-                    }}
-                    className="w-full py-2.5 text-xs font-bold text-white bg-emerald-600 hover:bg-emerald-700 rounded-xl transition-colors cursor-pointer text-center block shadow-2xs"
-                  >
-                    Launch Scenario Challenge →
-                  </button>
-                )}
-              </div>
-            )}
-          </div>
-        </div>
-      )}
-      {/* Interactive In-Card AI Tutor Chatbot Modal Overlay */}
+      {/* Embedded Step-by-Step AI Tutor Chatbot Drawer Modal */}
       <StepAiTutorModal
         isOpen={tutorModalOpen}
         onClose={() => setTutorModalOpen(false)}
