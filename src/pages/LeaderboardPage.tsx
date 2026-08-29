@@ -4,17 +4,12 @@ import { LeaderboardUser } from '../types';
 import { progressService } from '../services/progressService';
 import {
   Trophy,
-  Medal,
   Flame,
-  Star,
-  Award,
   Crown,
-  Sparkles,
-  TrendingUp,
 } from 'lucide-react';
 
 export const LeaderboardPage: React.FC = () => {
-  const { userProgress } = useApp();
+  const { userProgress, t } = useApp();
   const [timeframe, setTimeframe] = useState<'weekly' | 'monthly' | 'allTime'>('weekly');
   const [leaders, setLeaders] = useState<LeaderboardUser[]>([]);
 
@@ -27,7 +22,6 @@ export const LeaderboardPage: React.FC = () => {
   }, [timeframe]);
 
   const top3 = leaders.slice(0, 3);
-  const rest = leaders.slice(3);
 
   return (
     <div className="space-y-8 max-w-5xl mx-auto animate-in fade-in duration-200 pb-12">
@@ -36,13 +30,13 @@ export const LeaderboardPage: React.FC = () => {
         <div className="space-y-2">
           <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-black bg-amber-100 text-amber-900 border border-amber-300">
             <Trophy className="w-3.5 h-3.5 text-amber-600" />
-            National Ethics Standings
+            {t('leaderboard')}
           </div>
           <h2 className="text-2xl sm:text-3xl font-extrabold font-heading text-[#071B3A]">
-            Leaderboard
+            {t('leaderboard')}
           </h2>
           <p className="text-xs sm:text-sm text-slate-600 max-w-2xl leading-relaxed font-medium">
-            Recognizing law students, advocates, and ethical learners with exceptional reasoning accuracy and continuous practice streaks.
+            {t('architectureSub')}
           </p>
         </div>
 
@@ -58,7 +52,7 @@ export const LeaderboardPage: React.FC = () => {
                   : 'text-slate-600 hover:text-slate-900'
               }`}
             >
-              {tf === 'allTime' ? 'All Time' : tf}
+              {tf === 'allTime' ? t('globalLeaderboard') : tf === 'weekly' ? t('weeklyChampions') : tf}
             </button>
           ))}
         </div>
@@ -110,7 +104,7 @@ export const LeaderboardPage: React.FC = () => {
             </div>
             <div className="p-3 bg-amber-100 border border-amber-300 rounded-xl flex justify-around text-xs font-black text-amber-950">
               <span>⭐ {top3[0].xp} XP</span>
-              <span>🔥 {top3[0].streak} Days</span>
+              <span>🔥 {top3[0].streak} {t('daysCount').replace('{days}', '')}</span>
               <span>🎯 {top3[0].accuracy}%</span>
             </div>
           </div>
@@ -143,10 +137,10 @@ export const LeaderboardPage: React.FC = () => {
       <div className="bg-white rounded-2xl border border-slate-200 shadow-2xs overflow-hidden">
         <div className="p-4 sm:p-5 border-b border-slate-200 flex items-center justify-between">
           <h3 className="text-sm font-extrabold text-[#071B3A] font-heading">
-            Full Rankings
+            {t('leaderboard')}
           </h3>
           <span className="text-xs text-slate-500 font-medium">
-            Your Rank: <strong className="text-blue-600 font-bold">#4 ({userProgress.userName})</strong>
+            {t('rank')}: <strong className="text-blue-600 font-bold">#4 ({userProgress.userName})</strong>
           </span>
         </div>
 
@@ -184,7 +178,7 @@ export const LeaderboardPage: React.FC = () => {
                       <span className="text-sm font-bold text-slate-900">{user.name}</span>
                       {isCurrentUser && (
                         <span className="px-2 py-0.2 text-[10px] font-black bg-[#071B3A] text-white rounded-full">
-                          You
+                          {t('user')}
                         </span>
                       )}
                     </div>
@@ -195,7 +189,7 @@ export const LeaderboardPage: React.FC = () => {
                 {/* Accuracy */}
                 <div className="hidden sm:flex flex-col items-center">
                   <span className="text-xs font-black text-emerald-600">{user.accuracy}%</span>
-                  <span className="text-[10px] text-slate-400 font-bold">Accuracy</span>
+                  <span className="text-[10px] text-slate-400 font-bold">{t('masteryProfile')}</span>
                 </div>
 
                 {/* Streak */}
@@ -207,7 +201,7 @@ export const LeaderboardPage: React.FC = () => {
                 {/* XP Score */}
                 <div className="text-right">
                   <span className="text-sm font-black text-[#071B3A]">{user.xp}</span>
-                  <span className="text-[10px] text-slate-400 font-bold block">XP</span>
+                  <span className="text-[10px] text-slate-400 font-bold block">{t('xpPoints')}</span>
                 </div>
               </div>
             );

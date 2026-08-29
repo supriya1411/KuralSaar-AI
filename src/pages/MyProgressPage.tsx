@@ -1,22 +1,15 @@
 import React from 'react';
 import { useApp } from '../context/AppContext';
 import {
-  LineChart,
   Award,
   Flame,
   Star,
   CheckCircle,
-  Brain,
-  Scale,
-  Sparkles,
-  Shield,
   TrendingUp,
-  Clock,
-  Calendar,
 } from 'lucide-react';
 
 export const MyProgressPage: React.FC = () => {
-  const { userProgress, setActiveTab } = useApp();
+  const { userProgress, t } = useApp();
 
   const xpForNextLevel = 2500;
   const currentXpInLevel = userProgress.xp;
@@ -46,18 +39,18 @@ export const MyProgressPage: React.FC = () => {
             <div className="flex items-center gap-2">
               <h2 className="text-2xl font-extrabold font-heading text-[#071B3A]">{userProgress.userName}</h2>
               <span className="px-2.5 py-0.5 text-xs font-black bg-amber-100 text-amber-900 border border-amber-300 rounded-full">
-                Level {userProgress.level}
+                {t('level')} {userProgress.level}
               </span>
             </div>
             <p className="text-xs text-blue-700 font-bold">{userProgress.userRole} • {userProgress.levelTitle}</p>
-            <p className="text-xs text-slate-500 font-medium">Member since February 2025</p>
+            <p className="text-xs text-slate-500 font-medium">{t('activeJourney')}</p>
           </div>
         </div>
 
         {/* Level Progression meter */}
         <div className="p-4 bg-slate-50 rounded-xl border border-slate-200 space-y-2 min-w-[240px]">
           <div className="flex justify-between text-xs font-bold">
-            <span className="text-slate-700">Level {userProgress.level} → Level {userProgress.level + 1}</span>
+            <span className="text-slate-700">{t('level')} {userProgress.level} → {t('level')} {userProgress.level + 1}</span>
             <span className="text-amber-600 font-black">{userProgress.xp} / {xpForNextLevel} XP</span>
           </div>
           <div className="w-full h-2.5 bg-slate-200 rounded-full overflow-hidden">
@@ -67,7 +60,7 @@ export const MyProgressPage: React.FC = () => {
             />
           </div>
           <p className="text-[10px] text-slate-500 text-right font-medium">
-            {xpForNextLevel - currentXpInLevel} XP to reach "Master of Juristic Wisdom"
+            {xpForNextLevel - currentXpInLevel} XP ({t('levelPractitioner').replace('{level}', (userProgress.level + 1).toString())})
           </p>
         </div>
       </div>
@@ -76,25 +69,25 @@ export const MyProgressPage: React.FC = () => {
       <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
         <div className="p-5 bg-white rounded-2xl border border-slate-200 shadow-2xs text-center space-y-1">
           <Star className="w-6 h-6 text-amber-500 fill-amber-500 mx-auto" />
-          <span className="text-xs text-slate-500 font-bold block">Total XP</span>
+          <span className="text-xs text-slate-500 font-bold block">{t('xpPoints')}</span>
           <h3 className="text-2xl font-black text-[#071B3A]">{userProgress.xp}</h3>
         </div>
 
         <div className="p-5 bg-white rounded-2xl border border-slate-200 shadow-2xs text-center space-y-1">
           <Flame className="w-6 h-6 text-amber-500 fill-amber-500 mx-auto" />
-          <span className="text-xs text-slate-500 font-bold block">Current Streak</span>
-          <h3 className="text-2xl font-black text-amber-600">🔥 {userProgress.streakDays} Days</h3>
+          <span className="text-xs text-slate-500 font-bold block">{t('streakCount')}</span>
+          <h3 className="text-2xl font-black text-amber-600">🔥 {t('daysCount').replace('{days}', userProgress.streakDays.toString())}</h3>
         </div>
 
         <div className="p-5 bg-white rounded-2xl border border-slate-200 shadow-2xs text-center space-y-1">
           <CheckCircle className="w-6 h-6 text-emerald-600 mx-auto" />
-          <span className="text-xs text-slate-500 font-bold block">Accuracy Rate</span>
+          <span className="text-xs text-slate-500 font-bold block">{t('masteryProfile')}</span>
           <h3 className="text-2xl font-black text-emerald-600">{userProgress.accuracyPercentage}%</h3>
         </div>
 
         <div className="p-5 bg-white rounded-2xl border border-slate-200 shadow-2xs text-center space-y-1">
           <Award className="w-6 h-6 text-blue-600 mx-auto" />
-          <span className="text-xs text-slate-500 font-bold block">Scenarios Solved</span>
+          <span className="text-xs text-slate-500 font-bold block">{t('casesSolved')}</span>
           <h3 className="text-2xl font-black text-blue-600">
             {userProgress.casesCompleted} / {userProgress.totalCases}
           </h3>
@@ -107,7 +100,7 @@ export const MyProgressPage: React.FC = () => {
         <div className="md:col-span-7 p-6 bg-white rounded-2xl border border-slate-200 shadow-2xs space-y-4">
           <div className="flex items-center justify-between">
             <h3 className="text-base font-extrabold text-[#071B3A] font-heading">
-              Weekly Learning Activity
+              {t('myProgress')}
             </h3>
             <span className="text-xs font-bold text-emerald-600 flex items-center gap-1">
               <TrendingUp className="w-3.5 h-3.5" /> +35% vs last week
@@ -147,13 +140,13 @@ export const MyProgressPage: React.FC = () => {
         {/* Detailed Competency Matrix (md:col-span-5) */}
         <div className="md:col-span-5 p-6 bg-white rounded-2xl border border-slate-200 shadow-2xs space-y-4">
           <h3 className="text-base font-extrabold text-[#071B3A] font-heading">
-            Competency Breakdown
+            {t('yourSkillsMastery')}
           </h3>
 
           <div className="space-y-3.5 text-xs">
             <div>
               <div className="flex justify-between font-bold text-slate-700 mb-1">
-                <span>Legal Awareness</span>
+                <span>{t('legalAwareness')}</span>
                 <span className="text-blue-600 font-extrabold">{userProgress.skills.legalAwareness}%</span>
               </div>
               <div className="h-2 bg-slate-100 rounded-full overflow-hidden">
@@ -163,7 +156,7 @@ export const MyProgressPage: React.FC = () => {
 
             <div>
               <div className="flex justify-between font-bold text-slate-700 mb-1">
-                <span>Ethical Reasoning</span>
+                <span>{t('ethicalReasoning')}</span>
                 <span className="text-blue-700 font-extrabold">{userProgress.skills.ethicalReasoning}%</span>
               </div>
               <div className="h-2 bg-slate-100 rounded-full overflow-hidden">
@@ -173,7 +166,7 @@ export const MyProgressPage: React.FC = () => {
 
             <div>
               <div className="flex justify-between font-bold text-slate-700 mb-1">
-                <span>Conflict Resolution</span>
+                <span>{t('conflictResolution')}</span>
                 <span className="text-amber-600 font-extrabold">{userProgress.skills.conflictResolution}%</span>
               </div>
               <div className="h-2 bg-slate-100 rounded-full overflow-hidden">
@@ -183,7 +176,7 @@ export const MyProgressPage: React.FC = () => {
 
             <div>
               <div className="flex justify-between font-bold text-slate-700 mb-1">
-                <span>Prosocial Decision Making</span>
+                <span>{t('decisionMaking')}</span>
                 <span className="text-emerald-600 font-extrabold">{userProgress.skills.prosocialDecisionMaking}%</span>
               </div>
               <div className="h-2 bg-slate-100 rounded-full overflow-hidden">
@@ -193,7 +186,7 @@ export const MyProgressPage: React.FC = () => {
 
             <div>
               <div className="flex justify-between font-bold text-slate-700 mb-1">
-                <span>Professional Ethics</span>
+                <span>{t('criticalThinking')}</span>
                 <span className="text-purple-600 font-extrabold">{userProgress.skills.professionalEthics}%</span>
               </div>
               <div className="h-2 bg-slate-100 rounded-full overflow-hidden">

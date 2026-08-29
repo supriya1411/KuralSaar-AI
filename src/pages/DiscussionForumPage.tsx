@@ -18,7 +18,7 @@ import {
 } from 'lucide-react';
 
 export const DiscussionForumPage: React.FC = () => {
-  const { userProgress } = useApp();
+  const { userProgress, t } = useApp();
   const [posts, setPosts] = useState<ForumPost[]>([]);
   const [activeCategory, setActiveCategory] = useState<string>('All');
   const [searchQuery, setSearchQuery] = useState<string>('');
@@ -126,13 +126,13 @@ export const DiscussionForumPage: React.FC = () => {
         <div className="space-y-2">
           <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-black bg-amber-100 text-amber-900 border border-amber-300">
             <MessagesSquare className="w-3.5 h-3.5 text-amber-600" />
-            Peer Jurisprudence & Ethical Discourse
+            {t('discussionForum')}
           </div>
           <h2 className="text-2xl sm:text-3xl font-extrabold font-heading text-[#071B3A]">
-            Discussion Forum
+            {t('forumTitle')}
           </h2>
           <p className="text-xs sm:text-sm text-slate-600 max-w-2xl leading-relaxed font-medium">
-            Collaborate with peers, discuss complex moral conflicts, and analyze how classical ethics informs constitutional and courtroom reasoning.
+            {t('slogan')}
           </p>
         </div>
 
@@ -141,7 +141,7 @@ export const DiscussionForumPage: React.FC = () => {
           className="inline-flex items-center gap-2 px-5 py-3 text-xs font-extrabold text-white bg-[#071B3A] hover:bg-[#0A2540] rounded-xl shadow-2xs transition-all shrink-0 cursor-pointer"
         >
           <Plus className="w-4 h-4 text-amber-400 stroke-[3]" />
-          Start New Topic
+          {t('createPost')}
         </button>
       </div>
 
@@ -158,7 +158,7 @@ export const DiscussionForumPage: React.FC = () => {
                   : 'text-slate-600 hover:text-slate-900 hover:bg-slate-100'
               }`}
             >
-              {cat}
+              {cat === 'All' ? t('all') : cat}
             </button>
           ))}
         </div>
@@ -167,7 +167,7 @@ export const DiscussionForumPage: React.FC = () => {
           <Search className="w-3.5 h-3.5 text-slate-400 absolute left-3 pointer-events-none" />
           <input
             type="text"
-            placeholder="Search discussions..."
+            placeholder={t('searchPlaceholder')}
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
             className="w-full sm:w-56 pl-9 pr-9 py-2 text-xs bg-slate-50 border border-slate-200 rounded-xl focus:bg-white focus:outline-hidden focus:ring-2 focus:ring-blue-500/20 text-slate-900 font-medium"

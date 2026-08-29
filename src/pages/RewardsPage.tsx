@@ -5,17 +5,11 @@ import { progressService } from '../services/progressService';
 import {
   Gift,
   Award,
-  Sparkles,
   Lock,
-  CheckCircle,
-  Star,
-  Flame,
-  Shield,
-  BookOpen,
 } from 'lucide-react';
 
 export const RewardsPage: React.FC = () => {
-  const { userProgress, setUnlockedBadgeToCelebrate } = useApp();
+  const { setUnlockedBadgeToCelebrate, t } = useApp();
   const [badges, setBadges] = useState<Badge[]>([]);
 
   useEffect(() => {
@@ -35,22 +29,22 @@ export const RewardsPage: React.FC = () => {
         <div className="space-y-2">
           <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-black bg-amber-100 text-amber-900 border border-amber-300">
             <Gift className="w-3.5 h-3.5 text-amber-600" />
-            Ethical Mastery & Gamification
+            {t('rewards')}
           </div>
           <h2 className="text-2xl sm:text-3xl font-extrabold font-heading text-[#071B3A]">
-            Badges & Achievements
+            {t('rewards')}
           </h2>
           <p className="text-xs sm:text-sm text-slate-600 max-w-2xl leading-relaxed font-medium">
-            Earn distinct badges for moral consistency, streak milestones, accurate statutory citations, and complex ethical dilemma resolutions.
+            {t('architectureSub')}
           </p>
         </div>
 
         <div className="p-4 bg-slate-50 rounded-xl border border-slate-200 text-center shrink-0 min-w-[180px]">
-          <span className="text-xs font-bold text-slate-500 block">Unlocked</span>
+          <span className="text-xs font-bold text-slate-500 block">{t('unlockedBadges')}</span>
           <h3 className="text-2xl font-black text-amber-600 mt-1">
             {unlockedCount} / {badges.length}
           </h3>
-          <span className="text-[10px] text-slate-500 font-bold uppercase tracking-wider">Achievements</span>
+          <span className="text-[10px] text-slate-500 font-bold uppercase tracking-wider">{t('allBadges')}</span>
         </div>
       </div>
 
@@ -95,7 +89,7 @@ export const RewardsPage: React.FC = () => {
                         : 'bg-slate-200 text-slate-600'
                     }`}
                   >
-                    {badge.unlocked ? 'Unlocked' : 'Locked'}
+                    {badge.unlocked ? t('unlockedBadges') : t('allBadges')}
                   </span>
                 </div>
 
@@ -103,26 +97,15 @@ export const RewardsPage: React.FC = () => {
                   <h3 className="text-base font-extrabold text-[#071B3A] font-heading">
                     {badge.title}
                   </h3>
-                  <p className="text-xs font-black text-amber-600 mt-0.5">
-                    +{badge.xpValue} XP
+                  <p className="text-xs text-slate-600 mt-1 leading-relaxed font-medium">
+                    {badge.description}
                   </p>
-                </div>
-
-                <p className="text-xs text-slate-600 leading-relaxed font-medium">
-                  {badge.description}
-                </p>
-
-                <div className="p-2.5 bg-slate-50 rounded-xl border border-slate-200 text-[11px] text-slate-600">
-                  <span className="font-bold text-slate-800">Criteria:</span> {badge.criteria}
                 </div>
               </div>
 
-              {badge.unlocked && (
-                <div className="pt-2 border-t border-slate-100 flex items-center justify-between text-xs font-bold text-blue-600">
-                  <span>View Certificate</span>
-                  <Sparkles className="w-4 h-4 text-amber-500" />
-                </div>
-              )}
+              <div className="pt-3 border-t border-slate-100 text-[11px] font-bold text-slate-400">
+                {badge.unlocked ? '🏆 Achievement Unlocked' : '🔒 Locked Challenge'}
+              </div>
             </div>
           );
         })}

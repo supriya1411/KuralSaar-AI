@@ -1,32 +1,27 @@
 import React, { useState, useEffect } from 'react';
 import { useApp } from '../context/AppContext';
-import { Kural, PaalType } from '../types';
+import { Kural } from '../types';
 import { kuralService } from '../services/kuralService';
-import { ThiruvalluvarAvatar } from '../components/common/ThiruvalluvarAvatar';
 import {
   Search,
   BookOpen,
   Sparkles,
   Scale,
-  ExternalLink,
   Tag,
-  SlidersHorizontal,
-  Layers,
   ArrowRight,
 } from 'lucide-react';
-
 import { VoiceDictationButton } from '../components/common/VoiceDictationButton';
 
 const CONCEPT_CHIPS = [
-  'All',
-  'Integrity',
-  'Justice',
-  'Anger',
-  'Honesty',
-  'Self-Control',
-  'Leadership',
-  'Responsibility',
-  'Conflict Resolution',
+  { key: 'All', labelKey: 'all' },
+  { key: 'Integrity', labelKey: 'integrity' },
+  { key: 'Justice', labelKey: 'justice' },
+  { key: 'Anger', labelKey: 'anger' },
+  { key: 'Honesty', labelKey: 'honesty' },
+  { key: 'Self-Control', labelKey: 'selfControl' },
+  { key: 'Leadership', labelKey: 'leadership' },
+  { key: 'Responsibility', labelKey: 'responsibility' },
+  { key: 'Conflict Resolution', labelKey: 'conflictResolution' },
 ];
 
 export const KuralQuestPage: React.FC = () => {
@@ -36,6 +31,8 @@ export const KuralQuestPage: React.FC = () => {
     setActiveTab,
     searchGlobalQuery,
     setSearchGlobalQuery,
+    language,
+    t,
   } = useApp();
 
   const [kurals, setKurals] = useState<Kural[]>([]);
@@ -67,14 +64,14 @@ export const KuralQuestPage: React.FC = () => {
         <div className="md:col-span-7 space-y-4">
           <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-black bg-amber-100 text-amber-900 border border-amber-300">
             <Sparkles className="w-3.5 h-3.5 text-amber-600" />
-            1,330 Sacred Couplets • Ethical Jurisprudence
+            {t('thirukkuralCouplets')}
           </div>
 
           <h2 className="text-2xl sm:text-3xl font-extrabold font-heading text-[#071B3A] tracking-tight">
-            Explore Thirukkural Ethical Wisdom
+            {t('kuralQuest')}
           </h2>
           <p className="text-xs sm:text-sm text-slate-600 leading-relaxed font-medium">
-            Search classical verses by ethical dilemma, legal principle, Tamil keyword, or chapter to illuminate responsible modern decisions.
+            {t('kuralQuestPillarDesc')}
           </p>
 
           {/* Search Input Bar */}
@@ -82,7 +79,7 @@ export const KuralQuestPage: React.FC = () => {
             <Search className="w-5 h-5 text-slate-400 absolute left-4 pointer-events-none" />
             <input
               type="text"
-              placeholder="Search by situation, concept or meaning (e.g., 'Conflict of Interest', 'Anger', 'Kural 131', 'Justice')..."
+              placeholder={t('searchPlaceholder')}
               value={searchGlobalQuery}
               onChange={(e) => setSearchGlobalQuery(e.target.value)}
               className="w-full pl-12 pr-20 py-3 text-sm bg-slate-50 border border-slate-200 text-slate-900 placeholder-slate-400 focus:bg-white focus:border-blue-600 focus:outline-hidden focus:ring-4 focus:ring-blue-500/20 rounded-xl transition-all font-medium"
@@ -97,7 +94,7 @@ export const KuralQuestPage: React.FC = () => {
                   onClick={() => setSearchGlobalQuery('')}
                   className="text-xs font-bold text-slate-500 hover:text-slate-900 bg-slate-200 px-2 py-1 rounded-md cursor-pointer"
                 >
-                  Clear
+                  {t('clear')}
                 </button>
               )}
             </div>
@@ -106,19 +103,19 @@ export const KuralQuestPage: React.FC = () => {
           {/* Concept Filter Chips */}
           <div className="flex items-center gap-2 flex-wrap pt-1">
             <span className="text-xs font-bold text-slate-500 flex items-center gap-1">
-              <Tag className="w-3.5 h-3.5 text-amber-600" /> Quick Filter:
+              <Tag className="w-3.5 h-3.5 text-amber-600" /> {t('quickFilter')}
             </span>
             {CONCEPT_CHIPS.map((chip) => (
               <button
-                key={chip}
-                onClick={() => setSelectedConcept(chip)}
+                key={chip.key}
+                onClick={() => setSelectedConcept(chip.key)}
                 className={`px-3 py-1 rounded-lg text-xs font-bold transition-all cursor-pointer ${
-                  selectedConcept === chip
+                  selectedConcept === chip.key
                     ? 'bg-[#071B3A] text-white shadow-2xs'
                     : 'bg-slate-100 text-slate-700 hover:bg-slate-200 border border-slate-200'
                 }`}
               >
-                {chip}
+                {t(chip.labelKey)}
               </button>
             ))}
           </div>
@@ -135,10 +132,10 @@ export const KuralQuestPage: React.FC = () => {
             <div className="absolute inset-0 bg-gradient-to-t from-slate-950/60 via-transparent to-transparent" />
             <div className="absolute bottom-3 left-4 right-4 text-white">
               <span className="text-[10px] font-black uppercase tracking-wider bg-amber-400 text-slate-950 px-2 py-0.5 rounded shadow-2xs">
-                Thirukkural Manuscripts
+                {t('appName')}
               </span>
               <p className="text-xs font-bold text-white mt-1 drop-shadow-sm">
-                Leather-bound verses & ancient palm-leaf moral wisdom
+                {t('slogan')}
               </p>
             </div>
           </div>
@@ -159,18 +156,18 @@ export const KuralQuestPage: React.FC = () => {
               }`}
             >
               {p === 'All'
-                ? 'All Sections'
+                ? t('all')
                 : p === 'Aram'
-                ? 'அறத்துப்பால் (Virtue)'
+                ? t('virtue')
                 : p === 'Porul'
-                ? 'பொருட்பால் (Governance & Wealth)'
-                : 'காமத்துப்பால் (Love)'}
+                ? t('wealth')
+                : t('love')}
             </button>
           ))}
         </div>
 
         <div className="text-xs text-slate-500 font-bold px-2">
-          Found <span className="text-[#071B3A] font-black">{kurals.length}</span> couplets matching criteria
+          {t('kuralsCountTag').replace('{count}', kurals.length.toString())}
         </div>
       </div>
 
@@ -182,10 +179,7 @@ export const KuralQuestPage: React.FC = () => {
       ) : kurals.length === 0 ? (
         <div className="p-12 text-center bg-white rounded-2xl border border-slate-200 space-y-3 shadow-2xs">
           <BookOpen className="w-12 h-12 text-slate-400 mx-auto" />
-          <h3 className="text-base font-bold text-slate-800">No matching Thirukkural found</h3>
-          <p className="text-xs text-slate-500 max-w-sm mx-auto">
-            Try searching for terms like "Anger", "Justice", "Integrity", "Truth", or browse by Section tabs.
-          </p>
+          <h3 className="text-base font-bold text-slate-800">{t('searchPlaceholder')}</h3>
           <button
             onClick={() => {
               setSearchGlobalQuery('');
@@ -194,7 +188,7 @@ export const KuralQuestPage: React.FC = () => {
             }}
             className="px-4 py-2 text-xs font-bold text-[#071B3A] bg-slate-100 rounded-xl hover:bg-slate-200 transition-colors cursor-pointer"
           >
-            Reset Filters
+            {t('clear')}
           </button>
         </div>
       ) : (
@@ -212,16 +206,16 @@ export const KuralQuestPage: React.FC = () => {
                       Kural #{kural.number}
                     </span>
                     <span className="text-[11px] font-extrabold text-slate-500 uppercase tracking-wider">
-                      {kural.paal} • {kural.adhigaram}
+                      {language === 'ta' ? (kural.paalTamil || kural.paal) : kural.paal} • {language === 'ta' ? (kural.adhigaramTamil || kural.adhigaram) : kural.adhigaram}
                     </span>
                   </div>
 
                   <span className="px-2.5 py-0.5 text-xs font-extrabold text-amber-900 bg-amber-100/90 rounded-md border border-amber-300/60">
-                    {kural.ethicalConcept}
+                    {language === 'ta' ? (kural.ethicalConceptTamil || kural.ethicalConcept) : kural.ethicalConcept}
                   </span>
                 </div>
 
-                {/* Tamil Verse */}
+                {/* Tamil & Primary Verses */}
                 <div className="p-4 bg-slate-50 rounded-xl border border-slate-200/80 space-y-1">
                   <p className="text-base font-bold font-tamil text-slate-950 leading-relaxed">
                     {kural.verse1Tamil}
@@ -234,22 +228,34 @@ export const KuralQuestPage: React.FC = () => {
                   </p>
                 </div>
 
-                {/* English Verse */}
-                <p className="text-sm font-semibold text-slate-800 leading-relaxed">
-                  "{kural.verseEnglish}"
-                </p>
+                {/* Explanation in current language */}
+                <div className="space-y-1">
+                  <p className="text-sm font-semibold text-slate-800 leading-relaxed">
+                    "{language === 'ta' ? (kural.explanationTamil || kural.verseEnglish) : kural.verseEnglish}"
+                  </p>
+                  {language !== 'ta' && kural.explanationEnglish && (
+                    <p className="text-xs text-slate-600 leading-relaxed">
+                      <strong>{t('ethicalMeaning')}</strong> {kural.explanationEnglish}
+                    </p>
+                  )}
+                  {language === 'ta' && kural.explanationTamil && (
+                    <p className="text-xs text-slate-600 leading-relaxed">
+                      <strong>{t('ethicalMeaning')}</strong> {kural.explanationTamil}
+                    </p>
+                  )}
+                </div>
 
                 {/* Chapter Context */}
                 <div className="text-xs text-slate-500 font-medium">
-                  <strong className="text-slate-800">Chapter ({kural.adhigaramTamil}):</strong>{' '}
-                  {kural.adhigaram}
+                  <strong className="text-slate-800">{t('chapter')}:</strong>{' '}
+                  {language === 'ta' ? kural.adhigaramTamil || kural.adhigaram : kural.adhigaram}
                 </div>
 
                 {/* Legal Intersection preview */}
                 <div className="p-3 bg-blue-50/70 rounded-xl text-xs text-slate-800 space-y-1 border border-blue-100">
                   <span className="font-extrabold flex items-center gap-1.5 text-blue-900">
                     <Scale className="w-3.5 h-3.5 text-blue-600" />
-                    Modern Legal Relevance:
+                    {t('whyThisStatute')}
                   </span>
                   <p className="line-clamp-2 text-slate-600 font-medium">{kural.modernRelevance}</p>
                 </div>
@@ -262,7 +268,7 @@ export const KuralQuestPage: React.FC = () => {
                   className="inline-flex items-center gap-1.5 px-4 py-2 text-xs font-bold text-[#071B3A] bg-slate-100 hover:bg-slate-200 rounded-xl transition-colors cursor-pointer"
                 >
                   <BookOpen className="w-3.5 h-3.5 text-blue-600" />
-                  View Full Kural
+                  {t('reviewKural')} #{kural.number}
                 </button>
 
                 {kural.relatedScenarioIds.length > 0 ? (
@@ -274,10 +280,10 @@ export const KuralQuestPage: React.FC = () => {
                     }}
                     className="inline-flex items-center gap-1 text-xs font-bold text-amber-700 hover:text-amber-800 cursor-pointer"
                   >
-                    Related Scenario <ArrowRight className="w-3.5 h-3.5" />
+                    {t('scenarioChallenge')} <ArrowRight className="w-3.5 h-3.5" />
                   </button>
                 ) : (
-                  <span className="text-[11px] text-slate-400 italic">General Principle</span>
+                  <span className="text-[11px] text-slate-400 italic">{t('tagline')}</span>
                 )}
               </div>
             </div>
