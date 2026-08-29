@@ -195,7 +195,7 @@ export const TRANSLATIONS: Record<Language, Record<string, string>> = {
     searchRelatedKurals: 'Search Related Kurals',
     askAiAboutDomain: 'Ask AI Tutor About This Domain',
 
-    // Category Titles & Descriptions
+    // All 12 Ethics Library Categories Titles & Descriptions
     catImpartialityTitle: 'Impartiality & Equity',
     catImpartialityDesc: 'Maintaining absolute neutrality and judicial balance without bias or personal interest.',
     catVeracityTitle: 'Veracity & Truthfulness',
@@ -208,6 +208,18 @@ export const TRANSLATIONS: Record<Language, Record<string, string>> = {
     catCompassionDesc: 'Humane treatment in criminal justice, human rights preservation, and mercy petitions.',
     catGovernanceTitle: 'Righteous Governance',
     catGovernanceDesc: 'Constitutional governance, rule of law, anti-arbitrariness, and administrative justice.',
+    catDutyOfCareTitle: 'Social Duty & Gratitude',
+    catDutyOfCareDesc: 'Fiduciary duties, client trust, pro-bono representation, and social responsibility.',
+    catJusticeIntegrityTitle: 'Judicial Equanimity & Due Process',
+    catJusticeIntegrityDesc: 'Deliberate investigation, evaluating evidence before judgment, and preventing hasty rulings.',
+    catProfessionalDignityTitle: 'Professional Integrity & Moral Stature',
+    catProfessionalDignityDesc: 'Maintaining moral stature, anti-corruption standards, and judicial independence.',
+    catCivilDecorumTitle: 'Civil Decorum & Courtroom Etiquette',
+    catCivilDecorumDesc: 'Courtroom etiquette, respect for opposing counsel, witnesses, and bench officers.',
+    catPurityOfActionTitle: 'Purity of Action & Clean Hands',
+    catPurityOfActionDesc: 'The Clean Hands Doctrine in equity jurisprudence and ethical legal strategy.',
+    catUniversalEthicsTitle: 'Universal Moral Duty & Natural Law',
+    catUniversalEthicsDesc: 'Universal jurisprudence, natural law principles, and fundamental ethical duties.',
   },
   ta: {
     // Brand & App
@@ -403,7 +415,7 @@ export const TRANSLATIONS: Record<Language, Record<string, string>> = {
     searchRelatedKurals: 'தொடர்புடைய குறள்களைத் தேடுக',
     askAiAboutDomain: 'இந்த பிரிவு பற்றி AI ஆசிரியரிடம் கேட்க',
 
-    // Category Titles & Descriptions
+    // All 12 Ethics Library Categories Titles & Descriptions in Tamil
     catImpartialityTitle: 'நடுவுநிலைமை & சமத்துவம்',
     catImpartialityDesc: 'எந்தவொரு சார்பும் இன்றி முழுமையான நடுவுநிலைமையையும் நீதித்துறை சமநிலையையும் பேணுதல்.',
     catVeracityTitle: 'வாய்மை & உண்மை',
@@ -416,6 +428,18 @@ export const TRANSLATIONS: Record<Language, Record<string, string>> = {
     catCompassionDesc: 'குற்றவியல் நீதியில் மனிதநேய சிகிச்சை, மனித உரிமைகள் பாதுகாப்பு மற்றும் கருணை மனுக்கள்.',
     catGovernanceTitle: 'செங்கோன்மை & நல்லாட்சி',
     catGovernanceDesc: 'அரசியலமைப்பு ஆட்சி, சட்டத்தின் ஆட்சி மற்றும் நிர்வாக நீதி.',
+    catDutyOfCareTitle: 'செய்ந்நன்றியறிதல் & சமூக கடமை',
+    catDutyOfCareDesc: 'நம்பிக்கைப் பொறுப்புகள், கிளையண்ட் நம்பிக்கை, இலவச சட்ட உதவி மற்றும் சமூக பொறுப்பு.',
+    catJusticeIntegrityTitle: 'நீதிநெறி & விசாரணை முறை',
+    catJusticeIntegrityDesc: 'தீர்ப்பு வழங்குவதற்கு முன் சான்றுகளை ஆராய்தல் மற்றும் அவசரத் தீர்ப்புகளைத் தடுத்தல்.',
+    catProfessionalDignityTitle: 'சான்றாண்மை & தொழில்முறை கண்ணியம்',
+    catProfessionalDignityDesc: 'நன்னடத்தை நிலைப்பாடு, ஊழல் எதிர்ப்புத் தரம் மற்றும் நீதித்துறை தன்னாட்சி.',
+    catCivilDecorumTitle: 'பண்புடைமை & நீதிமன்ற ஒழுக்கம்',
+    catCivilDecorumDesc: 'நீதிமன்ற ஒழுக்கம், எதிர்தரப்பு வழக்கறிஞர் மற்றும் நீதிபதிகளுக்கு மதிப்பளித்தல்.',
+    catPurityOfActionTitle: 'வினைத்தூய்மை & தூய செயல்',
+    catPurityOfActionDesc: 'சட்ட வழக்குகளில் தூய கைகள் கோட்பாடு மற்றும் நேர்மையான உத்திகள்.',
+    catUniversalEthicsTitle: 'அறன் வலியுறுத்தல் & இயற்கை நீதி',
+    catUniversalEthicsDesc: 'உலகளாவிய சட்ட தத்துவம், இயற்கை நீதி மற்றும் அடிப்படை அறநெறி கடமைகள்.',
   },
   hi: {
     // Brand & App
@@ -611,7 +635,7 @@ export const TRANSLATIONS: Record<Language, Record<string, string>> = {
     searchRelatedKurals: 'संबंधित कुरल खोजें',
     askAiAboutDomain: 'इस क्षेत्र के बारे में AI ट्यूटर से पूछें',
 
-    // Category Titles & Descriptions
+    // All 12 Ethics Library Categories Titles & Descriptions in Hindi
     catImpartialityTitle: 'निष्पक्षता एवं समता',
     catImpartialityDesc: 'बिना किसी पूर्वाग्रह या व्यक्तिगत हित के पूर्ण तटस्थता और न्यायिक संतुलन बनाए रखना।',
     catVeracityTitle: 'सत्यता एवं ईमानदारी',
@@ -624,5 +648,17 @@ export const TRANSLATIONS: Record<Language, Record<string, string>> = {
     catCompassionDesc: 'आपराधिक न्याय में मानवीय व्यवहार, मानव अधिकार संरक्षण और दया याचिकाएं।',
     catGovernanceTitle: 'धर्मपरायण शासन',
     catGovernanceDesc: 'संवैधानिक शासन, कानून का शासन, गैर-मनमानी और प्रशासनिक न्याय।',
+    catDutyOfCareTitle: 'सामाजिक कर्तव्य एवं कृतज्ञता',
+    catDutyOfCareDesc: 'ग्राहक विश्वास, मुफ्त कानूनी सहायता और सामाजिक जिम्मेदारी।',
+    catJusticeIntegrityTitle: 'न्यायिक समभाव एवं उचित प्रक्रिया',
+    catJusticeIntegrityDesc: 'निर्णय से पहले साक्ष्यों का मूल्यांकन और त्वरित निर्णयों को रोकना।',
+    catProfessionalDignityTitle: 'व्यावसायिक अखंडता एवं नैतिक कद',
+    catProfessionalDignityDesc: 'नैतिक स्थिति, भ्रष्टाचार विरोधी मानक और न्यायिक स्वतंत्रता बनाए रखना।',
+    catCivilDecorumTitle: 'नागरिक शिष्टाचार एवं अदालत शिष्टाचार',
+    catCivilDecorumDesc: 'अदालत शिष्टाचार, विरोधी वकील और न्यायाधीशों का सम्मान।',
+    catPurityOfActionTitle: 'कार्य की पवित्रता एवं स्वच्छ हाथ',
+    catPurityOfActionDesc: 'कानूनी रणनीति में स्वच्छ हाथ सिद्धांत और नैतिक कार्य।',
+    catUniversalEthicsTitle: 'सार्वभौमिक नैतिक कर्तव्य एवं प्राकृतिक कानून',
+    catUniversalEthicsDesc: 'सार्वभौमिक कानून दर्शन, प्राकृतिक कानून सिद्धांत और नैतिक कर्तव्य।',
   },
 };
