@@ -7,11 +7,18 @@ export const aiTutorService = {
    * Calls the server-side /api/ai-tutor/query endpoint powered by Gemini 3.7 and RAG retrieval.
    */
   async askTutor(query: string, lang: Language = 'en'): Promise<Phase3AiResponse> {
+    let effectiveLang = lang;
+    if (/[\u0B80-\u0BFF]/.test(query)) {
+      effectiveLang = 'ta';
+    } else if (/[\u0900-\u097F]/.test(query)) {
+      effectiveLang = 'hi';
+    }
+
     try {
       const res = await fetch('/api/ai-tutor/query', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ prompt: query, lang })
+        body: JSON.stringify({ prompt: query, lang: effectiveLang })
       });
 
       if (res.ok) {
@@ -24,7 +31,7 @@ export const aiTutorService = {
       console.warn('[aiTutorService] API query failed, fallback triggered:', err);
     }
 
-    if (lang === 'ta') {
+    if (effectiveLang === 'ta') {
       return {
         id: `ai-resp-${Date.now()}`,
         situationUnderstanding: `அறநெறி மற்றும் சட்டப் பொறுப்புகள் குறித்த கேள்வி: "${query}".`,
@@ -45,9 +52,30 @@ export const aiTutorService = {
       };
     }
 
+    if (effectiveLang === 'hi') {
+      return {
+        id: `ai-resp-${Date.now()}`,
+        situationUnderstanding: `नैतिक आचरण और कानूनी अनुपालन से संबंधित प्रश्न: "${query}".`,
+        detectedConcepts: ['धर्म (Virtue)', 'निष्पक्षता', 'आत्म-नियंत्रण'],
+        ethicalPerspective: `तिरुक्कुरल के अनुसार, निष्पक्षता और सदाचार ही जीवन का सर्वोच्च धर्म है।`,
+        legalEducationalPerspective: `भारतीय संविधान और कानूनों के तहत, सभी नागरिकों को कानून के समक्ष समानता (अनुच्छेद 14) और प्राकृतिक न्याय की गारंटी है।`,
+        relatedKurals: [],
+        whyKuralIsRelevant: `आत्म-नियंत्रण और न्याय के सिद्धांतों पर जोर देता है।`,
+        responsibleAction: `धैर्यपूर्वक स्थिति का मूल्यांकन करें और कानूनी प्रक्रियाओं का पालन करें।`,
+        modernApplication: `सत्यनिष्ठा और निष्पक्षता कानूनी सुरक्षा और सम्मान प्रदान करती है।`,
+        keyTakeaway: `धर्म और न्याय का मार्ग ही स्थाई सफलता दिलाता है।`,
+        sources: [
+          { name: 'तिरुक्कुरल डेटाबेस', recordId: 'कुरल 131', relevance: 85 }
+        ],
+        traces: [],
+        disclaimer: 'केवल शैक्षणिक कानूनी संदर्भ के लिए।',
+        timestamp: new Date().toISOString()
+      };
+    }
+
     return {
       id: `ai-resp-${Date.now()}`,
-      situationUnderstanding: `Inquiry on ethical conduct and statutory compliance.`,
+      situationUnderstanding: `Inquiry on ethical conduct and statutory compliance regarding "${query}".`,
       detectedConcepts: ['Aram (Virtue)', 'Impartiality', 'Self-Control'],
       ethicalPerspective: `In classical Tamil jurisprudence, Aram (Virtue) guides virtuous decisions across personal, professional, and civic realms.`,
       legalEducationalPerspective: `Contemporary Indian jurisprudence balances statutory frameworks with the constitutional values of fairness, equality, and rule of law.`,

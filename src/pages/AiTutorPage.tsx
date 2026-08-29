@@ -66,7 +66,7 @@ export const AiTutorPage: React.FC = () => {
     setQuery(textToAsk);
 
     try {
-      const res = await aiTutorService.askTutor(textToAsk);
+      const res = await aiTutorService.askTutor(textToAsk, language);
       setCurrentResponse(res);
     } catch (err) {
       console.warn('[AiTutorPage] Query error:', err);

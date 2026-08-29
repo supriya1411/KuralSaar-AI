@@ -23,6 +23,16 @@ function getGeminiClient(): GoogleGenAI | null {
   return geminiClient;
 }
 
+function resolvePromptLanguage(prompt: string, requestedLang: 'en' | 'ta' | 'hi' = 'en'): 'en' | 'ta' | 'hi' {
+  if (/[\u0B80-\u0BFF]/.test(prompt)) {
+    return 'ta';
+  }
+  if (/[\u0900-\u097F]/.test(prompt)) {
+    return 'hi';
+  }
+  return requestedLang;
+}
+
 export class GeminiTutorService {
   private static instance: GeminiTutorService;
   private retrievalService: RetrievalService;
@@ -39,6 +49,8 @@ export class GeminiTutorService {
   }
 
   public async queryTutor(userPrompt: string, lang: 'en' | 'ta' | 'hi' = 'en'): Promise<Phase3AiResponse> {
+    const effectiveLang = resolvePromptLanguage(userPrompt, lang);
+
     // 1. Run full 8-step RAG retrieval
     const retrieval = this.retrievalService.retrieveContext(userPrompt, {
       limitKurals: 3,
@@ -50,11 +62,11 @@ export class GeminiTutorService {
 
     let structuredOutput: Partial<Phase3AiResponse> | null = null;
 
-    const languageInstruction = lang === 'ta'
-      ? 'CRITICAL MANDATE: You MUST write your entire JSON response in TAMIL (தமிழ் மொழி). All explanations, ethical perspectives, legal rules, recommendations, and key takeaways must be fully articulated in clear, natural Tamil (தமிழ்).'
-      : lang === 'hi'
-      ? 'CRITICAL MANDATE: You MUST write your entire JSON response in HINDI (हिंदी भाषा). All explanations, ethical perspectives, legal rules, recommendations, and key takeaways must be fully articulated in clear Hindi (हिंदी).'
-      : 'Write your response in clear English.';
+    const languageInstruction = effectiveLang === 'ta'
+      ? 'CRITICAL MANDATE: The user has asked in TAMIL or selected TAMIL. You MUST write your ENTIRE JSON response in pure, natural TAMIL (தமிழ் மொழி). All explanations, ethical perspectives, legal rules, recommendations, and key takeaways must be fully articulated in Tamil (தமிழ்).'
+      : effectiveLang === 'hi'
+      ? 'CRITICAL MANDATE: The user has asked in HINDI or selected HINDI. You MUST write your ENTIRE JSON response in pure, natural HINDI (हिंदी भाषा). All explanations, ethical perspectives, legal rules, recommendations, and key takeaways must be fully articulated in Hindi (हिंदी).'
+      : 'CRITICAL MANDATE: Write your ENTIRE response in clear English.';
 
     if (ai) {
       try {
@@ -159,7 +171,7 @@ Please synthesize a grounded legal-ethics response in JSON (${lang.toUpperCase()
       const topLegal = retrieval.legalKnowledge[0];
       const conceptList = retrieval.detectedConcepts.map((c) => c.name);
 
-      if (lang === 'ta') {
+      if (effectiveLang === 'ta') {
         structuredOutput = {
           situationUnderstanding: `உங்கள் கேள்வி தமிழ் அறநெறி (திருக்குறள்) மற்றும் இந்திய சட்டப் பின்னணி குறித்த ஆய்வு ஆகும்: "${retrieval.normalizedQuery}".`,
           detectedConcepts: conceptList.length > 0 ? conceptList : ['அறம் (Virtue)', 'நடுவுநிலைமை', 'சுயகட்டுப்பாடு'],
@@ -174,7 +186,7 @@ Please synthesize a grounded legal-ethics response in JSON (${lang.toUpperCase()
           modernApplication: `நவீன நிறுவனங்கள் மற்றும் சமுதாய வாழ்க்கையில் நேர்மையும் நடுவுநிலைமையும் சட்டப் பாதுகாப்பையும் நன்மதிப்பையும் அளிக்கின்றன.`,
           keyTakeaway: `அறமும் நீதியும் இணைந்த வழியே உண்மையான வெற்றியைத் தரும்.`
         };
-      } else if (lang === 'hi') {
+      } else if (effectiveLang === 'hi') {
         structuredOutput = {
           situationUnderstanding: `आपका प्रश्न तिरुक्कुरल नीतिशास्त्र और भारतीय कानूनी संदर्भ पर आधारित है: "${retrieval.normalizedQuery}".`,
           detectedConcepts: conceptList.length > 0 ? conceptList : ['धर्म (Virtue)', 'निष्पक्षता', 'आत्म-नियंत्रण'],
