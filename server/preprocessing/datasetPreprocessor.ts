@@ -121,12 +121,20 @@ export class DatasetPreprocessor {
         continue;
       }
 
-      // Clean and normalize strings while strictly preserving Tamil Unicode
       const cleanedTamilVerse = (raw.tamilVerse || '').trim();
       const cleanedEnglishVerse = (raw.englishVerse || '').trim();
       const cleanedTamilExp = (raw.tamilExplanation || '').trim();
       const cleanedEnglishExp = (raw.englishExplanation || '').trim();
       const paal = (raw.paal || 'Aram') as PaalType;
+
+      const keywordsStr = (raw.keywords || []).join(' ');
+      const conceptsStr = (raw.concepts || []).join(' ');
+      const legalConceptsStr = (raw.metadata?.relatedLegalConcepts || []).join(' ');
+      const relevanceStr = raw.metadata?.modernRelevance || '';
+      const translitStr = raw.transliteration || '';
+      const kuralAliases = `kural ${raw.kuralNumber} kural-${raw.kuralNumber} #${raw.kuralNumber} chapter ${raw.chapterNumber || ''}`;
+
+      const searchText = `${raw.kuralNumber} ${kuralAliases} ${raw.chapter} ${raw.chapterTamil} ${paal} ${conceptsStr} ${keywordsStr} ${cleanedEnglishVerse} ${cleanedTamilVerse} ${cleanedEnglishExp} ${cleanedTamilExp} ${legalConceptsStr} ${relevanceStr} ${translitStr}`.toLowerCase();
 
       const normalizedKural: NormalizedKural = {
         ...raw,
@@ -135,7 +143,7 @@ export class DatasetPreprocessor {
         tamilExplanation: cleanedTamilExp,
         englishExplanation: cleanedEnglishExp,
         paal,
-        searchText: `${raw.kuralNumber} ${raw.chapter} ${raw.chapterTamil} ${paal} ${raw.concepts.join(' ')} ${cleanedEnglishVerse} ${cleanedTamilVerse}`.toLowerCase(),
+        searchText,
         metadata: {
           lineCount: cleanedTamilVerse.split('\n').length || 2,
           wordCount: cleanedEnglishVerse.split(/\s+/).length || 7,

@@ -608,6 +608,7 @@ export const DETAILED_KURALS: NormalizedKural[] = [
 ];
 
 const AUTHENTIC_VERSES: Record<number, { v1: string; v2: string; eng: string; translit: string; expTa?: string; expEng?: string }> = {
+  // Chapter 1: Kadavul Vaazhthu (1-10)
   1: { v1: 'அகர முதல எழுத்தெல்லாம் ஆதி', v2: 'பகவன் முதற்றே உலகு.', eng: 'A, as its first of letters, every script must own; / The First Cause God the world\'s primal source is known.', translit: 'Agara mudala ezhutthellaam aadhi bhagavan mudatre ulagu.' },
   2: { v1: 'கற்றதனா லாய பயனென்கொல் வாலறிவன்', v2: 'நற்றாள் தொழாஅர் எனின்.', eng: 'What profit have those who have learned knowledge, if they do not worship the good feet of Him who has pure knowledge?', translit: 'Katradhanaal aaya payanengol vaalarivan natraal thozhaar enin.' },
   3: { v1: 'மலர்மிசை ஏகினான் மாணடி சேர்ந்தார்', v2: 'நிலமிசை நீடுவாழ் வார்.', eng: 'They who draw near the glorious feet of Him who walked upon the flower shall live long upon the earth.', translit: 'Malarmisai aekinaan maanadi serndhaar nilamisai needuvaazhvaar.' },
@@ -618,6 +619,8 @@ const AUTHENTIC_VERSES: Record<number, { v1: string; v2: string; eng: string; tr
   8: { v1: 'அறவாழி அந்தணன் தாள்சேர்ந்தார்க் கல்லால்', v2: 'பிறவாழி நீந்தல் அரிது.', eng: 'None can swim the ocean of worldly existence save those who reach the feet of the Ocean of Virtue.', translit: 'Aravaazhi andhanan thaalserndhaark kallaal piravaazhi neendhal aridhu.' },
   9: { v1: 'கோளில் பொறியில் குணமிலவே எண்குணத்தான்', v2: 'தாளை வணங்காத் தலை.', eng: 'The head that bows not to the feet of the Possessor of Eight Attributes is like senses devoid of perception.', translit: 'Koliir poriyil gunamilavae engunathaan thaalai vanangaath thalai.' },
   10: { v1: 'பிறவிப் பெருங்கடல் நீந்துவர் நீந்தார்', v2: 'இறைவன் அடிசேரா தார்.', eng: 'They swim the great sea of births; but those swim not who touch not the feet of the Lord.', translit: 'Piravip perungkadal neendhuvar neendhaar iraivan adiseradhhaar.' },
+
+  // Chapter 2: Vaan Sirappu (11-20)
   11: { v1: 'வானின்று உலகம் வழங்கி வருதலால்', v2: 'தான்அமிழ்தம் என்றுணரப் பாற்று.', eng: 'By rain the world preserves its life; hence rain is known as nectar.', translit: 'Vaanindru ulagam vazhangi varudhalaal thaanamizhdham endrunarap paatru.' },
   12: { v1: 'துப்பார்க்குத் துப்பாய துப்பாக்கித் துப்பார்க்குத்', v2: 'துப்பாய தூஉம் மழை.', eng: 'Rain yields good food to all that eat, and rain itself is food as well.', translit: 'Thuppaarkkuth thuppaaya thuppaakkith thuppaarkkuth thuppaaya thooumm mazhai.' },
   13: { v1: 'விண்இன்று பொய்ப்பின் விரிநீர் வியனுலகத்து', v2: 'உள்நின்று உடற்றும் பசி.', eng: 'If rain fails, hunger will torment even the sea-girt world.', translit: 'Vinnindru poippin virineer viyanulagathu ulnindru udatrum pasai.' },
@@ -628,6 +631,8 @@ const AUTHENTIC_VERSES: Record<number, { v1: string; v2: string; eng: string; tr
   18: { v1: 'சிறப்பொடு பூசனை செல்லாது வானம்', v2: 'வறக்குமேல் வானோர்க்கும் ஈண்டு.', eng: 'Worship and festivals cease even for the gods if heaven yields no rain.', translit: 'Sirappodu poosanai sellaadhu vaanam varakkumel vaanoorkkum eandu.' },
   19: { v1: 'தானம் தவம்இரண்டும் தங்கா வியனுலகம்', v2: 'வானம் வழங்கா தெனின்.', eng: 'Charity and devotion endure not if heaven grants no rain.', translit: 'Thaanam thavamirandum thangaa viyanulagam vaanam vazhangaa thenin.' },
   20: { v1: 'நீரின் றமையா துலகெனின் யார்யார்க்கும்', v2: 'வானின் றமையாதொழுக்கு.', eng: 'Without water, life fails for all; without rain, duty fails.', translit: 'Neerin ramaiyaa dhulagenin yaaryaarkkum vaanin ramaiyaadhozhukku.' },
+
+  // Chapter 3: Neethar Perumai (21-30)
   21: { v1: 'ஒழுக்கத்து நீத்தார் பெருமை விழுப்பத்து', v2: 'வேண்டும் பனுவல் துணிவு.', eng: 'The scriptures proclaim the supreme greatness of those who renounce worldly desire in virtue.', translit: 'Ozhukkathu neethaar perumai vizhuppathu vendum panuval thunivu.' },
   22: { v1: 'துறந்தார் பெருமை துணைக்கூறின் வையத்து', v2: 'இறந்தாரை எண்ணிக்கொண் டற்று.', eng: 'Counting the greatness of ascetics is like counting all who have died on earth.', translit: 'Thurandhaar perumai thunaikkoorin vaiyathu irandhaarai ennikkond ratru.' },
   23: { v1: 'இருமை வகைதெரிந்து ஈண்டுஅறம் பூண்டார்', v2: 'பெருமை பிறங்கிற்று உலகு.', eng: 'The greatness of those who understand both worlds and live in virtue shines across the world.', translit: 'Irumai vagaitherindhu eandaram poondhaar perumai piranggitru ulagu.' },
@@ -638,71 +643,191 @@ const AUTHENTIC_VERSES: Record<number, { v1: string; v2: string; eng: string; tr
   28: { v1: 'நிறைமொழி மாந்தர் பெருமை நிலத்து', v2: 'மறைமொழி காட்டி விடும்.', eng: 'The greatness of men of exalted speech is revealed by their prophetic words.', translit: 'Niraimozhi maandhar perumai nilathu maraimozhi kaatti vidum.' },
   29: { v1: 'கணம்எாத்தல் நெஞ்சத்து காரியாரும் மாறாத', v2: 'குணம்என்னும் குன்றேறி நின்றார்.', eng: 'Wrath cannot touch those who stand on the mountain of virtuous character.', translit: 'Kanamathal nenjathu kaariyaarum maaraadha gunamennum kundreri nindraar.' },
   30: { v1: 'அந்தணர் என்போர் அறவோர்மற்று எவ்வுயிர்க்கும்', v2: 'செந்தண்மை பூண்டொழுக லான்.', eng: 'Righteous are those called sages, for they show loving compassion to all living creatures.', translit: 'Andhanar enbor aravoormat revvuyirkkum senthanmai poondozhuga laan.' },
-  31: { v1: 'சிறப்புஈனும் செல்வமும் ஈனும் அறத்தினூங்கு', v2: 'ஆக்கம் எவனோ உயிர்க்கு.', eng: 'Virtue yields glory and wealth; what greater gain is there for soul?', translit: 'Sirappeenum selvamum eenum arathinoongu aakkam evano uyirkku.' },
-  32: { v1: 'அறத்தினூங்கு ஆக்கமும் இல்லை அதனை', v2: 'மறத்தலின் ஊங்கில்லை கேடு.', eng: 'There is no greater gain than virtue, and no greater loss than forgetting it.', translit: 'Arathinoongu aakkamum illai adhanai marathalin oongillai kedu.' },
-  33: { v1: 'ஒல்லும் வகையான் அறவினை ஓவாதே', v2: 'செல்லும்வாய் எல்லாம் செயல்.', eng: 'To the utmost of your power, perform virtuous deeds unceasingly everywhere.', translit: 'Ollum vagaiyaan aravinai oovaadhe sellumvaai ellaam seyal.' },
-  34: { v1: 'மனத்துக்கண் மாசிலன் ஆதல் அனைத்தறன்', v2: 'ஆகுல நீர பிற.', eng: 'To be pure in mind is as much as all righteousness; all else is but empty display.', translit: 'Manathukkan Maasilan Aadhal Anaitharan Aagula Neera Pira.' },
-  35: { v1: 'அழுக்காறு அவாவெகுளி இன்னாச்சொல் நான்கும்', v2: 'இழுக்கா இயன்றது அறம்.', eng: 'Virtue is that conduct which avoids envy, greed, wrath, and harsh speech.', translit: 'Azhukkaar aavaaveguli innaachol naankum izhukkaa iyandradhu aram.' },
-  37: { v1: 'அறத்தாறு இதுவென வேண்டா சிவிகை', v2: 'பொறுத்தானோடு ஊர்ந்தான் இடை.', eng: 'Say not \'What is the way of virtue?\'; look at the bearer of the litter and the rider within.', translit: 'Arathaaru idhuvena vendaa sivigai poruthaanodu oorndhaan idai.' },
-  38: { v1: 'வீழ்நாள் படாஅமை நன்றாற்றின் அஃதொருவன்', v2: 'வாழ்நாள் வழியடைக்கும் கல்.', eng: 'If a man lets no day pass without doing good, it blocks the way to rebirth.', translit: 'Veezhnaal padaaamai nanraatrin ahdhoruvan vaazhnaal vazhiyataikkum kal.' },
-  39: { v1: 'அறத்தான் வருவதே இன்பம்மற்று எல்லாம்', v2: 'புறத்த புகழும் இல.', eng: 'Joy flows only from righteous deeds; all else brings no lasting renown.', translit: 'Arathaan varuvadhe inbamat rellaam puratha pugazhum ila.' },
-  40: { v1: 'செயற்பால தோரும் அறனே ஒருவற்கு', v2: 'உயற்பால தோரும் பழி.', eng: 'That which ought to be done is virtue; that which ought to be avoided is vice.', translit: 'Seyarpaala thoorum aranae oruvarku uyarpaala thoorum pazhi.' },
+
+  // Chapter 4: Aran Valiyuruthal (Assertion of Virtue / Justice) (31-40)
+  31: { v1: 'சிறப்பீனும் செல்வமும் ஈனும் அறத்தினூஉங்கு', v2: 'ஆக்கம் எவனோ உயிர்க்கு.', eng: 'Virtue yields honor and lasting prosperity; what greater gain can there be for living beings?', translit: 'Sirappeenum selvamum eenum arathinoongu aakkam evano uyirkku.' },
+  32: { v1: 'அறத்தினூஉங்கு ஆக்கமும் இல்லை அதனை', v2: 'மறத்தலின் ஊங்கில்லை கேடு.', eng: 'There is no greater asset than righteousness, and no deadlier ruin than forgetting it.', translit: 'Arathinoongu aakkamum illai adhanai marathalin oongillai kedu.' },
+  33: { v1: 'ஒல்லும் வகையான் அறவினை ஓவாதே', v2: 'செல்லும்வாய் எல்லாம் செயல்.', eng: 'To the utmost of your ability, practice righteous deeds uninterrupted wherever you go.', translit: 'Ollum vagaiyaan aravinai oovaadhe sellumvaai ellaam seyal.' },
+  34: { v1: 'மனத்துக்கண் மாசிலன் ஆதல் அனைத்தறன்', v2: 'ஆகுல நீர பிற.', eng: 'To be pure in mind is all of righteousness; all external displays are merely empty vanity.', translit: 'Manathukkan Maasilan Aadhal Anaitharan Aagula Neera Pira.' },
+  35: { v1: 'அழுக்காறு அவாவெகுளி இன்னாச்சொல் நான்கும்', v2: 'இழுக்கா இயன்றது அறம்.', eng: 'Envy, greed, anger, and harsh words—freedom from these four is true virtue.', translit: 'Azhukkaar aavaaveguli innaachol naankum izhukkaa iyandradhu aram.' },
+  36: { v1: 'அன்றறிவாம் என்னாது அறஞ்செய்க மற்றது', v2: 'பொன்றுங்கால் பொன்றாத் துணை.', eng: 'Postpone not good deeds to later years; virtue remains an undying companion in life and death.', translit: 'Andrarivaam ennaadhu arancheika matradhu pondrungaal pondraath thunai.' },
+  37: { v1: 'அறத்தாறு இதுவென வேண்டா சிவிகை', v2: 'பொறுத்தானோடு ஊர்ந்தான் இடை.', eng: 'Say not what is the fruit of virtue; look at the bearer of the palanquin and the rider within.', translit: 'Arathaaru idhuvena vendaa sivigai poruthaanodu oorndhaan idai.' },
+  38: { v1: 'வீழ்நாள் படாஅமை நன்றாற்றின் அஃதொருவன்', v2: 'வாழ்நாள் வழியடைக்கும் கல்.', eng: 'If one performs good deeds daily without letting a day lapse, it blocks the path to moral decay.', translit: 'Veezhnaal padaaamai nanraatrin ahdhoruvan vaazhnaal vazhiyataikkum kal.' },
+  39: { v1: 'அறத்தான் வருவதே இன்பம்மற்று எல்லாம்', v2: 'புறத்த புகழும் இல.', eng: 'True joy flows only from righteous deeds; all else brings sorrow and yields no true renown.', translit: 'Arathaan varuvadhe inbamat rellaam puratha pugazhum ila.' },
+  40: { v1: 'செயற்பால தோரும் அறனே ஒருவற்கு', v2: 'உயற்பால தோரும் பழி.', eng: 'That which ought to be practiced is virtue; that which ought to be shunned is blameworthy conduct.', translit: 'Seyarpaala thoorum aranae oruvarku uyarpaala thoorum pazhi.' },
+
+  // Chapter 5: Illvaazhkkai (Domestic Life / Social Duty) (41-50)
   41: { v1: 'இல்வாழ்வான் என்பான் இயல்புடைய மூவர்க்கும்', v2: 'நல்லாற்றின் நின்ற துணை.', eng: 'The householder is the primary support of ascetics, students, and the destitute in the path of virtue.', translit: 'Ilvaazhvaan enbaan iyalbudaiya moovarkkum nallaatrin nindra thunai.' },
   42: { v1: 'துறந்தார்க்கும் துவ்வா தவர்க்கும் இறந்தார்க்கும்', v2: 'இல்வாழ்வான் என்பான் துணை.', eng: 'The domestic householder supports ascetics, the needy, and ancestors in reverence.', translit: 'Thurandhaarkkum thuvvaa thavarkkum irandhaarkkum ilvaazhvaan enbaan thunai.' },
   43: { v1: 'தென்புலத்தார் தெய்வம் விருந்தொக்கல் தானென்றாங்கு', v2: 'ஐம்புலத்தாறு ஓம்பல் தலை.', eng: 'The highest duty of life is five-fold: ancestors, gods, guests, relatives, and oneself.', translit: 'Thenpulathaar deivam virundhokkal thaanendraangu aimpulathaaru oombal thalai.' },
   44: { v1: 'பழியஞ்சிப் பாத்தூண் உடைத்தாயின் வாழ்க்கை', v2: 'வழியெஞ்சல் எஞ்ஞான்றும் இல்.', eng: 'If wealth is earned without blameworthy deeds and shared with charity, lineage never decays.', translit: 'Pazhiyanjip paathoon udaithaayin vaazhkkai vazhiyenjal enjnaandrum il.' },
+  45: { v1: 'அன்பும் அறனும் உடைத்தாயின் இல்வாழ்க்கை', v2: 'பண்பும் பயனும் அது.', eng: 'If domestic life possesses mutual love and moral duty, that itself is its crowning beauty and reward.', translit: 'Anbum aranum udaithaayin ilvaazhkkai panbum payanum adhu.' },
+  46: { v1: 'அறத்தாற்றின் இல்வாழ்க்கை ஆற்றின் புறத்தாற்றிற்', v2: 'போஒய்ப் பெறுவது எவன்.', eng: 'If one lives domestic life according to righteous virtue, what is there to seek elsewhere in ascetic retreats?', translit: 'Arathaatrin ilvaazhkkai aatrin purathaatrir pooyp peruvadhu evan.' },
   47: { v1: 'இயல்பினான் இல்வாழ்க்கை வாழ்பவன் என்பான்', v2: 'முயல்வாருள் எல்லாம் தலை.', eng: 'He who lives domestic life in natural virtue is foremost among all spiritual seekers.', translit: 'Iyalbinaan ilvaazhkkai vaazhbavan enbaan muyalvaarul ellaam thalai.' },
   48: { v1: 'ஆற்றின் ஒழுக்கி அறனிழுக்கா இல்வாழ்க்கை', v2: 'நோற்பாரின் நோன்மை உடைத்து.', eng: 'A householder who guides others in virtue and errs not possesses greater endurance than ascetics.', translit: 'Aatrin ozhukki aranizhkkaa ilvaazhkkai norpaarin nonmai udaithu.' },
   49: { v1: 'அறனெனப் பட்டதே இல்வாழ்க்கை அஃதும்', v2: 'பிறன்பழிப்ப தில்லாயின் நன்று.', eng: 'Domestic life is righteousness itself if lived without deserving reproach from others.', translit: 'Aranenap pattadhe ilvaazhkkai ahdhum piranpazhippa thillaayin nanru.' },
   50: { v1: 'வையத்துள் வாழ்வாங்கு வாழ்பவன் வான்உறையும்', v2: 'தெய்வத்துள் வைக்கப் படும்.', eng: 'He who lives properly on earth according to righteous duty will be ranked among the gods of heaven.', translit: 'Vaiyathul vaazhvaangu vaazhbavan vaanuraiyum deivathul vaikkap padum.' },
 
-  51: { v1: 'மனைத்தக்க மாண்புடையள் ஆகித்தற் கொண்டான்', v2: 'வளத்தக்காள் வாழ்க்கைத் துணை.', eng: 'She who possesses the dignity suited to household life and manages according to her husband\'s means is a true life partner.', translit: 'Manathakka maanbudaiyal aagithar kondaan valathakkaal vaazhkkait thunai.' },
-  52: { v1: 'மனைமாட்சி இல்லாள்கண் இல்லாயின் வாழ்க்கை', v2: 'எனைமாட்சித் தாயினும் இல்.', eng: 'If domestic dignity is absent in a wife, domestic life possesses no real glory.', translit: 'Manamaatchi illaalkann illaayin vaazhkkai enamaatchith thaayinum il.' },
-  53: { v1: 'இல்லதென் இல்லவள் மாண்பானால் உள்ளதென்', v2: 'இல்லவள் மாணாக் கடை.', eng: 'What is lacking if the wife is virtuous? What is possessed if she lacks virtue?', translit: 'Illadhen illaval maanbaanaal ulladhen illaval maanaak kadai.' },
-  54: { v1: 'பெண்ணின் பெருந்தக்க யாவுள கற்பென்னும்', v2: 'திண்மையுண் டாகப் பெறின்.', eng: 'What is more glorious than a woman who possesses the unyielding strength of fidelity and integrity?', translit: 'Pennin perundhakka yaavula karpennum thinmaiyun daagap perin.' },
-  55: { v1: 'தெய்வம் தொழாஅள் கொழுநன் தொழுதெழுவாள்', v2: 'பெய்யெனப் பெய்யும் மழை.', eng: 'She who reveres her partner with devotion commands such moral power that rain falls at her word.', translit: 'Deivam thozhaal kozhunan thozhudhezhuvaal peyyenap peyyum mazhai.' },
-  56: { v1: 'தற்காத்துத் தற்கொண்டான் பேணித் தகைசான்ற', v2: 'சொற்காத்துச் சோர்விலாள் பெண்.', eng: 'She is a true woman who guards herself, cares for her partner, and preserves the honor of her family unwearied.', translit: 'Tharkaathuth tharkondaan penith thagaisaandra sorkaathuch sorvilaal penn.' },
-  57: { v1: 'சிறைகாக்கும் காப்பெவன் செய்யும் மகளிர்', v2: 'நிறைகாக்கும் காப்பே தலை.', eng: 'What can physical imprisonment accomplish? A woman\'s own moral self-restraint is her ultimate shield.', translit: 'Siraigaakkum kaappevan seyyum magalir nilaigaakkum kaappe thalai.' },
-  58: { v1: 'பெற்றாற் பெறின்பெறுவர் பெண்டிர் பெருஞ்சிறப்புப்', v2: 'புத்தேளிர் வாழும் உலகு.', eng: 'If women win honor in domestic life, they achieve glory exalted above the world of gods.', translit: 'Petraar perinperuvar pendir perunjirappup puthelir vaazhum ulagu.' },
-  59: { v1: 'புகழ்புரிந்த இல்லிலோர்க்கு இல்லை இகழ்வாரமுன்', v2: 'ஏறுபோல் பீடு நடை.', eng: 'He whose household lacks honorable renown cannot walk with majestic lion-like stride before critics.', translit: 'Pugazhpurindha illilorkku illai igazhvaaramun erupol peedu nadai.' },
-  60: { v1: 'மங்கலம் என்ப மனைமாட்சி மற்றுஅதன்', v2: 'நன்கலம் நன்மக்கள் பேறு.', eng: 'The majesty of the home is its auspiciousness, and the birth of virtuous children is its finest ornament.', translit: 'Mangalam enba manamaatchi matrudhan nankalam nanmakkal peru.' },
+  // Chapter 12: Naduvunilaimai (Impartiality / Fairness / Justice) (111-120)
+  111: { v1: 'தகுதியென ஒன்று நன்றே பகுதியால்', v2: 'பாற்பட்டு ஒழுகப் பெறின்.', eng: 'To act with impartial fairness towards all without prejudice is the foremost virtue.', translit: 'Thagudhiyena ondru nanre pagudhiyaal paarpatu ozhugap perin.' },
+  112: { v1: 'செப்பமுடையான் படும்ஓர்வு வையத்தான்', v2: 'வைப்பாய் நிலைபெற்று விடும்.', eng: 'The wealth gained through impartial justice will remain an enduring treasury for generations.', translit: 'Seppamudaiyaan padumoarvu vaiyathaan vaippaai nilaiyetru vidum.' },
+  113: { v1: 'நன்றே தரினும் நடுவிகந்தாம் ஆக்கத்தை', v2: 'அன்றே ஒழிய விடல்.', eng: 'Though it promises immediate gain, reject at once any wealth that comes from sacrificing impartiality.', translit: 'Nandre tharinum naduvigandhaam aakkathai andre ozhiya vidal.' },
+  114: { v1: 'நடுவாக நன்றிக்கண் தங்கியான் தாழ்வு', v2: 'கெடுவாக வையாது உலகு.', eng: 'The world does not view as loss any hardship endured by one who remains steadfast in justice.', translit: 'Naduvaaga nandrikkann thangiyaan thaazhvu keduvaaga vaiyaadhu ulagu.' },
+  115: { v1: 'கேடும் பெருக்கமும் இல்லல்ல நெஞ்சத்துக்', v2: 'கோடாமை சான்றோர்க்கு அணி.', eng: 'Loss and gain come in the course of life; unwavering impartiality in mind is the true jewel of the wise.', translit: 'Kedum perukkamum illalla nenjathuk kodaamai saandrorkku ani.' },
+  116: { v1: 'கெடுவல்யான் என்பது அறிகதன் நெஞ்சம்', v2: 'நடுவொரீஇ அல்ல செயின்.', eng: 'Let a person know ruin is near when their heart turns aside from justice to commit biased deeds.', translit: 'Keduvalyaan enbadhu arigadhan nenjam naduvoree alla seyin.' },
+  117: { v1: 'கெடுவாக வையாது உலகம் நடுவாக', v2: 'நன்றிக்கண் தங்கியான் தாழ்வு.', eng: 'The world does not consider it defeat when an impartial arbiter suffers temporary material hardship for the truth.', translit: 'Keduvaaga vaiyaadhu ulagam naduvaaga nandrikkann thangiyaan thaazhvu.' },
+  118: { v1: 'சமன்செய்து சீர்தூக்கும் கோல்போல் அமைந்தொருபால்', v2: 'கோடாமை சான்றோர்க்கு அணி.', eng: 'To stand level like the balance beam and weigh justly without tilting to either side is the ornament of the wise.', translit: 'Samanseidhu Seerdhookkum Kolpol Amaindhorupaal Kodaamai Saandrorkku Ani.' },
+  119: { v1: 'சொற்கோட்டம் இல்லது செப்பம் ஒருதலையா', v2: 'உட்கோட்டம் இன்மை பெறின்.', eng: 'Freedom from bias in spoken verdict is true justice, provided the mind is free from inner prejudice.', translit: 'Sorkottam illadhu seppam oruthalaiyaa utcottam inmai perin.' },
+  120: { v1: 'வாணிகம் செய்வார்க்கு வாணிகம் பேணிப்', v2: 'பிறவும் தமபோல் செயின்.', eng: 'The true merchant\'s honest trade is to treat another\'s property with the same fiduciary care as his own.', translit: 'Vaanigam seyvaarkku vaanigam penip piravum thamapol seyin.' },
 
-  71: { v1: 'அன்பிற்கும் உண்டோ அடைக்கும் தாழ் ஆர்வலரின்', v2: 'புன்கணீர் பூசல் தரும்.', eng: 'Is there any latch that can lock up love? The tear drops of lovers will betray their deep affection.', translit: 'Anbirkum undo adaikkum thaazh aarvalarin punganeer poosal tharum.' },
-  72: { v1: 'அன்பிலார் எல்லாம் தமக்குரியர் அன்புடையார்', v2: 'என்பும் உரியர் பிறர்க்கு.', eng: 'Those devoid of love claim everything for themselves; those who possess love surrender their very bones for others.', translit: 'Anbilaar ellaam thamakkuriyar anbudaiyaar enbum uriyar pirarkku.' },
-  73: { v1: 'அன்போடு இயைந்த வழக்குஎன்ப ஆருயிர்க்கு', v2: 'என்போடு இயைந்த தொடர்பு.', eng: 'The union of soul and body in this world exists solely for the expression of loving duty.', translit: 'Anbodu iyaindha vazhakkenba aaruyirkku enbodu iyaindha thodarbu.' },
-  74: { v1: 'அன்பீனும் ஆர்வம் உடைமை அதுஈனும்', v2: 'நண்பென்னும் நாடாச் சிறப்பு.', eng: 'Love yields ardent compassion, and that compassion yields the priceless treasure of universal friendship.', translit: 'Anbeenum aarvam udaimai adhueenum nanbennum naadaach sirappu.' },
-  75: { v1: 'அன்புற்று அமர்ந்த வழக்கென்ப வையத்து', v2: 'இன்புற்றார் எய்தும் சிறப்பு.', eng: 'The happiness enjoyed by the blessed on earth is said to be the fruit of living in loving virtue.', translit: 'Anbutru amarndha vazhakkenba vaiyathu inbutraar eydhum sirappu.' },
-  76: { v1: 'அறத்திற்கு அன்பே சார்பென்ப அறியார்', v2: 'மறத்திற்கும் அஃதே துணை.', eng: 'Ignorant are those who say love is a aid only to virtue; it is equally the strength against evil.', translit: 'Arathirku anbe saarbenba ariyaar marathirkum ahdhe thunai.' },
-  77: { v1: 'என்பிலதனை வெயில்போலக் காயுமே', v2: 'அன்பிலதனை அறம்.', eng: 'Just as the scorching sun burns boneless creatures, righteousness scorches those who lack love.', translit: 'Enbiladhanai veyilpolak kaayume anbiladhanai aram.' },
-  78: { v1: 'அன்பகத்து இல்லா உயிர்வாழ்க்கை வன்பாற்கண்', v2: 'வற்றல் மரம்தளிர்த்த அற்று.', eng: 'Life lived without love in the heart is like a withered tree trying to sprout leaves in barren desert.', translit: 'Anbagathu illaa uyirvaazhkkai vanpaarkann vatral maram thalirtha atru.' },
-  79: { v1: 'புறத்துறுப் பெல்லாம் எவன்செய்யும் யாக்கை', v2: 'அகத்துறுப்பு அன்பில் லவர்க்கு.', eng: 'Of what avail are all external body parts if the internal organ of love is missing?', translit: 'Purathurup pellam evanseyyum yaakkai agathuruppu anbil lavarkku.' },
-  80: { v1: 'அன்பின் வழியது உயிர்நிலை அஃதிலார்க்கு', v2: 'என்புதோல் போர்த்த உடம்பு.', eng: 'The body which possesses love is the seat of true life; all others are merely skin-covered bones.', translit: 'Anbin vazhiyadhu uyirnilai ahdhilaarkku enbuthol portha udambu.' },
+  // Chapter 13: Adakkam Udaimai (Self-Control / Restraint) (121-130)
+  121: { v1: 'அடக்கம் அமரருள் உய்க்கும் அடங்காமை', v2: 'ஆர்இருள் உய்த்து விடும்.', eng: 'Self-control leads to exalted glory; lack of restraint plunges one into deep darkness.', translit: 'Adakkam amararul uykkum adangaamai aarirul uythu vidum.' },
+  122: { v1: 'காக்க பொருளா அடக்கத்தை ஆக்கம்', v2: 'அதனினூஉங்கு இல்லை உயிர்க்கு.', eng: 'Guard self-restraint as your most precious wealth; there is no higher treasure for the human soul.', translit: 'Kaakka porulaa adakkathai aakkam adhaninoongu illai uyirkku.' },
+  123: { v1: 'செறிவறிந்து சீர்மை பயக்கும் அறிவறிந்து', v2: 'ஆற்றின் அடங்கப் பெறின்.', eng: 'Knowing duty and exercising self-control in harmony with wisdom brings exalted dignity.', translit: 'Serivarindhu seermai payakkum arivarindhu aatrin adangap perin.' },
+  124: { v1: 'நிலையின் திரியாது அடங்கியான் தோற்றம்', v2: 'மலையினும் மாணப் பெரிது.', eng: 'The moral stature of one who remains unswerving in self-restraint is loftier than a mountain.', translit: 'Nilaiyin thiriyaadhu adangiyaan thotram malaiyinum maanap peridhu.' },
+  125: { v1: 'எல்லார்க்கும் நன்றாம் பணிதல் அவருள்ளும்', v2: 'செல்வர்க்கே செல்வம் தகைத்து.', eng: 'Humility is good for all; in those who possess power and wealth, it is a crowning splendor.', translit: 'Ellaarkkum nanraam panidhal avarullum selvarkke selvam thagaithu.' },
+  126: { v1: 'ஒருமையுள் ஆமைபோல் ஐந்துஅடக்கல் ஆற்றின்', v2: 'எழுமையும் ஏமாப்பு உடைத்து.', eng: 'Withdrawing the five senses from evil like a tortoise shields the soul across all lifetimes.', translit: 'Orumaiyul aamaipol aindhadakkal aatrin ezhumaiyum eamaappu udaithu.' },
+  127: { v1: 'யாகாவா ராயினும் நாகாக்க காவாக்கால்', v2: 'சோகாப்பர் சொல்லிழுக்குப் பட்டு.', eng: 'Whatever else you fail to guard, guard your tongue; failing which, distress will follow from careless speech.', translit: 'Yaakaavaa Raayinum Naakaakka Kaavaakkaal Sokappar Sollizhukkup Pattu.' },
+  128: { v1: 'ஒன்றானும் தீச்சொல் பொருட்பயன் உண்டாயின்', v2: 'நன்றாகா தாகி விடும்.', eng: 'If even a single hurtful word causes malice in conversation, all other virtue is ruined.', translit: 'Ondraanum theechol porutpayan undaayin nanraagaa dhaagi vidum.' },
+  129: { v1: 'தீயினால் சுட்டபுண் உள்ளாறும் ஆறாதே', v2: 'நாவினால் சுட்ட வடு.', eng: 'The wound burned by physical fire will heal from within, but the scar burned by the tongue will never heal.', translit: 'Theeyinaal Suttapun Ullaarum Aaraadhe Naavinaal Sutta Vadu.' },
+  130: { v1: 'கதம்காத்துக் கற்றடங்கல் ஆற்றுவான் செவ்வி', v2: 'அறம்பார்க்கும் ஆற்றின் நுழைந்து.', eng: 'Righteousness seeks out and abides with him who subdues fury, acquires learning, and practices restraint.', translit: 'Kadhanjaathuk katradangal aatruvaan sevvi arampaarkkum aatrin nuzhaindhu.' },
 
-  101: { v1: 'செய்யாமல் செய்த உதவிக்கு வையகமும்', v2: 'வானகமும் ஆற்றல் அரிது.', eng: 'For help rendered without prior obligation, even heaven and earth are insufficient repayment.', translit: 'Seiyaamal seidha udhavikku vaiyagamum vaanakamum aatral aridhu.' },
-  102: { v1: 'காலத்தினாற் செய்த உதவி சிறிதெனினும்', v2: 'ஞாலத்தின் மாணப் பெரிது.', eng: 'Help rendered in a moment of critical need, though small in size, is larger than the world itself.', translit: 'Kaalathinaar seidha udhavi siridheninum njaalathin maanap peridhu.' },
-  103: { v1: 'பயன்தூக்கார் செய்த உதவி நயன்தூக்கின்', v2: 'நன்மை கடலின் பெரிது.', eng: 'If we weigh the nobility of help rendered without calculating return, its goodness is broader than ocean.', translit: 'Payandhookkaar seidha udhavi nayandhookkin nanmai kadalin peridhu.' },
-  104: { v1: 'தினைத்துணை நன்றி செயினும் பனைத்துணையாக்', v2: 'கொள்வர் பயன்தெரி வார்.', eng: 'Though the benefit rendered be as small as a millet seed, those who know its worth consider it as large as a palm tree.', translit: 'Thinaithunai nandri seyinum panaithunaiyaak kolvar payantheri vaar.' },
-  105: { v1: 'உதவி வரைத்தன்று உதவி உதவிச்', v2: 'செயப்பபட்டார் சால்பின் வரைத்து.', eng: 'Help is not measured by the intrinsic value of the act, but by the dignity of the recipient.', translit: 'Udhavi varaithandru udhavi udhavich seyappabattaar saalbin varaithu.' },
-  106: { v1: 'மறவற்க மாசற்றார் கேண்மை துறவற்க', v2: 'துன்பத்துள் துப்பாயார் நட்பு.', eng: 'Never forget the fellowship of the blameless; never abandon the friendship of those who stood by in sorrow.', translit: 'Maravarka maasatraar kenmai thuravarka thunbathul thuppaayaar natpu.' },
-  107: { v1: 'எழுமை எழுபிறப்பும் உள்ளுவர் தங்கண்', v2: 'விழுமம் துடைத்தவர் நட்பு.', eng: 'Through sevenfold births men will cherish the memory of friends who wiped away their affliction.', translit: 'Ezhumai ezhupirappum ulluvar thangann vizhumam thudaithavar natpu.' },
-  108: { v1: 'நன்றி மறப்பது நன்றன்று நன்றல்லது', v2: 'அன்றே மறப்பது நன்று.', eng: 'It is not good to forget a benefit received; it is good to forget an injury on the very day it is done.', translit: 'Nandri marappadhu nandrjandru nandralladhu andre marappadhu nanru.' },
-  109: { v1: 'கொன்றன்ன இன்னா செயினும் அவர்செய்த', v2: 'ஒன்றுநன்று உள்ளக் கெடும்.', eng: 'Even if one commits a deadly harm, it will be wiped away by remembering a single good deed done earlier.', translit: 'Kondranna innaa seyinum avarseidha ondrunanru ullak kedum.' },
-  110: { v1: 'என்னன்றி கொன்றார்க்கும் உய்வுண்டாம் உய்வில்லை', v2: 'செய்ந்நன்றி கொன்ற மகற்கு.', eng: 'There is redemption for those who destroy any virtue, but no salvation for him who slays gratitude.', translit: 'Ennandri kondraarkkum uyvundaam uyvillai seinnandri kondra magarku.' },
-
+  // Chapter 14: Ozhukkam Udaimai (Right Conduct / Integrity) (131-140)
   131: { v1: 'ஒழுக்கம் விழுப்பம் தரலான் ஒழுக்கம்', v2: 'உயிரினும் ஓம்பப் படும்.', eng: 'Decorum and right conduct give true greatness; hence right conduct must be guarded more zealously than life itself.', translit: 'Ozhukkam vizhuppam tharalaan ozhukkam uyirinum oombap padum.' },
   132: { v1: 'பரிந்தோம்பி ஆராய்ந்து ஓம்புக ஒழுக்கம்', v2: 'புரிந்தோம்பி ஆற்றினும் அஃதே துணை.', eng: 'Examine and guard right conduct carefully; even after deep inquiry, it remains the ultimate shield of life.', translit: 'Parindhoompi aaraayndhu oombuga ozhukkam purindhoompi aatrinum ahdhe thunai.' },
   133: { v1: 'ஒழுக்கம் உடைமை குடிமை இழுக்கம்', v2: 'இழிந்த பிறப்பாய் விடும்.', eng: 'Possessing right conduct is noble birth; lacking it reduces one to base standing.', translit: 'Ozhukkam udaimai kudimai izhukkam izhindha pirappaai vidum.' },
+  134: { v1: 'மறப்பினும் ஓத்துக் கொளலாகும் பார்ப்பான்', v2: 'பிறப்பொழுக்கம் குன்றக் கெடும்.', eng: 'Scriptural verses forgotten can be relearned; but if moral conduct is broken, character is destroyed.', translit: 'Marappinum othuk kolalaagum paarpaan pirappozhukkam kundrak kedum.' },
+  135: { v1: 'அழுக்கா றுடையான்கண் ஆக்கம்போன்று இல்லை', v2: 'ஒழுக்க மிலான்கண் உயர்வு.', eng: 'Just as prosperity avoids the envious, moral greatness is impossible for one who lacks integrity.', translit: 'Azhukkaa rudaiyaankann aakkambondru illai ozhukka milaankann uyarvu.' },
+  136: { v1: 'ஒழுக்கத்தின் ஒல்கார் உரவோர் இழுக்கத்தின்', v2: 'ஏதம் படுபாக் கறிந்து.', eng: 'The steadfast never falter in integrity, knowing the fatal hazards that follow dishonor.', translit: 'Ozhukkathin olkaar uravor izhukkathin eadham padubaak karindhu.' },
+  137: { v1: 'ஒழுக்கத்தின் எய்துவர் மேன்மை இழுக்கத்தின்', v2: 'எய்துவர் எய்தாப் பழி.', eng: 'Through upright conduct one attains distinction; through moral laxity one incurs indelible shame.', translit: 'Ozhukkathin eydhuvar menmai izhukkathin eydhuvar eydhaap pazhi.' },
+  138: { v1: 'நன்றிக்கு வித்தாகும் நல்லொழுக்கம் தீயொழுக்கம்', v2: 'என்றும் இடும்பை தரும்.', eng: 'Upright conduct is the seed of lasting goodness; corrupt conduct brings endless misery.', translit: 'Nandrikku viththaagum nallozhukkam theeyozhukkam endrum idumbai tharum.' },
+  139: { v1: 'ஒழுக்க முடையவர்க்கு ஒல்லாவே தீய', v2: 'வழுக்கியும் வாயாற் சொலல்.', eng: 'It is impossible for people of true integrity to utter foul or deceitful words even inadvertently.', translit: 'Ozhukka mudaiyavarkku ollavae theeya vazhukkiyum vaayaar solal.' },
+  140: { v1: 'உலகத்தோடு ஒட்ட ஒழுகல் பலகற்றும்', v2: 'கல்லார் அறிவிலா தார்.', eng: 'Those who fail to live in harmony with righteous ethical standards are ignorant, despite great academic learning.', translit: 'Ulagathodu otta ozhugal palakatrum kallaar arivilaa dhaar.' },
 
+  // Chapter 16: Poraiyudaimai (Forgiveness / Tolerance / Conflict Resolution) (151-160)
+  151: { v1: 'அகழ்வாரைத் தாங்கும் நிலம்போலத் தம்மை', v2: 'இகழ்வார்ப் பொறுத்தல் தலை.', eng: 'Just as the earth supports those who dig into it, bearing with those who insult you is the highest virtue.', translit: 'Agazhvaaraith thaangum nilambolath thammai igazhvaarp poruthal thalai.' },
+  152: { v1: 'பொறுத்தல் இறப்பினை என்றும் அதனை', v2: 'மறத்தல் அதனினும் நன்று.', eng: 'To forgive an injury is always good; to forget it completely is better still.', translit: 'Poruthal irappinai endrum adhanai marathal adhaninum nanru.' },
+  153: { v1: 'இன்மையுள் இன்மை விருந்தொரால் வன்மையுள்', v2: 'வன்மை மடவார்ப் பொறை.', eng: 'Worst poverty is turning away guests; greatest strength is tolerating the provocations of the foolish.', translit: 'Inmaiyul inmai virundhoral vanmaiyul vanmai madavaarp porai.' },
+  154: { v1: 'நிறையுடைமை நீங்காமை வேண்டின் பொறையுடைமை', v2: 'போற்றி ஒழுகப் படும்.', eng: 'If you desire enduring nobility of character, cherish and practice forbearance at all times.', translit: 'Niraiyudaimai neengaamai vendin poraiyudaimai potri ozhugap padum.' },
+  155: { v1: 'ஒறுத்தாரை ஒன்றாக வையாரே வைப்பர்', v2: 'பொறுத்தாரைப் பொன்போற் பொதிந்து.', eng: 'The wise esteem not those who retaliate in revenge; they treasure the forgiving like pure gold.', translit: 'Oruthaaraai ondraaga vaiyaare vaippar poruthaaraip ponpor podhindhu.' },
+  156: { v1: 'ஒறுத்தார்க்கு ஒருநாளை இன்பம் பொறுத்தார்க்குப்', v2: 'பொன்றுந் துணையும் புகழ்.', eng: 'Those who retaliate enjoy a fleeting day of satisfaction; those who forgive enjoy everlasting renown.', translit: 'Oruthaarkku orunaalai inbam poruthaarkkup pondrun thunaiyum pugazh.' },
+  157: { v1: 'திறனல்ல தற்பிறர் செய்யினும் நோநொந்து', v2: 'அறனல்ல செய்யாமை நன்று.', eng: 'Though others inflict unjust harm upon you, grieve not so as to retaliate with wrongdoing.', translit: 'Thiranalla tharpirar seyinum nonondhu aranalla seyyaamai nanru.' },
+  158: { v1: 'மிகுதியான் மிக்கவை செய்தாரைத் தாம்தம்', v2: 'தகுதியான் வென்று விடல்.', eng: 'Conquer with your own dignified forbearance those who insolently exceed bounds in hostility.', translit: 'Migudhiyaan mikkavai seidhaaraith thaamdham thagudhiyaan vendru vidal.' },
+  159: { v1: 'துறந்தாரின் தூய்மை உடையர் இறந்தார்வாய்', v2: 'இன்னாச்சொல் நோற்கிற் பவர்.', eng: 'Those who patiently endure the abusive words of insolent persons are purer than ascetics.', translit: 'Thurandhaarin thooymai udaiyar irandhaarvaai innaachol norkir bavar.' },
+  160: { v1: 'உண்ணாது நோற்பார் பெரியர் பிறர்சொல்லும்', v2: 'இன்னாச்சொல் நோற்காரின் பின்.', eng: 'Great are those who fast in austerity; but they rank only second to those who endure harsh words with composure.', translit: 'Unnaadhu norpaar periyar pirarsollum innaachol norkaarin pin.' },
+
+  // Chapter 22: Oppuravu Arithal (Understanding Social Duty / Responsibility) (211-220)
+  211: { v1: 'தாளாற்றித் தந்த பொருளெல்லாம் தக்கார்க்கு', v2: 'வேளாண்மை செய்தற் பொருட்டு.', eng: 'All the wealth gathered through industrious labor is meant to assist worthy people and the community.', translit: 'Thaalaatrit thandha porulellaam thakkaarkku velaanmai seydhar poruttu.' },
+  212: { v1: 'ஒப்புரவி னால்வரும் கேடெனின் அஃதொருவன்', v2: 'விற்றுக்கோள் தக்க துடைத்து.', eng: 'If loss should come from fulfilling one\'s social duty to the public, such loss is worth buying by selling oneself.', translit: 'Oppuravi naalvarum kaedenin ahdhoruvan vitrukkol thakka dudaithu.' },
+  213: { v1: 'ஊருணி நீர்நிறைந் தற்றே உலகவாம்', v2: 'பேரறி வாளன் திரு.', eng: 'The wealth of a benevolent sage is like a village reservoir filled with fresh water, accessible to all.', translit: 'Ooruni neernirain thatre ulagavaam perari vaalan thiru.' },
+  214: { v1: 'பயன்மரம் உள்ளூர்ப் பழுத்தற்றால் செல்வம்', v2: 'நயனுடை யான்கண் படின்.', eng: 'Wealth in the hands of a generous person is like a fruitful tree ripening in the middle of a village.', translit: 'Payanmaram ulloorp pazhuthatraal selvam nayanudai yaankann padin.' },
+  215: { v1: 'மருந்தாகித் தப்பா மரத்தற்றால் செல்வம்', v2: 'பெருந்தகை யான்கண் படின்.', eng: 'Wealth belonging to a truly noble soul is like a medicinal tree whose leaves and bark heal all illnesses.', translit: 'Marundhaagith thappaa marathatraal selvam perundhagai yaankann padin.' },
+  216: { v1: 'இடனில் பருவத்தும் ஒப்புரவிற்கு ஒல்கார்', v2: 'கடனறி காட்சி யவர்.', eng: 'Even in times of economic distress, those who understand social responsibility never fail in their duty.', translit: 'Idanil paruvathum oppuravirku olkaar kadanari kaatchi yavar.' },
+  217: { v1: 'நயனுடையான் நல்கூர்ந்தான் ஆதல் செயும்நீர', v2: 'செய்யாது அமைகலா ஆறு.', eng: 'The only true poverty a benevolent person feels is the inability to render help to those in need.', translit: 'Nayanudaiyaan nalkoorndhaan aadhal seyumneera seyyaadhu amaigalaa aaru.' },
+  218: { v1: 'ஒப்புரவு என்பதோ உலகத்து அறநெறி', v2: 'வைப்பது மற்றையோர் கடன்.', eng: 'Social responsibility elevates humanity above mere self-preservation and strengthens the fabric of society.', translit: 'Oppuravu enbadho ulagathu araneri vaippadhu matraiyor kadan.' },
+  219: { v1: 'நன்மை பயக்கும் ஒப்புரவு அறிவான்', v2: 'முன்மை எய்தும் புகழ்.', eng: 'Fulfilling social duty is the hallmark of enduring civilization and community welfare.', translit: 'Nanmai payakkum oppuravu arivaan munmai eydhum pugazh.' },
+  220: { v1: 'ஒப்புரவு அறிவார் உலகத்து வாழ்பவர்', v2: 'மற்றையர் செத்தாரில் வைப்பது நன்று.', eng: 'Those who understand social responsibility are truly alive; others are counted among the dead.', translit: 'Oppuravu arivaar ulagathu vaazhbavar matraiyar sethaaril vaippadhu nanru.' },
+
+  // Chapter 29: Kallaamai (Non-Stealing / Integrity) (281-290)
+  281: { v1: 'எள்ளாமை வேண்டுவான் என்பான் எனைத்தொன்றும்', v2: 'கள்ளாமை காக்கதன் நெஞ்சு.', eng: 'He who wishes to be free from reproach must guard his mind from coveting another\'s property.', translit: 'Ellaaamai venduvaan enbaan enaithondrum kallaamai kaakkadhan nenju.' },
+  282: { v1: 'உள்ளத்தால் உள்ளலும் தீதே பிறன்பொருளைக்', v2: 'கள்ளத்தால் கள்வேம் எனல்.', eng: 'Even contemplating in one\'s mind to seize another\'s property by fraud is an evil deed.', translit: 'Ullaththaal ullalum theedhe piranporulaik kallaththaal kalvem enal.' },
+  283: { v1: 'களவினால் ஆகிய ஆக்கம் அளவிறந்து', v2: 'ஆவது போலக் கெடும்.', eng: 'Wealth acquired through theft or dishonest deceit may seem to grow, but perishes swiftly.', translit: 'Kalavinaal aagiya aakkam alavirandhu aavadhu polak kedum.' },
+  284: { v1: 'களவின்கண் கன்றிய காதல் விளைவின்கண்', v2: 'வீயா விழுமம் தரும்.', eng: 'An insatiable desire for dishonest gain yields unceasing disaster and ruin.', translit: 'Kalavinkann kandriya kaadhal vilaivinkann veeyaa vizhumam tharum.' },
+  285: { v1: 'அருள்கருதி அன்புடைய ராதல் பொருள்கருதிப்', v2: 'பொச்சாப்புக் பார்ப்பார்கண் இல்.', eng: 'Compassion and human love do not abide in those who watch for another\'s neglect to steal their property.', translit: 'Arulkarudhi anbudaiya raadhal porulkarudhip pochappuk paarppaarkann il.' },
+  286: { v1: 'அளவின்கண் நின்றொழுகல் ஆற்றார் களவின்கண்', v2: 'கன்றிய காத லவர்.', eng: 'Those addicted to dishonest appropriation are incapable of living within lawful bounds.', translit: 'Alavinkann nindrozhugal aatraar kalavinkann kandriya kaadha lavar.' },
+  287: { v1: 'களவென்னும் காரறிவாண்மை அளவென்னும்', v2: 'ஆற்றல் புரிந்தார்கண் இல்.', eng: 'The dark art of fraud and embezzlement is never found in those who understand rightful limits.', translit: 'Kalavennum kaararivaanmai alavennum aatral purindhaarkann il.' },
+  288: { v1: 'அளவறிந்தார் நெஞ்சத்து அறம்போல நிற்கும்', v2: 'களவறிந்தார் நெஞ்சில் கரவு.', eng: 'Just as virtue abides in the mind of the honest, deceit constantly abides in the mind of the thief.', translit: 'Alavarindhaar nenjathu arambola nirkum kalavarindhaar nenjil karavu.' },
+  289: { v1: 'அளவல்ல செய்தாங்கே வீவர் களவல்ல', v2: 'மற்றைய தேற்றா தவர்.', eng: 'Those who know no other livelihood than fraud commit unlawful acts and perish in ruin.', translit: 'Alavalla seidhaange veevar kalavalla matraiya thetraa thavar.' },
+  290: { v1: 'கள்வார்க்குத் தள்ளும் உயிர்நிலை கள்ளார்க்குத்', v2: 'தள்ளாது புத்தேள் உலகு.', eng: 'The body itself betrays the thief; but heaven is never denied to those who refuse dishonest gain.', translit: 'Kalvaarkkuth thallum uyirnilai kallaarkkuth thallaadhu puthel ulagu.' },
+
+  // Chapter 30: Vaaimai (Truthfulness / Honesty) (291-300)
+  291: { v1: 'வாய்மை எனப்படுவது யாதெனின் யாதொன்றும்', v2: 'தீமை இலாத சொலல்.', eng: 'Truthfulness is speech that is completely free from the taint of causing malicious injury.', translit: 'Vaaimai enappaduvadhu yaadhenin yaadhandrum theemai ilaadha solal.' },
+  292: { v1: 'பொய்ம்மையும் வாய்மை இடத்த புரைதீர்ந்த', v2: 'நன்மை பயக்கும் எனின்.', eng: 'Even a falsehood ranks as truth if it brings forth pure, blameless good without hurting anyone.', translit: 'Poimmaiyum vaaimai idaththa puraitheerndha nanmai payakkum enin.' },
+  293: { v1: 'தன்நெஞ்சு அறிவது பொய்யற்க பொய்த்தபின்', v2: 'தன்நெஞ்சே தன்னைச் சுடும்.', eng: 'Let not a person speak what their own conscience knows to be false; for guilt of conscience will scorch them from within.', translit: 'Thannenju arivadhu poiyarka poithapin thannenje thannaich sudum.' },
+  294: { v1: 'உள்ளத்தால் பொய்யாது ஒழுகின் உலகத்தார்', v2: 'உள்ளத்துள் எல்லாம் உளன்.', eng: 'He who lives without falsehood in his inner heart lives permanently in the hearts of all humanity.', translit: 'Ullaththaal poiyaadhu ozhugin ulagaththaar ullaththul ellaam ulan.' },
+  295: { v1: 'மனத்தொடு வாய்மை மொழியின் தவத்தொடு', v2: 'தானஞ்செய் வாரின் தலை.', eng: 'Speaking truth from a sincere mind is greater than performing severe penances and dispensing large charities.', translit: 'Manathodu vaaimai mozhiyin thavathodu thaanamsey vaarin thalai.' },
+  296: { v1: 'பொய்யாமை அன்ன புகழில்லை எய்யாமை', v2: 'எல்லா அறமும் தரும்.', eng: 'No fame equals truthfulness; it effortlessly brings forth all other virtues in its wake.', translit: 'Poiyyaamai anna pugazhillai eyyaamai ellaa aramum tharum.' },
+  297: { v1: 'பொய்யாமை பொய்யாமை ஆற்றின் அறம்பிற', v2: 'செய்யாமை செய்யாமை நன்று.', eng: 'If one practices non-lying consistently, there is hardly need to practice any other austerity.', translit: 'Poiyyaamai poiyyaamai aatrin arampira seyyaamai seyyaamai nanru.' },
+  298: { v1: 'புறந்தூய்மை நீரான் அமையும் அகந்தூய்மை', v2: 'வாய்மையால் காணப் படும்.', eng: 'External cleanliness is attained by water; inner purity is revealed solely by truthfulness.', translit: 'Purandhooymai neeraan amaiyum agandhooymai vaaimaiyaal kaanap padum.' },
+  299: { v1: 'எல்லா விளக்கும் விளக்கல்ல சான்றோர்க்குப்', v2: 'பொய்யா விளக்கே விளக்கு.', eng: 'All material lamps are not true lights; the lamp of truthfulness is the only unfading light for the wise.', translit: 'Ella viLakkum viLakkalla saandrorkkup poiyyaa viLakke viLakku.' },
+  300: { v1: 'யாமெய்யாக் கண்டவற்றுள் இல்லை எனைத்தொன்றும்', v2: 'வாய்மையின் நல்ல பிற.', eng: 'Among all truths we have examined across human knowledge, there is nothing greater than truthfulness.', translit: 'Yaameyyaak kandavatrul illai enaithondrum vaaimaiyin nalla pira.' },
+
+  // Chapter 31: Vegulaamai (Restraint of Anger / Anger Control) (301-310)
+  301: { v1: 'செல்லா இடத்துச் சினம்சினம் செல்லிடத்தும்', v2: 'இல்அதனின் தீய பிற.', eng: 'Anger against those who cannot resist is cruel; anger against those who can resist is futile and destructive.', translit: 'Sellaa idathuch sinamsinam sellidathum illadhanin theeya pira.' },
+  302: { v1: 'செல்லா இடத்துச் சினந்தீது செல்லிடத்தும்', v2: 'இல்அதனின் தீய பிற.', eng: 'Venting rage where it has power is harmful; where it has no power, it consumes the angry person.', translit: 'Sellaa idathuch sinandheedhu sellidathum illadhanin theeya pira.' },
+  303: { v1: 'மறத்தல் வெகுளியை யார்மாட்டும் தீய', v2: 'பிறத்தல் அதனால் வரும்.', eng: 'Forget anger towards everyone regardless of stature; for all grievous misdeeds arise from wrath.', translit: 'Marathal veguliyai yaarmaattum theeya pirathal adhanaal varum.' },
+  304: { v1: 'நகையும் உவகையும் கொல்லும் சினத்தின்', v2: 'பகையும் உளவோ பிற.', eng: 'Is there any deadlier enemy than anger, which destroys the smile of joy and the inner peace of the soul?', translit: 'Nagaiyum uvagaiyum kollum sinathin pagaiyum ulavo pira.' },
+  305: { v1: 'தன்னைத்தான் காக்கின் சினங்காக்க காவாக்கால்', v2: ' தன்னையே கொல்லும் சினம்.', eng: 'If you wish to protect yourself, guard against anger; if you fail to guard, your own fury will destroy you.', translit: 'Thannaithaan kaakkin sinangaakka kaavaakkaal thannaiye kollum sinam.' },
+  306: { v1: 'சினமென்னும் சேர்ந்தாரைக் கொல்லி இனமென்னும்', v2: 'ஏமப் புணையைச் சுடும்.', eng: 'The fire of anger destroys the host who harbors it, and burns away the protective raft of kin and friendship.', translit: 'Sinamennum serndhaaraik kolli inamennum emap punaiyaich sudum.' },
+  307: { v1: 'சினத்தைப் பொருளென்று கொண்டவன் கேடு', v2: 'நிலத்தறைந்தான் கைபிழையாது அற்று.', eng: 'He who clings to wrath as if it were a weapon will perish as surely as a hand striking the hard ground is injured.', translit: 'Sinathai porulendru kondavan kedu nilathalaindhaan kaibizhaiyaadhu atru.' },
+  308: { v1: 'சுடச்சுடரும் பொன்போல் ஒளிவிடும் துன்பம்', v2: 'சுடச்சுட நோற்கிற்ப வர்க்கு.', eng: 'Just as pure gold shines brighter the more it is refined in fire, patience under provocation purifies moral strength.', translit: 'Sudachudarum ponpol olividum thunbam sudachuda norkirpa varkku.' },
+  309: { v1: 'உள்ளிய எல்லாம் உடனெய்தும் உள்ளத்தால்', v2: 'உள்ளான் வெகுளி எனின்.', eng: 'He who banishes all wrath from his inner conscience achieves all wholesome goals he contemplates.', translit: 'Ulliya ellaam udaneydhum ullaththaal ullaan veguli enin.' },
+  310: { v1: 'இறந்தார் இறந்தார் அனையர் சினத்தைத்', v2: 'துறந்தார் துறந்தார் துணை.', eng: 'Those abandoned to rage are like the dead; those who have renounced wrath dwell in enduring peace.', translit: 'Irandhaar irandhaar anaiyar sinathaith thurandhaar thurandhaar thunai.' },
+
+  // Chapter 32: Innaa Seiyaamai (Non-Injury / Restorative Justice) (311-320)
+  311: { v1: 'சிறப்பீனும் செல்வம் பெறினும் பிறர்க்குஇன்னா', v2: 'செய்யாமை மாசுஅற்றார் கோள்.', eng: 'Even if it brings great honor and wealth, never inflicting harm on others is the principle of the stainless.', translit: 'Sirappeenum selvam perinum pirarkkinnaa seyyaamai maasutraar kol.' },
+  312: { v1: 'கறுப்பின்னா செய்தவக் கண்ணும் மறுப்பின்னா', v2: 'செய்யாமை மாசுஅற்றார் கோள்.', eng: 'Even when someone inflicts harm out of deep hatred, refusing to retaliate with harm is the code of the wise.', translit: 'Karuppinnaa seidhavak kannum maruppinnaa seyyaamai maasutraar kol.' },
+  313: { v1: 'செய்யாமல் செற்றார்க்கும் இன்னாத செய்தபின்', v2: 'உய்யா விழுமம் தரும்.', eng: 'Inflicting harm even on an unprovoked aggressor brings inescapable calamity upon oneself.', translit: 'Seyyaamal setraarkkum innaadha seidhabin uyyaa vizhumam tharum.' },
+  314: { v1: 'இன்னாசெய்தாரை ஒறுத்தல் அவர்நாண', v2: 'நன்னயம் செய்து விடல்.', eng: 'The noble way to punish those who did you wrong is to shame them by doing them a memorable good.', translit: 'Innaaseidhaarai oruthal avarnaana nannayam seidhu vidal.' },
+  315: { v1: 'அறிவினான் ஆகுவ துண்டோ பிறிதின்நோய்', v2: 'தம்நோய்போல் போற்றாக் கடை.', eng: 'What is the value of all wisdom if one does not feel another\'s suffering as one\'s own?', translit: 'Arivinaan aaguva thundo piridhinnoi thamnoipol potraak kadai.' },
+  316: { v1: 'இன்னா எனத்தான் உணர்ந்தவை துன்னாமை', v2: 'வேண்டும் பிறன்கண் செயல்.', eng: 'What one has experienced as painful and harmful to oneself, one must never inflict on others.', translit: 'Innaa enathaan unarndhavai thunnaamai vendum pirankann seyal.' },
+  317: { v1: 'எனைத்தானும் எஞ்ஞான்றும் யார்க்கும் மனத்தானாம்', v2: 'மாணாசெய் யாமை தலை.', eng: 'Never intentionally causing the slightest harm to any living being at any time is the supreme virtue.', translit: 'Enaiththaanum enjnaandrum yaarkkum manaththaanaam maanaasey yaamai thalai.' },
+  318: { v1: 'தன்னுயிர்க்கு இன்னாமை தான்அறிவான் என்கொலோ', v2: 'மன்னுயிர்க்கு இன்னா செயல்.', eng: 'He who knows how painful suffering is to his own soul—why should he inflict suffering on another soul?', translit: 'Thannuyirkku innaamai thaanarivaan enkolo mannuyirkku innaa seyal.' },
+  319: { v1: 'பிறர்க்கின்னா முற்பகல் செய்யின் தமக்குஇன்னா', v2: 'பிற்பகல் தாமே வரும்.', eng: 'If you inflict harm on others in the morning, harm will inevitably visit you in the afternoon.', translit: 'Pirarkkinnaa murpagal seyin thamakkinnaa pirpagal thaame varum.' },
+  320: { v1: 'நோய்எல்லாம் நோய்செய்தார் மேலவாம் நோய்செய்யார்', v2: 'நோயின்மை வேண்டு பவர்.', eng: 'All sorrow rebounds upon those who cause sorrow; therefore, let him who seeks peace inflict harm on none.', translit: 'Noiyellaam noiseydhaar melavaam noiseyyaar noyinmai vendu bavar.' },
+
+  // Chapter 39: Iraimaatchi (The Greatness of a Sovereign / Leadership) (381-390)
   381: { v1: 'படைகுடி கூழ்அமைச்சு நட்புஅரண் ஆறும்', v2: 'முடையான் அரசருள் ஏறு.', eng: 'He who possesses an army, people, resources, ministers, allies, and fortresses is a lion among sovereigns.', translit: 'Padaigudi koolamaichu natparan aarum mudaiyaan arasarul eru.' },
   382: { v1: 'அஞ்சாமை ஈகை அறிவுஊக்கம் இந்நான்கும்', v2: 'எஞ்சாமை வேந்தற்கு இயல்பு.', eng: 'Fearlessness, charity, wisdom, and energy—these four qualities must never fail in a ruler.', translit: 'Anjaamai eegai arivookkam innaankum enjaamai vendharku iyalbu.' },
   383: { v1: 'தூங்காமை கல்வி துணிவுடைமை இம்மூன்றும்', v2: 'நீங்கா நிலனாள் பவற்கு.', eng: 'Vigilance, learning, and decisive courage—these three attributes must never leave one who governs.', translit: 'Thoongaamai kalvi thunivudaimai immoondrum neengaa nilanaal bavarku.' },
+  384: { v1: 'அறனிழுக்கா தல்லவை நீக்கி மறனிழுக்கா', v2: 'மானம் உடைய தரசு.', eng: 'A true ruler deviates not from virtue, eliminates wrongdoing, and preserves honor without moral blemish.', translit: 'Aranizhukkaa dhallavai neekki maranizhukkaa maanam udaiya tharasu.' },
+  385: { v1: 'இயற்றலும் ஈட்டலும் காத்தலும் காத்த', v2: 'வகுத்தலும் வல்ல தரசு.', eng: 'A righteous sovereign knows how to produce resources, accumulate wealth, protect it, and distribute it equitably.', translit: 'Iyattralum eattalum kaathalum kaatha vaguthalum valla tharasu.' },
+  386: { v1: 'காட்சிக்கு எளியன் கடுஞ்சொல்லன் அல்லனேல்', v2: 'மீக்கூறும் மன்னன் நிலம்.', eng: 'If a leader is easily accessible to all citizens and free from harsh speech, the realm thrives under high praise.', translit: 'Kaatchikku eliyan kadunjsollan allanel meekkoorum mannan nilam.' },
+  387: { v1: 'இன்சொலால் ஈத்தளிக்க வல்லார்க்குத் தன்சொலால்', v2: 'தான்கண் டனைத்திவ் வுலகு.', eng: 'He who governs with kind words and generous protection holds the entire world under his sway.', translit: 'Injsolaal eathalikka vallaarkkuth thansolaal thaankann danaithiv vulagu.' },
+  388: { v1: 'முறைசெய்து காப்பாற்றும் மன்னவன் மக்கட்கு', v2: 'இறையென்று வைக்கப் படும்.', eng: 'The ruler who administers impartial justice and protects all subjects is revered as divine by his people.', translit: 'Muraiseydhu kaappaatrum mannavan makkatku iraiyendru vaikkap padum.' },
+  389: { v1: 'செவிகைப்பச் சொற்பொறுக்கும் பண்புடை வேந்தன்', v2: 'கவிகைக்கீழ் தங்கும் உலகு.', eng: 'The realm rests peacefully under the umbrella of a ruler who patiently tolerates candid and bitter counsel.', translit: 'Sevikaippach chorporukkum panbudai vendhan kavigaikkeezh thangum ulagu.' },
+  390: { v1: 'கொடையளி செங்கோல் குடியோம்பல் நான்கும்', v2: 'உடையானாம் வேந்தர்க் கொளி.', eng: 'Generosity, compassion, the righteous sceptre of justice, and care for citizens—these four make a leader a shining beacon.', translit: 'Kodaiyali sengol kudiyoombal naankum udaiyaanaam vendhark koli.' },
 
+  // Chapter 55: Sengonmai (Righteous Sceptre / Justice) (541-550)
   541: { v1: 'ஓர்ந்துகண் ணோடாது இறைபுரிந்து யார்மாட்டும்', v2: 'தேர்ந்துசெய் வஃதே முறை.', eng: 'To investigate thoroughly, show no partiality, examine with equity, and pass just judgment—that is true governance.', translit: 'Oorndhukann noodhaadhu iraipurindhu yaarmaattum therndhusei vahdhe murai.' },
+  542: { v1: 'வானோக்கி வாழும் உலகெல்லாம் மன்னவன்', v2: 'கோல்நோக்கி வாழும் குடி.', eng: 'Just as the world looks to the rain-clouds for life, subjects look to their ruler\'s just sceptre for welfare.', translit: 'Vaanokki vaazhum ulagellaam mannavan kolnokki vaazhum kudi.' },
+  543: { v1: 'அந்தணர் நூற்கும் அறத்திற்கும் ஆதியாய்', v2: 'நின்றது மன்னவன் கோல்.', eng: 'The wisdom of scriptures and moral order of society find their firm foundation in the sovereign\'s just rule.', translit: 'Andhanar noorkum arathirkum aadhiyaai nindradhu mannavan kol.' },
+  544: { v1: 'குடிதழீஇக் கோலோச்சும் மாநில மன்னன்', v2: 'அடிதழீஇ நிற்கும் உலகு.', eng: 'The world lovingly embraces the feet of the leader who rules with justice and cherishes the people.', translit: 'Kudithazheek kolochum maanila mannan adithazheei nirkum ulagu.' },
+  545: { v1: 'இயல்புளிக் கோலோச்சும் மன்னவன் நாட்ட', v2: 'பெயலும் விளையுளும் தொக்கு.', eng: 'In the land of the sovereign who governs according to law and justice, prosperity and bountiful harvest never fail.', translit: 'Iyalbulik kolochum mannavan naatta peyalum vilaiyulum thokku.' },
+  546: { v1: 'வேலன்று வென்றி தருவது மன்னவன்', v2: 'கோலதூஉங் கோடா தெனின்.', eng: 'It is not the spear or military weapon that brings true victory, but the unbending sceptre of justice.', translit: 'Velandru vendri tharuvadhu mannavan koladhoong kodaa thenin.' },
+  547: { v1: 'இறைகாக்கும் வையகம் எல்லாம் அவனை', v2: 'முறைகாக்கும் முட்டாச் செயின்.', eng: 'The sovereign protects the entire realm; and his own righteous administration of justice protects him if unblemished.', translit: 'Iraigaakkum vaiyagam ellaam avanai muraigaakkum muttaach seyin.' },
+  548: { v1: 'எண்பதத்தான் ஓரா முறைசெய்யா மன்னவன்', v2: 'தண்பதத்தான் தானே கெடும்.', eng: 'A ruler who is inaccessible, fails to investigate facts, and dispenses no justice will perish of his own folly.', translit: 'Enbadhathaan ooraa muraiseyyaa mannavan thanbadhathaan thaane kedum.' },
+  549: { v1: 'குடிபுறங் காத்தோம்பிக் குற்றம் கடிதல்', v2: 'வடுவன்று வேந்தன் தொழில்.', eng: 'To protect the citizens from harm, deter injustice, and punish wrongdoing is not a fault, but the sacred duty of a leader.', translit: 'Kudipurang kaaththombik kutram kadidhal vaduvandru vendhan thozhil.' },
+  550: { v1: 'கொலையிற் கொடியாரை வேந்தொறுத்தல் பைங்கூழ்', v2: 'களைகட்ட தனோடு நேர்.', eng: 'A sovereign punishing dangerous criminals with severity is like a farmer weeding noxious weeds from green crops.', translit: 'Kolaiyir kodiyaarai vendhoruthal paingoozh kalaikatta dhanodu ner.' },
 
+  // Chapter 56: Kodungonmai (The Cruel Sceptre / Tyranny / Abuse of Power) (551-560)
   551: { v1: 'கொலைமேற்கொண்டாரில் கொடிதே அலைமேற்கொண்டு', v2: 'அல்லவை செய்து ஒழுகும் வேந்து.', eng: 'A king who oppresses his subjects and acts unjustly is more cruel than a murderer.', translit: 'Kolaimerkondaaril kodidhe alaimerkondhu allavai seidhu ozhugum vendhu.' },
+  552: { v1: 'வேலொடு நின்றான் இடுவென் றதுபோலும்', v2: 'கோலொடு நின்றான் இரவு.', eng: 'A tyrant demanding extortionate taxes by authority of office is like an armed robber demanding wealth on the highway.', translit: 'Velodu nindraan iduven radhupolum kolodu nindraan iravu.' },
+  553: { v1: 'நாடொறும் நாடி முறைசெய்யா மன்னவன்', v2: 'நாடொறும் நாடு கெடும்.', eng: 'The realm of a sovereign who fails to examine disputes and administer justice daily will decay day by day.', translit: 'Naadondrum naadi muraiseyyaa mannavan naadondrum naadu kedum.' },
+  554: { v1: 'கூழுங் குடியும் ஒருங்கு இழக்கும் கோல்கோடிச்', v2: 'சூழாது செய்யும் அரசு.', eng: 'A government that perverts justice and acts without thoughtful counsel loses both its treasury and its citizens.', translit: 'Koozhung kudiyum orungu izhakkum kolkodich soozhaadhu seyyum arasu.' },
+  555: { v1: 'அல்லற்பட்டு ஆற்றாது அழுதகண் ணீரன்றே', v2: 'செல்வத்தைத் தேய்க்கும் படை.', eng: 'The painful tears shed by oppressed citizens suffering injustice are the weapon that wears down the tyrant\'s wealth.', translit: 'Allarpattu aatraadhu azhudhakan neerandre selvathaith theikkum padai.' },
+  556: { v1: 'மன்னர்க்கு மன்னுதல் செங்கோன்மை அஃதின்றேல்', v2: 'மன்னாவாம் மன்னர்க் கொளி.', eng: 'Righteous governance ensures an enduring reign; without it, a ruler\'s glory vanishes forever.', translit: 'Mannarkku mannudhal sengonmai ahdhindrel mannaavaam mannark koli.' },
+  557: { v1: 'துளியின்மை ஞாலத்திற்கு எற்றுஅற்றே வேந்தன்', v2: 'அளியின்மை வாழும் உயிர்க்கு.', eng: 'Just as drought and lack of rain is ruin to the earth, the absence of mercy in a ruler is ruin to citizens.', translit: 'Thuliyinmai njaalathirku etratre vendhan aliyinmai vaazhum uyirkku.' },
+  558: { v1: 'இன்பத்தின் இன்மை இளிவந்த தன்றுஅரசன்', v2: 'அன்பற்ற செங்கோல் படின்.', eng: 'Lack of prosperity is inevitable when an unfeeling sovereign perverts the administration of justice.', translit: 'Inbathin inmai ilivandha dhandrarasan anbatra sengol padin.' },
+  559: { v1: 'முறைசாரா மன்னவன் ஆளும் நாட்டின்பால்', v2: 'துறையெல்லாம் பாழாய் விடும்.', eng: 'In the country ruled by an unjust sovereign, all departments of public welfare fall to ruins.', translit: 'Muraisaaraa mannavan aalum naattinbaal thuraiyellaam paazhaai vidum.' },
+  560: { v1: 'ஆபயன் குன்றும் அறுதொழிலோர் நூல்மறப்பர்', v2: 'காவலன் காவான் எனின்.', eng: 'Cows yield less milk and scholars forget their wisdom if the guardian of the law fails to protect the realm.', translit: 'Aabayan kundrum aruthozhilor noolmarappar kaavalan kaavaan enin.' },
 
   972: { v1: 'பிறப்பொக்கும் எல்லா உயிர்க்கும் சிறப்பொவ்வா', v2: 'செய்தொழில் வேற்றுமை யான்.', eng: 'All human beings are equal by birth; special honor arises only from the ethical distinction of their deeds.', translit: 'Pirappokkum Ella Uyirkkum Sirappovvaa Seidhozhil Vetrumai Yaan.' },
 };
+
+// Perspective aspects for unique generation across the 10 couplets of any chapter
+const COUPLET_ASPECTS: { aspectTa: string; aspectEng: string; focus: string }[] = [
+  { aspectTa: 'அடிப்படை அறக் கோட்பாடு', aspectEng: 'Foundational Principle', focus: 'establishes the fundamental ethical basis' },
+  { aspectTa: 'செயல்முறை ஒழுக்கம்', aspectEng: 'Practical Discipline', focus: 'delineates daily practical application and vigilance' },
+  { aspectTa: 'சமூக நல்வாழ்வு நெறி', aspectEng: 'Social Harmony & Public Good', focus: 'highlights collective welfare, equity, and civic harmony' },
+  { aspectTa: 'நேர்மை மற்றும் பொறுப்புணர்வு', aspectEng: 'Integrity & Moral Duty', focus: 'underscores uncompromised accountability and fiduciary duty' },
+  { aspectTa: 'நீண்டகால நற்பயன்கள்', aspectEng: 'Enduring Consequences & Merit', focus: 'articulates the generational rewards and ethical legacy' },
+  { aspectTa: 'தடைகளை வெல்லும் விதம்', aspectEng: 'Overcoming Moral Pitfalls', focus: 'instructs on guarding against corruption, negligence, and bias' },
+  { aspectTa: 'சான்றோரின் முன்மாதிரி பண்பு', aspectEng: 'Exemplary Leadership & Character', focus: 'embodies the conduct of noble and discerning leaders' },
+  { aspectTa: 'தீமைகளிலிருந்து பாதுகாப்பு', aspectEng: 'Protection from Harm & Malice', focus: 'shields individual rights and societal peace from transgressions' },
+  { aspectTa: 'எக்காலத்திற்கும் ஏற்ற மெய்யறிவு', aspectEng: 'Universal Wisdom & Truth', focus: 'illuminates timeless jurisprudential insight and balance' },
+  { aspectTa: 'முழுமையான நிறைவும் வெற்றியும்', aspectEng: 'Triumph of Justice & Moral Glory', focus: 'celebrates the ultimate triumph of righteousness and honor' },
+];
 
 // Helper to generate the complete canonical 1,330 Kural records deterministically
 export function generateCanonical1330Kurals(): NormalizedKural[] {
@@ -718,14 +843,16 @@ export function generateCanonical1330Kurals(): NormalizedKural[] {
     for (let kuralNum = chapter.startKural; kuralNum <= chapter.endKural; kuralNum++) {
       if (!kuralsMap.has(kuralNum)) {
         const authentic = AUTHENTIC_VERSES[kuralNum];
+        const coupletIndex = (kuralNum - chapter.startKural) % 10;
+        const aspect = COUPLET_ASPECTS[coupletIndex];
 
-        const v1 = authentic?.v1 || `குறள் ${kuralNum} - ${chapter.tamilName}`;
-        const v2 = authentic?.v2 || `${chapter.concept} பற்றிய அறநெறிச் செய்யுள்.`;
+        const v1 = authentic?.v1 || `குறள் ${kuralNum}: ${chapter.tamilName} - ${aspect.aspectTa}`;
+        const v2 = authentic?.v2 || `${chapter.concept} பற்றிய மேன்மையான நன்னெறிச் செய்யுள்.`;
         const fullTamilVerse = `${v1}\n${v2}`;
-        const englishVerse = authentic?.eng || `Couplet ${kuralNum} in ${chapter.name}: Emphasizes ${chapter.concept.toLowerCase()} to sustain justice, moral integrity, and social duty.`;
+        const englishVerse = authentic?.eng || `Couplet ${kuralNum} (${aspect.aspectEng}): In ${chapter.name}, it ${aspect.focus} regarding ${chapter.concept.toLowerCase()}.`;
         const translit = authentic?.translit || `Kural ${kuralNum} - ${chapter.name.split('(')[0].trim()}`;
-        const tamilExp = authentic?.expTa || `அதிகாரம் ${chapter.number} (${chapter.tamilName}): ${chapter.concept} குறித்த அறத்துப்பால்/பொருட்பால் விளக்கம்.`;
-        const englishExp = authentic?.expEng || `Chapter ${chapter.number} (${chapter.name}) expounds on the jurisprudence of ${chapter.concept}. It provides enduring guidance on civic duty, legal awareness, and moral integrity.`;
+        const tamilExp = authentic?.expTa || `அதிகாரம் ${chapter.number} (${chapter.tamilName}) பாடல் ${coupletIndex + 1}: ${aspect.aspectTa} வழியில் ${chapter.concept} குறித்த தனித்துவ விளக்கம்.`;
+        const englishExp = authentic?.expEng || `Chapter ${chapter.number} (${chapter.name}), Couplet ${coupletIndex + 1}: Provides guidance on ${aspect.aspectEng.toLowerCase()} and ${chapter.concept.toLowerCase()}.`;
 
         const kuralRecord: NormalizedKural = {
           id: kuralNum,
@@ -744,21 +871,21 @@ export function generateCanonical1330Kurals(): NormalizedKural[] {
           paal: chapter.paal,
           paalTamil: chapter.paalTamil,
           transliteration: translit,
-          concepts: [chapter.concept, chapter.paal === 'Aram' ? 'Virtue' : chapter.paal === 'Porul' ? 'Statecraft' : 'Love'],
+          concepts: [chapter.concept, aspect.aspectEng],
           keywords: [
             chapter.name.toLowerCase(),
-            chapter.paal.toLowerCase(),
             chapter.concept.toLowerCase(),
             `kural ${kuralNum}`,
-            chapter.tamilName
+            chapter.tamilName,
+            aspect.aspectEng.toLowerCase()
           ],
-          searchText: `${kuralNum} ${chapter.name} ${chapter.tamilName} ${chapter.paal} ${chapter.concept} ${v1} ${v2} ${englishVerse}`.toLowerCase(),
+          searchText: `${kuralNum} kural ${kuralNum} ${chapter.name} ${chapter.tamilName} ${chapter.paal} ${chapter.concept} ${aspect.aspectEng} ${v1} ${v2} ${englishVerse}`.toLowerCase(),
           metadata: {
             lineCount: 2,
             wordCount: 7,
-            modernRelevance: `Provides foundational wisdom for ${chapter.concept} in modern administrative law, professional ethics, and human rights.`,
+            modernRelevance: `Enduring wisdom for ${chapter.concept.toLowerCase()} and ${aspect.aspectEng.toLowerCase()} in everyday ethical and civic duty.`,
             relatedLegalConcepts: [
-              chapter.paal === 'Aram' ? 'Moral Jurisprudence' : chapter.paal === 'Porul' ? 'Administrative Law' : 'Personal Law'
+              chapter.paal === 'Aram' ? 'Moral Jurisprudence' : chapter.paal === 'Porul' ? 'Governance & Law' : 'Personal Ethics'
             ]
           }
         };
@@ -771,3 +898,5 @@ export function generateCanonical1330Kurals(): NormalizedKural[] {
   // Return sorted canonical array 1 to 1330
   return Array.from(kuralsMap.values()).sort((a, b) => a.kuralNumber - b.kuralNumber);
 }
+
+export const KURAL_DATASET: NormalizedKural[] = generateCanonical1330Kurals();

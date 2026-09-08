@@ -28,38 +28,7 @@
       }
     ]
   },
-  {
-    "id": "post-1787935221306",
-    "authorName": "Dr. Aditi Sharma",
-    "authorRole": "Senior Ethics Researcher",
-    "authorAvatar": "https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=150&auto=format&fit=crop&q=80",
-    "title": "Voice Ethics in AI Jurisprudence",
-    "content": "Sharing thoughts via voice message on AI bias and Thirukkural principles.",
-    "category": "Scenario Debates",
-    "upvotes": 1,
-    "replyCount": 0,
-    "timestamp": "Just now",
-    "tags": [
-      "Discussion",
-      "Ethics"
-    ]
-  },
-  {
-    "id": "post-1787742150730",
-    "authorName": "Arun Kumar",
-    "authorRole": "Senior Legal-Ethics Scholar",
-    "authorAvatar": "https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=150&auto=format&fit=crop&q=80",
-    "title": "133",
-    "content": "hind",
-    "category": "Kural Interpretations",
-    "upvotes": 8,
-    "replyCount": 0,
-    "timestamp": "Just now",
-    "tags": [
-      "Discussion",
-      "Ethics"
-    ]
-  },
+
   {
     "id": "post-1",
     "authorName": "Adv. Priyadarshini M.",

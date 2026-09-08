@@ -1,10 +1,9 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useMemo, useRef } from 'react';
 import { useApp } from '../context/AppContext';
 import { KnowledgeNode, KnowledgeEdge } from '../types';
 import { knowledgeGraphService } from '../services/knowledgeGraphService';
 import { StepAiTutorModal } from '../components/common/StepAiTutorModal';
 import {
-  Network,
   Sparkles,
   Scale,
   BookOpen,
@@ -12,9 +11,15 @@ import {
   ZoomOut,
   Maximize2,
   Minimize2,
-  X,
+  Search,
   Compass,
   FileText,
+  RotateCcw,
+  Layers,
+  HelpCircle,
+  X,
+  Sidebar,
+  ChevronRight
 } from 'lucide-react';
 import { CHAPTER_NAMES_LOCALIZED, ETHICAL_CONCEPT_LOCALIZED } from '../i18n/kuralLocalizations';
 import { SCENARIO_TRANSLATIONS } from '../i18n/scenarioLocalizations';
@@ -103,17 +108,21 @@ export const KnowledgeGraphPage: React.FC = () => {
   const [nodes, setNodes] = useState<KnowledgeNode[]>([]);
   const [edges, setEdges] = useState<KnowledgeEdge[]>([]);
   const [selectedNode, setSelectedNode] = useState<KnowledgeNode | null>(null);
-  const [viewMode, setViewMode] = useState<'guided' | 'explorer'>('guided');
-  const [activePathwayId, setActivePathwayId] = useState<string>('path-justice');
-  const [activeStepNumber, setActiveStepNumber] = useState<number>(1);
+  const [viewMode, setViewMode] = useState<'flow' | 'guided'>('flow');
+  const [searchQuery, setSearchQuery] = useState<string>('');
   const [filterType, setFilterType] = useState<string>('All');
   const [zoomLevel, setZoomLevel] = useState<number>(1);
   const [isFullscreen, setIsFullscreen] = useState<boolean>(false);
+  const [showDrawer, setShowDrawer] = useState<boolean>(true);
+  const [activePathwayId, setActivePathwayId] = useState<string>('path-justice');
+  const [activeStepNumber, setActiveStepNumber] = useState<number>(1);
 
   // In-Card AI Tutor Chatbot Modal State
   const [tutorModalOpen, setTutorModalOpen] = useState(false);
   const [tutorTopic, setTutorTopic] = useState('');
   const [tutorContextTitle, setTutorContextTitle] = useState('');
+
+  const graphContainerRef = useRef<HTMLDivElement>(null);
 
   const openStepTutorModal = (topic: string, contextTitle: string = 'Ethical & Legal Inquiry') => {
     setTutorTopic(topic);
@@ -126,519 +135,656 @@ export const KnowledgeGraphPage: React.FC = () => {
       const data = await knowledgeGraphService.getGraphData();
       setNodes(data.nodes);
       setEdges(data.edges);
-      setSelectedNode(data.nodes[0] || null);
+      if (data.nodes.length > 0) {
+        const firstChapter =
+          data.nodes.find(n => n.type === 'Chapter' && n.label.toLowerCase().includes('aran valiyuruthal')) ||
+          data.nodes.find(n => n.type === 'Chapter') ||
+          data.nodes[0];
+        setSelectedNode(firstChapter);
+      }
     };
     fetchGraph();
   }, []);
 
+  // Keyboard shortcut for Escape key to exit fullscreen
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'Escape' && isFullscreen) {
+        setIsFullscreen(false);
+      }
+    };
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, [isFullscreen]);
+
   const activePathway = GUIDED_PATHWAYS.find((p) => p.id === activePathwayId) || GUIDED_PATHWAYS[0];
 
-  const getLocalizedPathwayTitle = (pId: string) => {
-    if (pId === 'path-justice') return t('pathJusticeTitle');
-    if (pId === 'path-integrity') return t('pathIntegrityTitle');
-    if (pId === 'path-truth') return t('pathTruthTitle');
-    if (pId === 'path-governance') return t('pathGovernanceTitle');
-    return '';
+  // Partition nodes by column type
+  const columnNodes = useMemo(() => {
+    const chapters: KnowledgeNode[] = [];
+    const kurals: KnowledgeNode[] = [];
+    const ethicalConcepts: KnowledgeNode[] = [];
+    const legalConcepts: KnowledgeNode[] = [];
+
+    nodes.forEach((n) => {
+      const tLower = (n.type || '').toLowerCase();
+      if (tLower === 'chapter') {
+        chapters.push(n);
+      } else if (tLower === 'kural') {
+        kurals.push(n);
+      } else if (tLower === 'ethicalconcept' || tLower === 'ethical_concept') {
+        ethicalConcepts.push(n);
+      } else if (tLower === 'legalconcept' || tLower === 'legal_concept' || tLower === 'legal_knowledge') {
+        legalConcepts.push(n);
+      }
+    });
+
+    return { chapters, kurals, ethicalConcepts, legalConcepts };
+  }, [nodes]);
+
+  // Find connected node IDs for the selected node
+  const connectedNodeIds = useMemo(() => {
+    if (!selectedNode) return new Set<string>();
+    const ids = new Set<string>([selectedNode.id]);
+
+    edges.forEach((e) => {
+      if (e.source === selectedNode.id) ids.add(e.target);
+      if (e.target === selectedNode.id) ids.add(e.source);
+    });
+
+    edges.forEach((e) => {
+      if (ids.has(e.source)) ids.add(e.target);
+      if (ids.has(e.target)) ids.add(e.source);
+    });
+
+    return ids;
+  }, [selectedNode, edges]);
+
+  // Filtered lists for each column based on search & filter type
+  const filterList = (list: KnowledgeNode[], colType: string) => {
+    if (filterType !== 'All' && filterType !== colType) return [];
+    if (!searchQuery.trim()) return list;
+
+    const q = searchQuery.toLowerCase().trim();
+    return list.filter((n) => {
+      const matchLabel = n.label.toLowerCase().includes(q);
+      const matchDesc = (n.details?.description || '').toLowerCase().includes(q);
+      const matchTamil = (n.details?.meta?.tamilName ? String(n.details.meta.tamilName) : '').toLowerCase().includes(q);
+      const matchTags = (n.details?.tags || []).some(t => t.toLowerCase().includes(q));
+      return matchLabel || matchDesc || matchTamil || matchTags;
+    });
   };
 
-  const getLocalizedPathwayDesc = (pId: string) => {
-    if (pId === 'path-justice') return t('pathJusticeDesc');
-    if (pId === 'path-integrity') return t('pathIntegrityDesc');
-    if (pId === 'path-truth') return t('pathTruthDesc');
-    if (pId === 'path-governance') return t('pathGovernanceDesc');
-    return '';
-  };
+  const visibleChapters = useMemo(() => filterList(columnNodes.chapters, 'Chapter'), [columnNodes.chapters, searchQuery, filterType]);
+  const visibleKurals = useMemo(() => filterList(columnNodes.kurals, 'Kural'), [columnNodes.kurals, searchQuery, filterType]);
+  const visibleEthical = useMemo(() => filterList(columnNodes.ethicalConcepts, 'EthicalConcept'), [columnNodes.ethicalConcepts, searchQuery, filterType]);
+  const visibleLegal = useMemo(() => filterList(columnNodes.legalConcepts, 'LegalConcept'), [columnNodes.legalConcepts, searchQuery, filterType]);
 
-  const getNodeColor = (type: KnowledgeNode['type']) => {
-    switch (type) {
-      case 'Chapter':
-        return { bg: 'bg-slate-100/90', border: 'border-slate-300', text: 'text-slate-950', typeText: 'text-slate-600' };
-      case 'Kural':
-        return { bg: 'bg-amber-50/90', border: 'border-amber-300', text: 'text-amber-950', typeText: 'text-amber-700' };
-      case 'EthicalConcept':
-        return { bg: 'bg-blue-50/90', border: 'border-blue-300', text: 'text-blue-950', typeText: 'text-blue-700' };
-      case 'LegalConcept':
-        return { bg: 'bg-indigo-50/90', border: 'border-indigo-300', text: 'text-indigo-950', typeText: 'text-indigo-700' };
-      case 'Scenario':
-        return { bg: 'bg-emerald-50/90', border: 'border-emerald-300', text: 'text-emerald-950', typeText: 'text-emerald-700' };
-      case 'Question':
-        return { bg: 'bg-purple-50/90', border: 'border-purple-300', text: 'text-purple-950', typeText: 'text-purple-700' };
-      default:
-        return { bg: 'bg-slate-50', border: 'border-slate-200', text: 'text-slate-900', typeText: 'text-slate-500' };
-    }
-  };
-
-  const filteredNodes = filterType === 'All' ? nodes : nodes.filter((n) => n.type === filterType);
+  const totalFilteredCount = visibleChapters.length + visibleKurals.length + visibleEthical.length + visibleLegal.length;
 
   return (
-    <div className="space-y-6 animate-in fade-in duration-200 pb-12">
-      {/* Header Banner */}
-      <div className="p-6 bg-white rounded-2xl border border-slate-200 shadow-2xs text-slate-900 flex flex-col md:flex-row md:items-center justify-between gap-4">
-        <div className="space-y-2">
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-black bg-amber-100 text-amber-900 border border-amber-300">
-            <Compass className="w-3.5 h-3.5 text-amber-600" />
-            {t('interactiveKnowledgeGraph')}
-          </div>
-          <h2 className="text-2xl font-extrabold font-heading text-[#071B3A]">
-            {t('ethicalLegalMapTitle')}
-          </h2>
-          <p className="text-xs sm:text-sm text-slate-600 max-w-2xl leading-relaxed font-medium">
-            {t('semanticMapSub')}
-          </p>
+    <div className={`space-y-6 pb-12 ${isFullscreen ? 'fixed inset-0 z-100 bg-slate-900/60 backdrop-blur-xs p-3 md:p-6 flex flex-col h-screen w-screen overflow-hidden' : ''}`}>
+      {/* Top Search & Controls Bar */}
+      <div className={`bg-white rounded-2xl border border-slate-200 shadow-2xs p-4 flex flex-col md:flex-row items-stretch md:items-center justify-between gap-4 ${isFullscreen ? 'shrink-0' : ''}`}>
+        {/* Search Bar matching screenshot */}
+        <div className="relative flex-1 max-w-md">
+          <Search className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400" />
+          <input
+            type="text"
+            value={searchQuery}
+            onChange={(e) => setSearchQuery(e.target.value)}
+            placeholder="Righteousness, Impartiality, Kural 118, Section 35..."
+            className="w-full pl-10 pr-10 py-2 text-sm bg-white border border-slate-200 rounded-xl text-slate-900 placeholder:text-slate-400 focus:outline-hidden focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 transition-all font-medium"
+          />
+          {searchQuery && (
+            <button
+              onClick={() => setSearchQuery('')}
+              className="absolute right-3 top-1/2 -translate-y-1/2 p-1 text-slate-400 hover:text-slate-600 rounded-full cursor-pointer"
+            >
+              <X className="w-3.5 h-3.5" />
+            </button>
+          )}
         </div>
 
-        {/* View Mode Selector Tabs */}
-        <div className="flex items-center p-1 bg-slate-100 rounded-xl border border-slate-200 shrink-0">
-          <button
-            onClick={() => setViewMode('guided')}
-            className={`px-4 py-2 rounded-lg text-xs font-bold transition-all cursor-pointer flex items-center gap-1.5 ${
-              viewMode === 'guided'
-                ? 'bg-[#071B3A] text-white shadow-2xs'
-                : 'text-slate-600 hover:text-slate-900'
-            }`}
-          >
-            <Sparkles className="w-3.5 h-3.5 text-amber-400" />
-            {t('guidedPathwaysEasy')}
-          </button>
-          <button
-            onClick={() => setViewMode('explorer')}
-            className={`px-4 py-2 rounded-lg text-xs font-bold transition-all cursor-pointer flex items-center gap-1.5 ${
-              viewMode === 'explorer'
-                ? 'bg-[#071B3A] text-white shadow-2xs'
-                : 'text-slate-600 hover:text-slate-900'
-            }`}
-          >
-            <Network className="w-3.5 h-3.5" />
-            {t('fullNetworkGraph')}
-          </button>
+        {/* View Mode Toggle & Stats */}
+        <div className="flex items-center gap-3">
+          <div className="flex items-center p-1 bg-slate-100 rounded-xl border border-slate-200">
+            <button
+              onClick={() => setViewMode('flow')}
+              className={`px-3 py-1.5 text-xs font-bold rounded-lg transition-all flex items-center gap-1.5 cursor-pointer ${
+                viewMode === 'flow'
+                  ? 'bg-white text-blue-700 shadow-2xs'
+                  : 'text-slate-600 hover:text-slate-900'
+              }`}
+            >
+              <Layers className="w-3.5 h-3.5" />
+              Interactive Flow
+            </button>
+            <button
+              onClick={() => setViewMode('guided')}
+              className={`px-3 py-1.5 text-xs font-bold rounded-lg transition-all flex items-center gap-1.5 cursor-pointer ${
+                viewMode === 'guided'
+                  ? 'bg-white text-blue-700 shadow-2xs'
+                  : 'text-slate-600 hover:text-slate-900'
+              }`}
+            >
+              <Compass className="w-3.5 h-3.5" />
+              Guided Pathways
+            </button>
+          </div>
+
+          {isFullscreen && (
+            <button
+              onClick={() => setIsFullscreen(false)}
+              className="px-3 py-1.5 text-xs font-bold text-slate-700 bg-slate-100 hover:bg-slate-200 rounded-xl border border-slate-200 transition-colors flex items-center gap-1 cursor-pointer"
+              title="Exit Fullscreen (Esc)"
+            >
+              <Minimize2 className="w-3.5 h-3.5" />
+              Exit (Esc)
+            </button>
+          )}
         </div>
       </div>
 
       {/* ========================================================================= */}
-      {/* MODE A: GUIDED PATHWAYS (EASY, ENJOYABLE & STEP-BY-STEP) */}
+      {/* MODE A: INTERACTIVE MULTI-COLUMN FLOW GRAPH (Matches User's UI Screenshot) */}
+      {/* ========================================================================= */}
+      {viewMode === 'flow' && (
+        <div className={`grid grid-cols-1 ${isFullscreen ? 'h-[calc(100vh-120px)] flex-1' : 'min-h-[640px]'} lg:grid-cols-12 gap-6 items-stretch`}>
+          {/* Main Column Flow Canvas */}
+          <div className={`${showDrawer ? 'lg:col-span-8 xl:col-span-9' : 'lg:col-span-12'} bg-white rounded-2xl border border-slate-200 shadow-2xs overflow-hidden flex flex-col h-full transition-all`}>
+            {/* Filter & Zoom Toolbar */}
+            <div className="flex items-center justify-between p-3.5 border-b border-slate-200 bg-slate-50 shrink-0">
+              <div className="flex items-center gap-2">
+                <span className="text-xs font-extrabold text-slate-700">Filter Nodes:</span>
+                <select
+                  value={filterType}
+                  onChange={(e) => setFilterType(e.target.value)}
+                  className="px-3 py-1.5 text-xs bg-white border border-slate-200 rounded-xl font-bold text-slate-700 focus:outline-hidden focus:ring-2 focus:ring-blue-500/20 shadow-2xs cursor-pointer"
+                >
+                  <option value="All">All Types ({totalFilteredCount || nodes.length})</option>
+                  <option value="Chapter">Chapter ({columnNodes.chapters.length})</option>
+                  <option value="Kural">Kural ({columnNodes.kurals.length})</option>
+                  <option value="EthicalConcept">Ethical Concept ({columnNodes.ethicalConcepts.length})</option>
+                  <option value="LegalConcept">Legal Concept ({columnNodes.legalConcepts.length})</option>
+                </select>
+              </div>
+
+              {/* Zoom & View Controls matching screenshot */}
+              <div className="flex items-center gap-1.5">
+                <button
+                  onClick={() => setZoomLevel((z) => Math.max(0.6, Number((z - 0.1).toFixed(1))))}
+                  title="Zoom Out"
+                  className="p-1.5 bg-white border border-slate-200 rounded-lg text-slate-700 hover:bg-slate-100 transition-colors cursor-pointer shadow-2xs"
+                >
+                  <ZoomOut className="w-3.5 h-3.5" />
+                </button>
+                <button
+                  onClick={() => setZoomLevel(1)}
+                  title="Reset Zoom"
+                  className="px-2 py-1 text-xs font-bold text-slate-700 bg-white border border-slate-200 rounded-lg hover:bg-slate-100 transition-colors cursor-pointer shadow-2xs"
+                >
+                  {Math.round(zoomLevel * 100)}%
+                </button>
+                <button
+                  onClick={() => setZoomLevel((z) => Math.min(1.5, Number((z + 0.1).toFixed(1))))}
+                  title="Zoom In"
+                  className="p-1.5 bg-white border border-slate-200 rounded-lg text-slate-700 hover:bg-slate-100 transition-colors cursor-pointer shadow-2xs"
+                >
+                  <ZoomIn className="w-3.5 h-3.5" />
+                </button>
+                <button
+                  onClick={() => setIsFullscreen(!isFullscreen)}
+                  title={isFullscreen ? 'Exit Fullscreen' : 'Open Full Screen Graph'}
+                  className={`p-1.5 border rounded-lg transition-colors cursor-pointer shadow-2xs ml-1 ${
+                    isFullscreen ? 'bg-blue-600 text-white border-blue-600' : 'bg-white border-slate-200 text-slate-700 hover:bg-slate-100'
+                  }`}
+                >
+                  {isFullscreen ? <Minimize2 className="w-3.5 h-3.5" /> : <Maximize2 className="w-3.5 h-3.5" />}
+                </button>
+                <button
+                  onClick={() => setShowDrawer(!showDrawer)}
+                  title={showDrawer ? 'Hide Details Panel' : 'Show Details Panel'}
+                  className="p-1.5 bg-white border border-slate-200 rounded-lg text-slate-700 hover:bg-slate-100 transition-colors cursor-pointer shadow-2xs ml-1"
+                >
+                  <Sidebar className="w-3.5 h-3.5" />
+                </button>
+              </div>
+            </div>
+
+            {/* Scrollable Flow Canvas */}
+            <div
+              ref={graphContainerRef}
+              className="p-6 flex-1 bg-slate-50/40 overflow-auto select-none relative min-h-0"
+            >
+              <div
+                style={{
+                  transform: `scale(${zoomLevel})`,
+                  transformOrigin: 'top left',
+                  transition: 'transform 0.15s ease-out'
+                }}
+                className="grid grid-cols-4 gap-x-14 gap-y-4 min-w-[1020px] relative py-2 pr-6"
+              >
+                {/* Column 1: CHAPTER */}
+                <div className="space-y-3.5">
+                  <div className="text-[11px] font-black uppercase tracking-wider text-slate-500 pb-1 border-b border-slate-200/80">
+                    Chapter ({visibleChapters.length})
+                  </div>
+                  {visibleChapters.slice(0, 24).map((node) => {
+                    const isSelected = selectedNode?.id === node.id;
+                    const isConnected = connectedNodeIds.has(node.id);
+
+                    return (
+                      <div
+                        key={node.id}
+                        onClick={() => setSelectedNode(node)}
+                        className={`p-3 rounded-2xl border-2 transition-all cursor-pointer relative bg-white ${
+                          isSelected
+                            ? 'border-blue-500 ring-4 ring-blue-500/30 bg-blue-50/40 shadow-md scale-102 z-20'
+                            : isConnected
+                            ? 'border-blue-300 bg-blue-50/20 hover:border-blue-400 hover:shadow-xs'
+                            : 'border-slate-200/90 hover:border-blue-300 hover:shadow-xs'
+                        }`}
+                      >
+                        <span className="text-[9px] font-black uppercase tracking-wider text-slate-500 block mb-0.5">
+                          CHAPTER
+                        </span>
+                        <h4 className="text-xs font-bold text-slate-900 leading-snug line-clamp-1">
+                          {node.label}
+                        </h4>
+
+                        {/* Connector Arrow Badge right anchor */}
+                        <div className="absolute -right-11 top-1/2 -translate-y-1/2 flex items-center pointer-events-none z-10">
+                          <span className={`text-[8px] font-black px-1.5 py-0.5 rounded transition-all ${
+                            isSelected || isConnected
+                              ? 'bg-blue-600 text-white shadow-2xs'
+                              : 'bg-slate-200/70 text-slate-600'
+                          }`}>
+                            BELONGS_TO
+                          </span>
+                        </div>
+                      </div>
+                    );
+                  })}
+                </div>
+
+                {/* Column 2: KURAL */}
+                <div className="space-y-3.5">
+                  <div className="text-[11px] font-black uppercase tracking-wider text-emerald-700 pb-1 border-b border-emerald-200/80">
+                    Kural ({visibleKurals.length})
+                  </div>
+                  {visibleKurals.slice(0, 24).map((node) => {
+                    const isSelected = selectedNode?.id === node.id;
+                    const isConnected = connectedNodeIds.has(node.id);
+
+                    return (
+                      <div
+                        key={node.id}
+                        onClick={() => setSelectedNode(node)}
+                        className={`p-3 rounded-2xl border-2 transition-all cursor-pointer relative ${
+                          isSelected
+                            ? 'border-emerald-600 ring-4 ring-emerald-500/30 bg-emerald-100/50 shadow-md scale-102 z-20'
+                            : isConnected
+                            ? 'border-emerald-500 bg-emerald-50/70 hover:border-emerald-600 hover:shadow-xs'
+                            : 'border-emerald-300/80 bg-emerald-50/30 hover:border-emerald-400 hover:shadow-xs'
+                        }`}
+                      >
+                        <span className="text-[9px] font-black uppercase tracking-wider text-emerald-700 block mb-0.5">
+                          KURAL
+                        </span>
+                        <h4 className="text-xs font-bold text-slate-900 leading-snug line-clamp-1">
+                          {node.label}
+                        </h4>
+
+                        {/* Connector Arrow Badge right anchor */}
+                        <div className="absolute -right-10 top-1/2 -translate-y-1/2 flex items-center pointer-events-none z-10">
+                          <span className={`text-[8px] font-black px-1.5 py-0.5 rounded transition-all ${
+                            isSelected || isConnected
+                              ? 'bg-emerald-600 text-white shadow-2xs'
+                              : 'bg-slate-200/70 text-slate-600'
+                          }`}>
+                            TEACHES
+                          </span>
+                        </div>
+                      </div>
+                    );
+                  })}
+                </div>
+
+                {/* Column 3: ETHICAL CONCEPT */}
+                <div className="space-y-3.5">
+                  <div className="text-[11px] font-black uppercase tracking-wider text-purple-700 pb-1 border-b border-purple-200/80">
+                    Ethical Concept ({visibleEthical.length})
+                  </div>
+                  {visibleEthical.slice(0, 24).map((node) => {
+                    const isSelected = selectedNode?.id === node.id;
+                    const isConnected = connectedNodeIds.has(node.id);
+
+                    return (
+                      <div
+                        key={node.id}
+                        onClick={() => setSelectedNode(node)}
+                        className={`p-3 rounded-2xl border-2 transition-all cursor-pointer relative ${
+                          isSelected
+                            ? 'border-purple-600 ring-4 ring-purple-500/30 bg-purple-100/50 shadow-md scale-102 z-20'
+                            : isConnected
+                            ? 'border-purple-500 bg-purple-50/70 hover:border-purple-600 hover:shadow-xs'
+                            : 'border-purple-300/80 bg-purple-50/30 hover:border-purple-400 hover:shadow-xs'
+                        }`}
+                      >
+                        <span className="text-[9px] font-black uppercase tracking-wider text-purple-700 block mb-0.5">
+                          ETHICALCONCEPT
+                        </span>
+                        <h4 className="text-xs font-bold text-slate-900 leading-snug line-clamp-1">
+                          {node.label}
+                        </h4>
+
+                        {/* Connector Arrow Badge right anchor */}
+                        <div className="absolute -right-11 top-1/2 -translate-y-1/2 flex items-center pointer-events-none z-10">
+                          <span className={`text-[8px] font-black px-1.5 py-0.5 rounded transition-all ${
+                            isSelected || isConnected
+                              ? 'bg-purple-600 text-white shadow-2xs'
+                              : 'bg-slate-200/70 text-slate-600'
+                          }`}>
+                            RELATED_TO
+                          </span>
+                        </div>
+                      </div>
+                    );
+                  })}
+                </div>
+
+                {/* Column 4: LEGAL CONCEPT / KNOWLEDGE */}
+                <div className="space-y-3.5">
+                  <div className="text-[11px] font-black uppercase tracking-wider text-blue-700 pb-1 border-b border-blue-200/80">
+                    Legal Concept ({visibleLegal.length})
+                  </div>
+                  {visibleLegal.slice(0, 24).map((node) => {
+                    const isSelected = selectedNode?.id === node.id;
+                    const isConnected = connectedNodeIds.has(node.id);
+
+                    return (
+                      <div
+                        key={node.id}
+                        onClick={() => setSelectedNode(node)}
+                        className={`p-3 rounded-2xl border-2 transition-all cursor-pointer relative ${
+                          isSelected
+                            ? 'border-blue-600 ring-4 ring-blue-500/30 bg-blue-100/50 shadow-md scale-102 z-20'
+                            : isConnected
+                            ? 'border-blue-400 bg-blue-50/70 hover:border-blue-500 hover:shadow-xs'
+                            : 'border-blue-300/80 bg-blue-50/30 hover:border-blue-400 hover:shadow-xs'
+                        }`}
+                      >
+                        <span className="text-[9px] font-black uppercase tracking-wider text-blue-700 block mb-0.5">
+                          LEGALCONCEPT
+                        </span>
+                        <h4 className="text-xs font-bold text-slate-900 leading-snug line-clamp-1">
+                          {node.label}
+                        </h4>
+                      </div>
+                    );
+                  })}
+                </div>
+              </div>
+            </div>
+
+            {/* Bottom Interactive Notice Bar */}
+            <div className="p-3 bg-slate-50 border-t border-slate-200 text-center shrink-0">
+              <span className="text-xs text-slate-600 font-medium">
+                💡 <strong>Interactive Flow:</strong> Click on any node to view detailed legal metadata and Thirukkural connections.
+              </span>
+            </div>
+          </div>
+
+          {/* Right Side Inspection Drawer */}
+          {showDrawer && (
+            <div className="lg:col-span-4 xl:col-span-3 bg-white rounded-2xl border border-slate-200 shadow-2xs p-6 space-y-4 h-full overflow-y-auto">
+              {selectedNode ? (
+                <div className="space-y-4 animate-in fade-in duration-150">
+                  {/* Node Pill & Type Header */}
+                  <div className="flex items-center justify-between pb-2 border-b border-slate-100">
+                    <span className="text-xs font-bold text-blue-800 bg-blue-100 px-3 py-1 rounded-full">
+                      {selectedNode.type} Node
+                    </span>
+                    <span className="text-xs font-medium text-slate-500">
+                      {(selectedNode.type || '').toLowerCase()}
+                    </span>
+                  </div>
+
+                  {/* Node Title */}
+                  <h3 className="text-xl font-bold text-slate-900 font-heading">
+                    {selectedNode.label}
+                  </h3>
+
+                  {/* Deep Description Box */}
+                  <div className="p-4 bg-slate-50 rounded-xl border border-slate-200/90 space-y-2">
+                    <span className="text-xs font-bold text-slate-800 block">
+                      Deep Description:
+                    </span>
+                    <p className="text-xs text-slate-700 leading-relaxed font-medium">
+                      {selectedNode.details?.description || selectedNode.details?.title}
+                    </p>
+
+                    {selectedNode.details?.subtitle && (
+                      <p className="text-xs text-slate-600 italic pt-1 border-t border-slate-200">
+                        {selectedNode.details.subtitle}
+                      </p>
+                    )}
+                  </div>
+
+                  {/* Semantic Tags */}
+                  <div className="space-y-2">
+                    <span className="text-xs font-bold text-slate-800 block">
+                      Semantic Tags:
+                    </span>
+                    <div className="flex flex-wrap gap-2">
+                      {(selectedNode.details?.tags || [selectedNode.type, (selectedNode.type || '').toLowerCase()]).map((tag, idx) => (
+                        <span
+                          key={idx}
+                          className="text-xs font-semibold text-blue-700 bg-blue-50 px-2.5 py-1 rounded-md border border-blue-200/60"
+                        >
+                          #{tag}
+                        </span>
+                      ))}
+                    </div>
+                  </div>
+
+                  {/* Node Action Button */}
+                  <button
+                    onClick={() => openStepTutorModal(selectedNode.label, `${selectedNode.type} Node Inquiry`)}
+                    className="w-full py-2.5 px-4 bg-white hover:bg-slate-50 text-slate-800 border border-slate-200 font-bold text-xs rounded-xl shadow-2xs transition-all cursor-pointer flex items-center justify-center gap-2 mt-4"
+                  >
+                    <Sparkles className="w-4 h-4 text-amber-500" />
+                    Ask AI Tutor About This Node
+                  </button>
+
+                  {/* Kural Open Modal Button if Kural */}
+                  {(selectedNode.type === 'Kural' || selectedNode.id.startsWith('kural-')) && (
+                    <button
+                      onClick={() => {
+                        const num = Number(selectedNode.id.replace('kural-', '')) || (selectedNode.details?.meta?.number as number) || 118;
+                        openKuralModalByNumber(num);
+                      }}
+                      className="w-full py-2.5 bg-[#071B3A] hover:bg-[#0A2540] text-white font-bold text-xs rounded-xl shadow-2xs transition-colors cursor-pointer text-center block"
+                    >
+                      Open Kural Details →
+                    </button>
+                  )}
+                </div>
+              ) : (
+                <p className="text-xs text-slate-500 text-center py-12 font-medium">
+                  Select a node from the network graph to inspect details.
+                </p>
+              )}
+            </div>
+          )}
+        </div>
+      )}
+
+      {/* ========================================================================= */}
+      {/* MODE B: GUIDED LEARNING PATHWAYS */}
       {/* ========================================================================= */}
       {viewMode === 'guided' && (
-        <div className="space-y-6">
-          {/* Guided Journey Selector Chips */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-            {GUIDED_PATHWAYS.map((pathway) => {
-              const isActive = activePathwayId === pathway.id;
-              return (
-                <div
+        <div className="bg-white rounded-2xl border border-slate-200 shadow-2xs p-6 space-y-6">
+          <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 pb-4 border-b border-slate-100">
+            <div>
+              <h2 className="text-base font-extrabold text-[#071B3A] font-heading flex items-center gap-2">
+                <Compass className="w-5 h-5 text-blue-600" />
+                {t('guidedPathwaysTitle')}
+              </h2>
+              <p className="text-xs text-slate-500 font-medium mt-0.5">
+                {t('guidedPathwaysSubtitle')}
+              </p>
+            </div>
+
+            {/* Pathway Selector */}
+            <div className="flex flex-wrap gap-2">
+              {GUIDED_PATHWAYS.map((pathway) => (
+                <button
                   key={pathway.id}
                   onClick={() => {
                     setActivePathwayId(pathway.id);
                     setActiveStepNumber(1);
                   }}
-                  className={`p-4 rounded-2xl border transition-all cursor-pointer space-y-2 ${
-                    isActive
-                      ? 'bg-blue-50/90 border-blue-600 ring-2 ring-blue-500/20 shadow-sm'
-                      : 'bg-white border-slate-200 hover:border-blue-300 hover:bg-slate-50/60'
+                  className={`px-3 py-1.5 text-xs font-bold rounded-xl transition-all cursor-pointer flex items-center gap-1.5 ${
+                    activePathwayId === pathway.id
+                      ? 'bg-[#071B3A] text-white shadow-2xs'
+                      : 'bg-slate-100 text-slate-700 hover:bg-slate-200'
                   }`}
                 >
-                  <div className="flex items-center justify-between">
-                    <span className="text-xl">{pathway.icon}</span>
-                    {isActive && (
-                      <span className="px-2 py-0.5 text-[10px] font-black bg-[#071B3A] text-white rounded-md">
-                        {t('activeJourney')}
-                      </span>
-                    )}
-                  </div>
-                  <h3 className="text-sm font-extrabold text-[#071B3A] font-heading">
-                    {getLocalizedPathwayTitle(pathway.id)}
-                  </h3>
-                  <p className="text-xs text-slate-600 line-clamp-2 font-medium">
-                    {getLocalizedPathwayDesc(pathway.id)}
-                  </p>
-                </div>
-              );
-            })}
+                  <span>{pathway.icon}</span>
+                  <span>{pathway.title}</span>
+                </button>
+              ))}
+            </div>
           </div>
 
-          {/* Step-by-Step Progressive Flow Cards */}
-          <div className="p-6 sm:p-8 bg-white rounded-2xl border border-slate-200 shadow-2xs space-y-6">
-            <div className="flex items-center justify-between pb-4 border-b border-slate-200">
-              <div className="flex items-center gap-3">
-                <span className="text-2xl">{activePathway.icon}</span>
-                <div>
-                  <h3 className="text-lg font-extrabold text-[#071B3A] font-heading">
-                    {t('learningPathwayPrefix')} {getLocalizedPathwayTitle(activePathway.id)}
-                  </h3>
-                  <p className="text-xs text-slate-500 font-medium">{getLocalizedPathwayDesc(activePathway.id)}</p>
-                </div>
-              </div>
-              <span className="text-xs font-bold text-blue-700 bg-blue-50 px-3 py-1 rounded-full border border-blue-200">
-                {t('clickStepToInspect')}
-              </span>
-            </div>
-
-            {/* Visual Step-by-Step Flow Chain */}
-            <div className="grid grid-cols-1 md:grid-cols-4 gap-4 relative">
-              {/* Step 1: Classical Verse */}
-              <div
-                onClick={() => setActiveStepNumber(1)}
-                className={`p-5 rounded-xl border space-y-3 transition-all cursor-pointer flex flex-col justify-between ${
-                  activeStepNumber === 1
-                    ? 'bg-emerald-50 border-emerald-500 ring-2 ring-emerald-500/30 shadow-md scale-102'
-                    : 'bg-emerald-50/40 border-emerald-200/90 hover:bg-emerald-50/80'
-                }`}
-              >
-                <div className="space-y-2">
-                  <div className="flex items-center justify-between">
-                    <span className="text-[10px] font-black uppercase tracking-wider bg-emerald-600 text-white px-2 py-0.5 rounded">
-                      {t('step1Tag')}
-                    </span>
-                    <span className="text-xs font-extrabold text-emerald-800">
-                      {t('kuralNumFormat').replace('{number}', activePathway.steps.kuralNumber.toString())}
-                    </span>
-                  </div>
-                  <h4 className="text-xs font-bold text-slate-950 font-heading">
-                    {CHAPTER_NAMES_LOCALIZED[language]?.[activePathway.steps.kuralTitle] || activePathway.steps.kuralTitle}
-                  </h4>
-                  <p className="text-xs font-tamil text-emerald-950 font-bold leading-relaxed italic bg-white/80 p-2.5 rounded-lg border border-emerald-200">
-                    "{activePathway.steps.tamilVerse}"
-                  </p>
-                </div>
-
-                <button
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    openKuralModalByNumber(activePathway.steps.kuralNumber);
-                  }}
-                  className="w-full py-2 text-xs font-bold text-emerald-950 bg-white hover:bg-emerald-100 border border-emerald-300 rounded-lg transition-colors cursor-pointer text-center mt-3"
-                >
-                  {t('readFullVerse')}
-                </button>
-              </div>
-
-              {/* Step 2: Ethical Core Principle */}
-              <div
-                onClick={() => setActiveStepNumber(2)}
-                className={`p-5 rounded-xl border space-y-3 transition-all cursor-pointer flex flex-col justify-between ${
-                  activeStepNumber === 2
-                    ? 'bg-indigo-50 border-indigo-500 ring-2 ring-indigo-500/30 shadow-md scale-102'
-                    : 'bg-indigo-50/40 border-indigo-200/90 hover:bg-indigo-50/80'
-                }`}
-              >
-                <div className="space-y-2">
-                  <div className="flex items-center justify-between">
-                    <span className="text-[10px] font-black uppercase tracking-wider bg-indigo-600 text-white px-2 py-0.5 rounded">
-                      {t('step2Tag')}
-                    </span>
-                    <Sparkles className="w-3.5 h-3.5 text-indigo-600" />
-                  </div>
-                  <h4 className="text-xs font-bold text-slate-950 font-heading">
-                    {ETHICAL_CONCEPT_LOCALIZED[language]?.[activePathway.steps.ethicalPrinciple] || activePathway.steps.ethicalPrinciple}
-                  </h4>
-                  <p className="text-xs text-slate-600 leading-relaxed font-medium bg-white/80 p-2.5 rounded-lg border border-indigo-200">
-                    {language === 'ta'
-                      ? 'அதிகாரங்களைப் பயன்படுத்துவதற்கு முன் அல்லது தீர்ப்புகளை வழங்குவதற்கு முன் தேவையான அறநெறி கடமைகளை நிறுவுகிறது.'
-                      : language === 'hi'
-                      ? 'अधिकार का प्रयोग करने या निर्णय जारी करने से पहले आवश्यक नैतिक दायित्वों को स्थापित करता है।'
-                      : 'Establishes non-negotiable moral obligations required before exercising authority or issuing judgments.'}
-                  </p>
-                </div>
-
-                <button
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    openStepTutorModal(activePathway.steps.ethicalPrinciple, 'Step 2: Ethical Principle');
-                  }}
-                  className="w-full py-2 text-xs font-bold text-indigo-950 bg-white hover:bg-indigo-100 border border-indigo-300 rounded-lg transition-colors cursor-pointer text-center mt-3 shadow-2xs"
-                >
-                  {t('exploreEthicsAiTutor')}
-                </button>
-              </div>
-
-              {/* Step 3: Statutory Law */}
-              <div
-                onClick={() => setActiveStepNumber(3)}
-                className={`p-5 rounded-xl border space-y-3 transition-all cursor-pointer flex flex-col justify-between ${
-                  activeStepNumber === 3
-                    ? 'bg-blue-50 border-blue-500 ring-2 ring-blue-500/30 shadow-md scale-102'
-                    : 'bg-blue-50/40 border-blue-200/90 hover:bg-blue-50/80'
-                }`}
-              >
-                <div className="space-y-2">
-                  <div className="flex items-center justify-between">
-                    <span className="text-[10px] font-black uppercase tracking-wider bg-blue-600 text-white px-2 py-0.5 rounded">
-                      {t('step3Tag')}
-                    </span>
-                    <Scale className="w-3.5 h-3.5 text-blue-600" />
-                  </div>
-                  <h4 className="text-xs font-bold text-slate-950 font-heading">
-                    {activePathway.steps.legalStatute}
-                  </h4>
-                  <p className="text-xs text-slate-600 leading-relaxed font-medium bg-white/80 p-2.5 rounded-lg border border-blue-200">
-                    {language === 'ta'
-                      ? 'தொன்மை அறநெறி கடமைகளைச் சட்டப் பாதுகாப்புகளாகவும் அரசியலமைப்பு உத்தரவாதங்களாகவும் மாற்றுகிறது.'
-                      : language === 'hi'
-                      ? 'शास्त्रीय नैतिक कर्तव्यों को लागू करने योग्य वैधानिक सुरक्षा और संवैधानिक गारंटी में समाहित करता है।'
-                      : 'Codifies classical moral duties into enforceable statutory protections and constitutional guarantees.'}
-                  </p>
-                </div>
-
-                <button
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    openStepTutorModal(activePathway.steps.legalStatute, 'Step 3: Statutory Law');
-                  }}
-                  className="w-full py-2 text-xs font-bold text-blue-950 bg-white hover:bg-blue-100 border border-blue-300 rounded-lg transition-colors cursor-pointer text-center mt-3 shadow-2xs"
-                >
-                  {t('exploreLawAiTutor')}
-                </button>
-              </div>
-
-              {/* Step 4: Real Case Scenario */}
-              <div
-                onClick={() => setActiveStepNumber(4)}
-                className={`p-5 rounded-xl border space-y-3 transition-all cursor-pointer flex flex-col justify-between ${
-                  activeStepNumber === 4
-                    ? 'bg-amber-50 border-amber-500 ring-2 ring-amber-500/30 shadow-md scale-102'
-                    : 'bg-amber-50/40 border-amber-200/90 hover:bg-amber-50/80'
-                }`}
-              >
-                <div className="space-y-2">
-                  <div className="flex items-center justify-between">
-                    <span className="text-[10px] font-black uppercase tracking-wider bg-amber-600 text-slate-950 px-2 py-0.5 rounded">
-                      {t('step4Tag')}
-                    </span>
-                    <FileText className="w-3.5 h-3.5 text-amber-700" />
-                  </div>
-                  <h4 className="text-xs font-bold text-slate-950 font-heading">
-                    {t('scenarioNum').replace('{current}', activePathway.steps.scenarioNumber.toString()).replace(' of {total}', '').replace(' / {total}', '')}: {SCENARIO_TRANSLATIONS[language]?.[`scen-${activePathway.steps.scenarioNumber}`]?.title || activePathway.steps.scenarioTitle}
-                  </h4>
-                  <p className="text-xs text-slate-600 leading-relaxed font-medium bg-white/80 p-2.5 rounded-lg border border-amber-200">
-                    {language === 'ta'
-                      ? 'சட்ட விதிகள் மற்றும் திருக்குறள் அறநெறியைப் பயன்படுத்தி நிஜ உலக மோதல்களைத் தீர்த்து உங்கள் புரிதலைச் சோதிக்கவும்.'
-                      : language === 'hi'
-                      ? 'वैधानिक कानून और तिरुक्कुरल तर्क का उपयोग करके वास्तविक दुनिया के संघर्षों को सुलझाकर अपनी समझ का परीक्षण करें।'
-                      : 'Test your understanding by resolving real-world conflicts using statutory law and Thirukkural reasoning.'}
-                  </p>
-                </div>
-
-                <button
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    setSelectedScenarioNumber(activePathway.steps.scenarioNumber);
-                    setActiveTab('scenario-challenge');
-                  }}
-                  className="w-full py-2 text-xs font-bold text-white bg-[#071B3A] hover:bg-[#0A2540] rounded-lg transition-colors cursor-pointer text-center mt-3 shadow-2xs"
-                >
-                  {t('solveScenarioBtn').replace('{num}', activePathway.steps.scenarioNumber.toString())}
-                </button>
-              </div>
-            </div>
-
-            {/* Deep Step Inspection Drawer */}
-            <div className="p-5 bg-slate-50 rounded-xl border border-slate-200 space-y-3 animate-in fade-in duration-150">
-              <div className="flex items-center justify-between pb-2 border-b border-slate-200">
-                <span className="text-xs font-extrabold text-[#071B3A] flex items-center gap-2">
-                  <BookOpen className="w-4 h-4 text-blue-600" />
-                  {t('inspectingStep')
-                    .replace('{num}', activeStepNumber.toString())
-                    .replace(
-                      '{title}',
-                      activeStepNumber === 1
-                        ? activePathway.steps.kuralTitle
-                        : activeStepNumber === 2
-                        ? activePathway.steps.ethicalPrinciple
-                        : activeStepNumber === 3
-                        ? activePathway.steps.legalStatute
-                        : activePathway.steps.scenarioTitle
-                    )}
+          {/* 4-Step Chain */}
+          <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
+            {/* Step 1: Kural */}
+            <div
+              onClick={() => setActiveStepNumber(1)}
+              className={`p-5 rounded-xl border space-y-3 transition-all cursor-pointer flex flex-col justify-between ${
+                activeStepNumber === 1
+                  ? 'bg-emerald-50 border-emerald-500 ring-2 ring-emerald-500/30 shadow-md'
+                  : 'bg-emerald-50/40 border-emerald-200/90 hover:bg-emerald-50/80'
+              }`}
+            >
+              <div className="space-y-2">
+                <span className="text-[10px] font-black uppercase tracking-wider bg-emerald-600 text-white px-2 py-0.5 rounded">
+                  Step 1: Thirukkural
                 </span>
-                <span className="text-[11px] font-bold text-slate-500">
-                  {t('pathwayLabel')} {getLocalizedPathwayTitle(activePathway.id)}
+                <h4 className="text-xs font-bold text-slate-950 font-heading">
+                  {activePathway.steps.kuralTitle}
+                </h4>
+                <p className="text-xs font-tamil font-bold text-slate-900 leading-relaxed bg-white/80 p-2.5 rounded-lg border border-emerald-200">
+                  {activePathway.steps.tamilVerse}
+                </p>
+              </div>
+              <button
+                onClick={(e) => {
+                  e.stopPropagation();
+                  openKuralModalByNumber(activePathway.steps.kuralNumber);
+                }}
+                className="w-full py-2 text-xs font-bold text-emerald-950 bg-white hover:bg-emerald-100 border border-emerald-300 rounded-lg transition-colors cursor-pointer text-center mt-3"
+              >
+                {t('readFullVerse')}
+              </button>
+            </div>
+
+            {/* Step 2: Ethical Principle */}
+            <div
+              onClick={() => setActiveStepNumber(2)}
+              className={`p-5 rounded-xl border space-y-3 transition-all cursor-pointer flex flex-col justify-between ${
+                activeStepNumber === 2
+                  ? 'bg-indigo-50 border-indigo-500 ring-2 ring-indigo-500/30 shadow-md'
+                  : 'bg-indigo-50/40 border-indigo-200/90 hover:bg-indigo-50/80'
+              }`}
+            >
+              <div className="space-y-2">
+                <span className="text-[10px] font-black uppercase tracking-wider bg-indigo-600 text-white px-2 py-0.5 rounded">
+                  Step 2: Ethical Principle
                 </span>
+                <h4 className="text-xs font-bold text-slate-950 font-heading">
+                  {activePathway.steps.ethicalPrinciple}
+                </h4>
+                <p className="text-xs text-slate-600 leading-relaxed font-medium bg-white/80 p-2.5 rounded-lg border border-indigo-200">
+                  Establishes non-negotiable moral obligations required before exercising authority.
+                </p>
               </div>
-
-              <div className="grid grid-cols-1 md:grid-cols-12 gap-4 text-xs">
-                <div className="md:col-span-8 space-y-2">
-                  <p className="text-slate-700 leading-relaxed font-medium">
-                    {activeStepNumber === 1 &&
-                      (language === 'ta'
-                        ? `குறள் #${activePathway.steps.kuralNumber} அறம் என்பது வெறும் சிந்தனை மட்டுமல்ல, உறுதியான நடுவுநிலைமையும் நன்னடத்தையும் ஆகும் எனக் கற்பிக்கிறது. இதுவே இந்தச் சட்டப் பாதையின் முதன்மைத் தத்துவ அடித்தளமாகும்.`
-                        : language === 'hi'
-                        ? `कुरल #${activePathway.steps.kuralNumber} सिखाता है कि धर्म केवल अमूर्त विचार नहीं है, बल्कि अटूट निष्पक्षता और नैतिक आचरण है। यह इस कानूनी मार्ग की प्राथमिक दार्शनिक नींव बनाता है।`
-                        : `Kural #${activePathway.steps.kuralNumber} teaches that virtue is not merely abstract thought, but unyielding fairness and moral conduct. It forms the primary philosophical foundation of this legal pathway.`)}
-                    {activeStepNumber === 2 &&
-                      (language === 'ta'
-                        ? `அறநெறிக் கோட்பாடு "${activePathway.steps.ethicalPrinciple}" நீதிபதிகள், வழக்கறிஞர்கள் மற்றும் அரசு ஊழியர்கள் தனிப்பட்ட சார்பு அல்லது நிதி சலுகைகளிலிருந்து முழுமையாக விலகியிருக்க வேண்டும் என வலியுறுத்துகிறது.`
-                        : language === 'hi'
-                        ? `नैतिक अवधारणा "${activePathway.steps.ethicalPrinciple}" अनिवार्य करती है कि न्यायाधीशों, अधिवक्ताओं और सिविल सेवकों को व्यक्तिगत पूर्वाग्रह से पूरी तरह मुक्त रहना चाहिए।`
-                        : `The ethical concept "${activePathway.steps.ethicalPrinciple}" mandates that judges, advocates, and civil servants maintain complete detachment from personal bias or monetary temptation.`)}
-                    {activeStepNumber === 3 &&
-                      (language === 'ta'
-                        ? `இந்திய சட்டவியலின் கீழ் (${activePathway.steps.legalStatute}), தன்னிச்சையான நிர்வாக நடவடிக்கைகளைத் தடுக்க நீதிமன்றங்கள் கண்டிப்பான நடைமுறை நீதியைச் செயல்படுத்துகின்றன.`
-                        : language === 'hi'
-                        ? `भारतीय न्यायशास्त्र (${activePathway.steps.legalStatute}) के तहत, अदालतें मनमानी प्रशासनिक कार्रवाइयों को रोकने के लिए सख्त प्रक्रियात्मक निष्पक्षता लागू करती हैं।`
-                        : `Under Indian jurisprudence (${activePathway.steps.legalStatute}), courts enforce strict procedural fairness to prevent arbitrary administrative actions.`)}
-                    {activeStepNumber === 4 &&
-                      (language === 'ta'
-                        ? `வழக்கு #${activePathway.steps.scenarioNumber} (${activePathway.steps.scenarioTitle}) இல், சட்ட விதிகள் மற்றும் தொன்மை அறநெறி தைரியத்தைச் சமநிலைப்படுத்த முடியுமா எனச் சோதிக்கும் நடைமுறைச் சவாலை எதிர்கொள்கிறீர்கள்.`
-                        : language === 'hi'
-                        ? `केस #${activePathway.steps.scenarioNumber} (${activePathway.steps.scenarioTitle}) में, आप एक व्यावहारिक वास्तविक जीवन की दुविधा का सामना करते हैं।`
-                        : `In Scenario #${activePathway.steps.scenarioNumber} (${activePathway.steps.scenarioTitle}), you face a practical real-life dilemma testing whether you can balance statutory rules with classical ethical courage.`)}
-                  </p>
-                </div>
-
-                <div className="md:col-span-4 flex flex-col gap-2 justify-center">
-                  {activeStepNumber === 1 && (
-                    <button
-                      onClick={() => openKuralModalByNumber(activePathway.steps.kuralNumber)}
-                      className="w-full py-2.5 text-xs font-bold text-white bg-[#071B3A] hover:bg-[#0A2540] rounded-xl shadow-2xs transition-colors cursor-pointer text-center"
-                    >
-                      {t('openKuralModalBtn').replace('{num}', activePathway.steps.kuralNumber.toString())}
-                    </button>
-                  )}
-                  {activeStepNumber === 4 && (
-                    <button
-                      onClick={() => {
-                        setSelectedScenarioNumber(activePathway.steps.scenarioNumber);
-                        setActiveTab('scenario-challenge');
-                      }}
-                      className="w-full py-2.5 text-xs font-bold text-white bg-emerald-600 hover:bg-emerald-700 rounded-xl shadow-2xs transition-colors cursor-pointer text-center"
-                    >
-                      {t('solveScenarioBtn').replace('{num}', activePathway.steps.scenarioNumber.toString())}
-                    </button>
-                  )}
-                  <button
-                    onClick={() => {
-                      const topic = activeStepNumber === 1
-                        ? activePathway.steps.kuralTitle
-                        : activeStepNumber === 2
-                        ? activePathway.steps.ethicalPrinciple
-                        : activeStepNumber === 3
-                        ? activePathway.steps.legalStatute
-                        : activePathway.steps.scenarioTitle;
-                      openStepTutorModal(topic, `Pathway Step ${activeStepNumber}`);
-                    }}
-                    className="w-full py-2.5 text-xs font-bold text-slate-700 bg-white hover:bg-slate-100 border border-slate-200 rounded-xl transition-colors cursor-pointer text-center shadow-2xs"
-                  >
-                    {t('askAiAboutStep')}
-                  </button>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      )}
-
-      {/* ========================================================================= */}
-      {/* MODE B: FULL NETWORK GRAPH EXPLORER */}
-      {/* ========================================================================= */}
-      {viewMode === 'explorer' && (
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
-          {/* SVG Interactive Graph Canvas (lg:col-span-8) */}
-          <div className="lg:col-span-8 bg-white rounded-2xl border border-slate-200 shadow-2xs overflow-hidden flex flex-col min-h-[520px]">
-            {/* Controls Bar */}
-            <div className="flex items-center justify-between p-4 border-b border-slate-200 bg-slate-50">
-              <div className="flex items-center gap-2">
-                <span className="text-xs font-extrabold text-slate-700">{t('filterNodes')}</span>
-                <select
-                  value={filterType}
-                  onChange={(e) => setFilterType(e.target.value)}
-                  className="px-3 py-1.5 text-xs bg-white border border-slate-200 rounded-xl font-bold text-slate-700 focus:outline-hidden focus:ring-2 focus:ring-blue-500/20"
-                >
-                  <option value="All">{t('all')}</option>
-                  <option value="Kural">{t('kuralVerses')}</option>
-                  <option value="EthicalConcept">{t('kuralEthicalConcept')}</option>
-                  <option value="LegalConcept">{t('statutoryGrounds')}</option>
-                  <option value="Scenario">{t('scenarioChallenge')}</option>
-                </select>
-              </div>
-
-              <div className="flex items-center gap-1.5">
-                <button
-                  onClick={() => setZoomLevel((z) => Math.min(1.5, z + 0.1))}
-                  className="p-1.5 bg-white border border-slate-200 rounded-lg text-slate-700 hover:bg-slate-100 transition-colors"
-                >
-                  <ZoomIn className="w-4 h-4" />
-                </button>
-                <button
-                  onClick={() => setZoomLevel((z) => Math.max(0.6, z - 0.1))}
-                  className="p-1.5 bg-white border border-slate-200 rounded-lg text-slate-700 hover:bg-slate-100 transition-colors"
-                >
-                  <ZoomOut className="w-4 h-4" />
-                </button>
-                <button
-                  onClick={() => setIsFullscreen(!isFullscreen)}
-                  className="p-1.5 bg-white border border-slate-200 rounded-lg text-slate-700 hover:bg-slate-100 transition-colors"
-                >
-                  {isFullscreen ? <Minimize2 className="w-4 h-4" /> : <Maximize2 className="w-4 h-4" />}
-                </button>
-              </div>
+              <button
+                onClick={(e) => {
+                  e.stopPropagation();
+                  openStepTutorModal(activePathway.steps.ethicalPrinciple, 'Step 2: Ethical Principle');
+                }}
+                className="w-full py-2 text-xs font-bold text-indigo-950 bg-white hover:bg-indigo-100 border border-indigo-300 rounded-lg transition-colors cursor-pointer text-center mt-3 shadow-2xs"
+              >
+                Explore Ethics AI Tutor
+              </button>
             </div>
 
-            {/* Canvas Node Grid Visualization */}
-            <div className="p-6 flex-1 bg-slate-50/50 flex flex-wrap gap-4 items-center justify-center overflow-auto max-h-[500px]">
-              {filteredNodes.map((node) => {
-                const styles = getNodeColor(node.type);
-                const isSelected = selectedNode?.id === node.id;
-
-                return (
-                  <div
-                    key={node.id}
-                    onClick={() => setSelectedNode(node)}
-                    className={`p-4 rounded-xl border transition-all cursor-pointer max-w-[220px] space-y-1.5 ${styles.bg} ${styles.border} ${
-                      isSelected ? 'ring-2 ring-blue-600 scale-105 shadow-md' : 'hover:scale-102 hover:shadow-xs'
-                    }`}
-                  >
-                    <span className={`text-[10px] font-black uppercase tracking-wider block ${styles.typeText}`}>
-                      {node.type}
-                    </span>
-                    <h4 className={`text-xs font-bold leading-tight ${styles.text}`}>
-                      {node.label}
-                    </h4>
-                  </div>
-                );
-              })}
-            </div>
-          </div>
-
-          {/* Selected Node Details Drawer (lg:col-span-4) */}
-          <div className="lg:col-span-4 bg-white rounded-2xl border border-slate-200 shadow-2xs p-6 space-y-4">
-            {selectedNode ? (
-              <div className="space-y-4">
-                <div className="flex items-center justify-between pb-3 border-b border-slate-100">
-                  <span className="text-xs font-black uppercase tracking-wider text-blue-600 bg-blue-50 px-2.5 py-1 rounded-md border border-blue-200">
-                    {selectedNode.type} Node
-                  </span>
-                  <span className="text-xs font-bold text-slate-400">ID: {selectedNode.id}</span>
-                </div>
-
-                <h3 className="text-base font-extrabold text-[#071B3A] font-heading">
-                  {selectedNode.label}
-                </h3>
-
-                {selectedNode.description && (
-                  <p className="text-xs text-slate-600 leading-relaxed font-medium">
-                    {selectedNode.description}
-                  </p>
-                )}
-
-                {selectedNode.tamilText && (
-                  <div className="p-3 bg-amber-50 rounded-xl border border-amber-200 space-y-1">
-                    <span className="text-[10px] font-black text-amber-800 uppercase tracking-wider">Tamil Verses</span>
-                    <p className="text-xs font-tamil font-bold text-slate-900 leading-relaxed">
-                      {selectedNode.tamilText}
-                    </p>
-                  </div>
-                )}
-
-                {selectedNode.kuralNumber && (
-                  <button
-                    onClick={() => openKuralModalByNumber(selectedNode.kuralNumber!)}
-                    className="w-full py-2.5 bg-[#071B3A] hover:bg-[#0A2540] text-white font-bold text-xs rounded-xl shadow-2xs transition-colors cursor-pointer text-center block"
-                  >
-                    Open Kural #{selectedNode.kuralNumber} Details →
-                  </button>
-                )}
+            {/* Step 3: Statutory Law */}
+            <div
+              onClick={() => setActiveStepNumber(3)}
+              className={`p-5 rounded-xl border space-y-3 transition-all cursor-pointer flex flex-col justify-between ${
+                activeStepNumber === 3
+                  ? 'bg-blue-50 border-blue-500 ring-2 ring-blue-500/30 shadow-md'
+                  : 'bg-blue-50/40 border-blue-200/90 hover:bg-blue-50/80'
+              }`}
+            >
+              <div className="space-y-2">
+                <span className="text-[10px] font-black uppercase tracking-wider bg-blue-600 text-white px-2 py-0.5 rounded">
+                  Step 3: Statutory Law
+                </span>
+                <h4 className="text-xs font-bold text-slate-950 font-heading">
+                  {activePathway.steps.legalStatute}
+                </h4>
+                <p className="text-xs text-slate-600 leading-relaxed font-medium bg-white/80 p-2.5 rounded-lg border border-blue-200">
+                  Codifies classical moral duties into enforceable statutory protections and constitutional guarantees.
+                </p>
               </div>
-            ) : (
-              <p className="text-xs text-slate-500 text-center py-10 font-medium">Select a node from the network graph to inspect details.</p>
-            )}
+              <button
+                onClick={(e) => {
+                  e.stopPropagation();
+                  openStepTutorModal(activePathway.steps.legalStatute, 'Step 3: Statutory Law');
+                }}
+                className="w-full py-2 text-xs font-bold text-blue-950 bg-white hover:bg-blue-100 border border-blue-300 rounded-lg transition-colors cursor-pointer text-center mt-3 shadow-2xs"
+              >
+                Explore Law AI Tutor
+              </button>
+            </div>
+
+            {/* Step 4: Real Case Scenario */}
+            <div
+              onClick={() => setActiveStepNumber(4)}
+              className={`p-5 rounded-xl border space-y-3 transition-all cursor-pointer flex flex-col justify-between ${
+                activeStepNumber === 4
+                  ? 'bg-amber-50 border-amber-500 ring-2 ring-amber-500/30 shadow-md'
+                  : 'bg-amber-50/40 border-amber-200/90 hover:bg-amber-50/80'
+              }`}
+            >
+              <div className="space-y-2">
+                <span className="text-[10px] font-black uppercase tracking-wider bg-amber-600 text-slate-950 px-2 py-0.5 rounded">
+                  Step 4: Case Scenario
+                </span>
+                <h4 className="text-xs font-bold text-slate-950 font-heading">
+                  Case #{activePathway.steps.scenarioNumber}: {activePathway.steps.scenarioTitle}
+                </h4>
+                <p className="text-xs text-slate-600 leading-relaxed font-medium bg-white/80 p-2.5 rounded-lg border border-amber-200">
+                  Test your understanding by resolving real-world conflicts using statutory law and Thirukkural reasoning.
+                </p>
+              </div>
+              <button
+                onClick={(e) => {
+                  e.stopPropagation();
+                  setSelectedScenarioNumber(activePathway.steps.scenarioNumber);
+                  setActiveTab('scenario-challenge');
+                }}
+                className="w-full py-2 text-xs font-bold text-white bg-[#071B3A] hover:bg-[#0A2540] rounded-lg transition-colors cursor-pointer text-center mt-3 shadow-2xs"
+              >
+                Solve Scenario Challenge →
+              </button>
+            </div>
           </div>
         </div>
       )}
