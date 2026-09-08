@@ -1081,10 +1081,10 @@ export const KnowledgeGraphPage: React.FC = () => {
               <div>
                 <div className="flex items-center gap-2 mb-1">
                   <span className="text-[10px] font-black uppercase tracking-wider bg-blue-100 text-blue-800 px-2.5 py-0.5 rounded-full border border-blue-200">
-                    Conceptual Architecture & Ontology
+                    Interactive Architecture & Ontology
                   </span>
                   <span className="text-[10px] font-bold text-slate-500">
-                    Dual-Corpus Mapping Model
+                    Dual-Corpus Mapping Model (1,330 Kurals + 52 Laws + 12 Scenarios)
                   </span>
                 </div>
                 <h3 className="text-xl font-extrabold text-[#071B3A] font-heading flex items-center gap-2">
@@ -1092,7 +1092,7 @@ export const KnowledgeGraphPage: React.FC = () => {
                   Connecting Ancient Wisdom with Modern Society
                 </h3>
                 <p className="text-xs text-slate-500 font-medium">
-                  Semantic reasoning vectors connecting Thirukkural couplets, ethical principles, statutory law, and actionable decision-making.
+                  Click on any node, concept, law, or scenario below to immediately trigger live AI reasoning, open couplet details, or solve active challenges.
                 </p>
               </div>
 
@@ -1111,10 +1111,13 @@ export const KnowledgeGraphPage: React.FC = () => {
               {/* TOP ROW: Concept | Chapter | Ethical Value */}
               <div className="grid grid-cols-1 md:grid-cols-3 gap-6 items-start">
                 {/* 1. CONCEPT (Top Left) */}
-                <div className="bg-amber-50/70 border-2 border-amber-300 rounded-2xl p-4 space-y-2 relative shadow-2xs hover:shadow-sm transition-all">
+                <div
+                  onClick={() => openStepTutorModal(activePathway.architecture.concept.title, 'Semantic Pillar Concept')}
+                  className="bg-amber-50/70 hover:bg-amber-50 border-2 border-amber-300 hover:border-amber-400 rounded-2xl p-4 space-y-2 relative shadow-2xs hover:shadow-md transition-all cursor-pointer group"
+                >
                   <div className="flex items-center justify-between">
                     <div className="flex items-center gap-2">
-                      <div className="w-7 h-7 rounded-lg bg-amber-500 text-white flex items-center justify-center shadow-xs">
+                      <div className="w-7 h-7 rounded-lg bg-amber-500 text-white flex items-center justify-center shadow-xs group-hover:scale-105 transition-transform">
                         <Lightbulb className="w-4 h-4" />
                       </div>
                       <h4 className="text-xs font-bold text-amber-950 font-heading">Concept</h4>
@@ -1123,16 +1126,31 @@ export const KnowledgeGraphPage: React.FC = () => {
                       Semantic Pillar
                     </span>
                   </div>
-                  <ul className="text-xs text-amber-900 space-y-1 font-medium pt-1">
+                  <ul className="text-xs text-amber-900 space-y-1.5 font-medium pt-1">
                     {activePathway.architecture.concept.items.map((item, i) => (
-                      <li key={i} className="flex items-center gap-1.5">
-                        <span className="w-1.5 h-1.5 rounded-full bg-amber-500"></span>
-                        <span>e.g., {item}</span>
+                      <li
+                        key={i}
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          openStepTutorModal(item, 'Ethical Concept');
+                        }}
+                        className="flex items-center justify-between p-1 rounded-md hover:bg-amber-100/70 transition-colors"
+                      >
+                        <div className="flex items-center gap-1.5">
+                          <span className="w-1.5 h-1.5 rounded-full bg-amber-500"></span>
+                          <span>e.g., {item}</span>
+                        </div>
+                        <span className="text-[9px] font-bold text-amber-700 opacity-0 group-hover:opacity-100 transition-opacity">
+                          Ask AI →
+                        </span>
                       </li>
                     ))}
                   </ul>
                   {/* Directional Vector Badge: CONVEYS */}
-                  <div className="pt-2 flex items-center justify-end">
+                  <div className="pt-2 flex items-center justify-between border-t border-amber-200/60">
+                    <span className="text-[10px] font-bold text-amber-800">
+                      Click to analyze
+                    </span>
                     <span className="text-[10px] font-black uppercase tracking-wider bg-amber-200/90 text-amber-900 px-2.5 py-0.5 rounded-full border border-amber-300 shadow-2xs">
                       conveys ↙
                     </span>
@@ -1140,10 +1158,13 @@ export const KnowledgeGraphPage: React.FC = () => {
                 </div>
 
                 {/* 2. CHAPTER (Top Center) */}
-                <div className="bg-rose-50/70 border-2 border-rose-300 rounded-2xl p-4 space-y-2 relative shadow-2xs hover:shadow-sm transition-all">
+                <div
+                  onClick={() => openKuralModalByNumber(activePathway.steps.kuralNumber)}
+                  className="bg-rose-50/70 hover:bg-rose-50 border-2 border-rose-300 hover:border-rose-400 rounded-2xl p-4 space-y-2 relative shadow-2xs hover:shadow-md transition-all cursor-pointer group"
+                >
                   <div className="flex items-center justify-between">
                     <div className="flex items-center gap-2">
-                      <div className="w-7 h-7 rounded-lg bg-rose-500 text-white flex items-center justify-center shadow-xs">
+                      <div className="w-7 h-7 rounded-lg bg-rose-500 text-white flex items-center justify-center shadow-xs group-hover:scale-105 transition-transform">
                         <BookOpen className="w-4 h-4" />
                       </div>
                       <h4 className="text-xs font-bold text-rose-950 font-heading">Chapter</h4>
@@ -1152,14 +1173,17 @@ export const KnowledgeGraphPage: React.FC = () => {
                       Corpus Hierarchy
                     </span>
                   </div>
-                  <p className="text-xs text-rose-900 font-medium">
+                  <p className="text-xs text-rose-900 font-bold pt-1">
                     • e.g., {activePathway.architecture.chapter.name}
                   </p>
-                  <p className="text-[11px] text-rose-700 italic">
+                  <p className="text-[11px] text-rose-700 italic font-medium">
                     (Chapter {activePathway.architecture.chapter.number} — {activePathway.architecture.chapter.desc})
                   </p>
                   {/* Directional Vector Badge: BELONGS TO */}
-                  <div className="pt-2 flex items-center justify-center">
+                  <div className="pt-2 flex items-center justify-between border-t border-rose-200/60">
+                    <span className="text-[10px] font-bold text-rose-800">
+                      Open Verses →
+                    </span>
                     <span className="text-[10px] font-black uppercase tracking-wider bg-rose-200/90 text-rose-900 px-2.5 py-0.5 rounded-full border border-rose-300 shadow-2xs">
                       ↕ belongs to
                     </span>
@@ -1167,10 +1191,13 @@ export const KnowledgeGraphPage: React.FC = () => {
                 </div>
 
                 {/* 3. ETHICAL VALUE (Top Right) */}
-                <div className="bg-emerald-50/70 border-2 border-emerald-300 rounded-2xl p-4 space-y-2 relative shadow-2xs hover:shadow-sm transition-all">
+                <div
+                  onClick={() => openStepTutorModal(activePathway.architecture.ethicalValue.title, 'Ethical Aram Value')}
+                  className="bg-emerald-50/70 hover:bg-emerald-50 border-2 border-emerald-300 hover:border-emerald-400 rounded-2xl p-4 space-y-2 relative shadow-2xs hover:shadow-md transition-all cursor-pointer group"
+                >
                   <div className="flex items-center justify-between">
                     <div className="flex items-center gap-2">
-                      <div className="w-7 h-7 rounded-lg bg-emerald-600 text-white flex items-center justify-center shadow-xs">
+                      <div className="w-7 h-7 rounded-lg bg-emerald-600 text-white flex items-center justify-center shadow-xs group-hover:scale-105 transition-transform">
                         <Leaf className="w-4 h-4" />
                       </div>
                       <h4 className="text-xs font-bold text-emerald-950 font-heading">Ethical Value</h4>
@@ -1179,20 +1206,32 @@ export const KnowledgeGraphPage: React.FC = () => {
                       Aram Virtues
                     </span>
                   </div>
-                  <ul className="text-xs text-emerald-900 space-y-1 font-medium pt-1">
+                  <ul className="text-xs text-emerald-900 space-y-1.5 font-medium pt-1">
                     {activePathway.architecture.ethicalValue.items.map((item, i) => (
-                      <li key={i} className="flex items-center gap-1.5">
-                        <span className="w-1.5 h-1.5 rounded-full bg-emerald-600"></span>
-                        <span>e.g., {item}</span>
+                      <li
+                        key={i}
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          openStepTutorModal(item, 'Ethical Virtue');
+                        }}
+                        className="flex items-center justify-between p-1 rounded-md hover:bg-emerald-100/70 transition-colors"
+                      >
+                        <div className="flex items-center gap-1.5">
+                          <span className="w-1.5 h-1.5 rounded-full bg-emerald-600"></span>
+                          <span>e.g., {item}</span>
+                        </div>
+                        <span className="text-[9px] font-bold text-emerald-700 opacity-0 group-hover:opacity-100 transition-opacity">
+                          Ask AI →
+                        </span>
                       </li>
                     ))}
                   </ul>
                   {/* Directional Vector Badges: PROMOTES & DEVELOPS */}
-                  <div className="pt-2 flex items-center justify-between">
-                    <span className="text-[10px] font-black uppercase tracking-wider bg-emerald-200/90 text-emerald-900 px-2.5 py-0.5 rounded-full border border-emerald-300 shadow-2xs">
+                  <div className="pt-2 flex items-center justify-between border-t border-emerald-200/60">
+                    <span className="text-[10px] font-black uppercase tracking-wider bg-emerald-200/90 text-emerald-900 px-2 py-0.5 rounded-full border border-emerald-300 shadow-2xs">
                       ↖ promotes
                     </span>
-                    <span className="text-[10px] font-black uppercase tracking-wider bg-blue-100 text-blue-900 px-2.5 py-0.5 rounded-full border border-blue-300 shadow-2xs">
+                    <span className="text-[10px] font-black uppercase tracking-wider bg-blue-100 text-blue-900 px-2 py-0.5 rounded-full border border-blue-300 shadow-2xs">
                       develops ➔
                     </span>
                   </div>
@@ -1202,10 +1241,13 @@ export const KnowledgeGraphPage: React.FC = () => {
               {/* MIDDLE ROW: AI Reasoning | THIRUKKURAL (CENTRAL HUB) | Life Skill */}
               <div className="grid grid-cols-1 md:grid-cols-3 gap-6 items-center my-6">
                 {/* 4. AI REASONING (Middle Left) */}
-                <div className="bg-cyan-50/80 border-2 border-cyan-400 rounded-2xl p-4 space-y-2.5 shadow-2xs hover:shadow-sm transition-all">
+                <div
+                  onClick={() => openStepTutorModal(activePathway.title, 'Dual-Corpus Reasoning Trace')}
+                  className="bg-cyan-50/80 hover:bg-cyan-50 border-2 border-cyan-400 hover:border-cyan-500 rounded-2xl p-4 space-y-2.5 shadow-2xs hover:shadow-md transition-all cursor-pointer group"
+                >
                   <div className="flex items-center justify-between">
                     <div className="flex items-center gap-2">
-                      <div className="w-7 h-7 rounded-lg bg-cyan-600 text-white flex items-center justify-center shadow-xs">
+                      <div className="w-7 h-7 rounded-lg bg-cyan-600 text-white flex items-center justify-center shadow-xs group-hover:scale-105 transition-transform">
                         <Brain className="w-4 h-4" />
                       </div>
                       <h4 className="text-xs font-bold text-cyan-950 font-heading">AI Reasoning</h4>
@@ -1217,14 +1259,14 @@ export const KnowledgeGraphPage: React.FC = () => {
                   <ul className="text-xs text-cyan-900 space-y-1.5 font-medium">
                     {activePathway.architecture.aiReasoning.steps.map((step, i) => (
                       <li key={i} className="flex items-start gap-1.5">
-                        <span className="text-cyan-600 mt-0.5">•</span>
+                        <span className="text-cyan-600 mt-0.5 font-bold">•</span>
                         <span>{step}</span>
                       </li>
                     ))}
                   </ul>
                   {/* Directional Vector Badges: RETRIEVES & SUGGESTS */}
-                  <div className="pt-2 flex items-center justify-between">
-                    <span className="text-[10px] font-black uppercase tracking-wider bg-indigo-100 text-indigo-900 px-2.5 py-0.5 rounded-full border border-indigo-300 shadow-2xs">
+                  <div className="pt-2 flex items-center justify-between border-t border-cyan-200/70">
+                    <span className="text-[10px] font-black uppercase tracking-wider bg-indigo-100 text-indigo-900 px-2 py-0.5 rounded-full border border-indigo-300 shadow-2xs">
                       retrieves ➔
                     </span>
                     <span className="text-[10px] font-black uppercase tracking-wider bg-purple-100 text-purple-900 px-2.5 py-0.5 rounded-full border border-purple-300 shadow-2xs">
@@ -1234,8 +1276,11 @@ export const KnowledgeGraphPage: React.FC = () => {
                 </div>
 
                 {/* 5. THIRUKKURAL (CENTRAL HUB) */}
-                <div className="bg-gradient-to-br from-[#071B3A] via-[#0D2852] to-[#1E3A8A] border-4 border-indigo-300 rounded-3xl p-6 text-center text-white space-y-3 shadow-xl relative transform hover:scale-[1.02] transition-all">
-                  <div className="w-12 h-12 rounded-2xl bg-amber-400/20 border border-amber-300/40 text-amber-300 flex items-center justify-center mx-auto shadow-inner">
+                <div
+                  onClick={() => openKuralModalByNumber(activePathway.steps.kuralNumber)}
+                  className="bg-gradient-to-br from-[#071B3A] via-[#0D2852] to-[#1E3A8A] hover:from-[#0A2540] hover:to-[#2563EB] border-4 border-indigo-300 rounded-3xl p-6 text-center text-white space-y-3 shadow-xl relative transform hover:scale-[1.03] transition-all cursor-pointer group"
+                >
+                  <div className="w-12 h-12 rounded-2xl bg-amber-400/20 border border-amber-300/40 text-amber-300 flex items-center justify-center mx-auto shadow-inner group-hover:rotate-6 transition-transform">
                     <BookOpen className="w-6 h-6" />
                   </div>
                   <div>
@@ -1253,18 +1298,24 @@ export const KnowledgeGraphPage: React.FC = () => {
                     Universal Moral Code & Classical Indian Jurisprudential Ethics
                   </p>
                   <button
-                    onClick={() => openKuralModalByNumber(activePathway.steps.kuralNumber)}
-                    className="w-full py-1.5 bg-white/10 hover:bg-white/20 text-white text-[11px] font-bold rounded-lg border border-white/20 transition-colors cursor-pointer"
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      openKuralModalByNumber(activePathway.steps.kuralNumber);
+                    }}
+                    className="w-full py-2 bg-white/10 hover:bg-white/25 text-white text-xs font-bold rounded-xl border border-white/30 transition-colors cursor-pointer shadow-xs"
                   >
                     Inspect Couplet #{activePathway.steps.kuralNumber} →
                   </button>
                 </div>
 
                 {/* 6. LIFE SKILL (Middle Right) */}
-                <div className="bg-sky-50/70 border-2 border-sky-300 rounded-2xl p-4 space-y-2 shadow-2xs hover:shadow-sm transition-all">
+                <div
+                  onClick={() => openStepTutorModal(activePathway.architecture.lifeSkill.title, 'Life Skill & Moral Judgment')}
+                  className="bg-sky-50/70 hover:bg-sky-50 border-2 border-sky-300 hover:border-sky-400 rounded-2xl p-4 space-y-2 shadow-2xs hover:shadow-md transition-all cursor-pointer group"
+                >
                   <div className="flex items-center justify-between">
                     <div className="flex items-center gap-2">
-                      <div className="w-7 h-7 rounded-lg bg-sky-600 text-white flex items-center justify-center shadow-xs">
+                      <div className="w-7 h-7 rounded-lg bg-sky-600 text-white flex items-center justify-center shadow-xs group-hover:scale-105 transition-transform">
                         <User className="w-4 h-4" />
                       </div>
                       <h4 className="text-xs font-bold text-sky-950 font-heading">Life Skill</h4>
@@ -1273,16 +1324,31 @@ export const KnowledgeGraphPage: React.FC = () => {
                       Human Competence
                     </span>
                   </div>
-                  <ul className="text-xs text-sky-900 space-y-1 font-medium pt-1">
+                  <ul className="text-xs text-sky-900 space-y-1.5 font-medium pt-1">
                     {activePathway.architecture.lifeSkill.items.map((item, i) => (
-                      <li key={i} className="flex items-center gap-1.5">
-                        <span className="w-1.5 h-1.5 rounded-full bg-sky-600"></span>
-                        <span>e.g., {item}</span>
+                      <li
+                        key={i}
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          openStepTutorModal(item, 'Life Skill Competency');
+                        }}
+                        className="flex items-center justify-between p-1 rounded-md hover:bg-sky-100/70 transition-colors"
+                      >
+                        <div className="flex items-center gap-1.5">
+                          <span className="w-1.5 h-1.5 rounded-full bg-sky-600"></span>
+                          <span>e.g., {item}</span>
+                        </div>
+                        <span className="text-[9px] font-bold text-sky-700 opacity-0 group-hover:opacity-100 transition-opacity">
+                          Ask AI →
+                        </span>
                       </li>
                     ))}
                   </ul>
                   {/* Directional Vector Badge: SUPPORTS */}
-                  <div className="pt-2 flex items-center justify-end">
+                  <div className="pt-2 flex items-center justify-between border-t border-sky-200/60">
+                    <span className="text-[10px] font-bold text-sky-800">
+                      Learn Skills →
+                    </span>
                     <span className="text-[10px] font-black uppercase tracking-wider bg-sky-200/90 text-sky-900 px-2.5 py-0.5 rounded-full border border-sky-300 shadow-2xs">
                       supports ↓
                     </span>
@@ -1293,10 +1359,13 @@ export const KnowledgeGraphPage: React.FC = () => {
               {/* LOWER-MIDDLE ROW: Recommended Action | Downward Branch | Legal Principle */}
               <div className="grid grid-cols-1 md:grid-cols-3 gap-6 items-start mb-6">
                 {/* 7. RECOMMENDED ACTION (Lower Left) */}
-                <div className="bg-purple-50/70 border-2 border-purple-300 rounded-2xl p-4 space-y-2 shadow-2xs hover:shadow-sm transition-all">
+                <div
+                  onClick={() => openStepTutorModal(activePathway.architecture.recommendedAction.title, 'Recommended Ethical Action')}
+                  className="bg-purple-50/70 hover:bg-purple-50 border-2 border-purple-300 hover:border-purple-400 rounded-2xl p-4 space-y-2 shadow-2xs hover:shadow-md transition-all cursor-pointer group"
+                >
                   <div className="flex items-center justify-between">
                     <div className="flex items-center gap-2">
-                      <div className="w-7 h-7 rounded-lg bg-purple-600 text-white flex items-center justify-center shadow-xs">
+                      <div className="w-7 h-7 rounded-lg bg-purple-600 text-white flex items-center justify-center shadow-xs group-hover:scale-105 transition-transform">
                         <Target className="w-4 h-4" />
                       </div>
                       <h4 className="text-xs font-bold text-purple-950 font-heading">Recommended Action</h4>
@@ -1305,17 +1374,29 @@ export const KnowledgeGraphPage: React.FC = () => {
                       Ethical Output
                     </span>
                   </div>
-                  <ul className="text-xs text-purple-900 space-y-1 font-medium pt-1">
+                  <ul className="text-xs text-purple-900 space-y-1.5 font-medium pt-1">
                     {activePathway.architecture.recommendedAction.actions.map((act, i) => (
-                      <li key={i} className="flex items-center gap-1.5">
-                        <span className="w-1.5 h-1.5 rounded-full bg-purple-600"></span>
-                        <span>e.g., {act}</span>
+                      <li
+                        key={i}
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          openStepTutorModal(act, 'Action Protocol');
+                        }}
+                        className="flex items-center justify-between p-1 rounded-md hover:bg-purple-100/70 transition-colors"
+                      >
+                        <div className="flex items-center gap-1.5">
+                          <span className="w-1.5 h-1.5 rounded-full bg-purple-600"></span>
+                          <span>e.g., {act}</span>
+                        </div>
+                        <span className="text-[9px] font-bold text-purple-700 opacity-0 group-hover:opacity-100 transition-opacity">
+                          Ask AI →
+                        </span>
                       </li>
                     ))}
                   </ul>
                   {/* Directional Vector Badge: REQUIRES */}
-                  <div className="pt-2 flex items-center justify-between">
-                    <span className="text-[10px] font-black uppercase tracking-wider bg-purple-200/90 text-purple-900 px-2.5 py-0.5 rounded-full border border-purple-300 shadow-2xs">
+                  <div className="pt-2 flex items-center justify-between border-t border-purple-200/60">
+                    <span className="text-[10px] font-black uppercase tracking-wider bg-purple-200/90 text-purple-900 px-2 py-0.5 rounded-full border border-purple-300 shadow-2xs">
                       ▲ suggests
                     </span>
                     <span className="text-[10px] font-black uppercase tracking-wider bg-blue-100 text-blue-900 px-2.5 py-0.5 rounded-full border border-blue-300 shadow-2xs">
@@ -1324,20 +1405,26 @@ export const KnowledgeGraphPage: React.FC = () => {
                   </div>
                 </div>
 
-                {/* Empty Middle or Connecting Scenario Indicator */}
-                <div className="hidden md:flex flex-col items-center justify-center p-4 text-center text-slate-400 space-y-2">
-                  <span className="text-[10px] font-bold uppercase tracking-wider text-slate-500 bg-white border border-slate-200 px-3 py-1 rounded-full shadow-2xs">
-                    Dual-Corpus Grounding
+                {/* Dual-Corpus Grounding Center Indicator */}
+                <div
+                  onClick={() => openStepTutorModal(activePathway.title, 'Dual-Corpus Grounding')}
+                  className="hidden md:flex flex-col items-center justify-center p-4 text-center text-slate-500 space-y-2 cursor-pointer hover:text-blue-600 transition-colors group"
+                >
+                  <span className="text-[10px] font-extrabold uppercase tracking-wider text-slate-700 bg-white border border-slate-200 group-hover:border-blue-300 px-3.5 py-1.5 rounded-full shadow-2xs group-hover:shadow-xs transition-all">
+                    ⚖️ Dual-Corpus Grounding 💡
                   </span>
-                  <div className="w-0.5 h-12 bg-slate-300"></div>
-                  <ArrowDown className="w-4 h-4 text-slate-400 -mt-1" />
+                  <div className="w-0.5 h-10 bg-slate-300 group-hover:bg-blue-400 transition-colors"></div>
+                  <ArrowDown className="w-4 h-4 text-slate-400 group-hover:text-blue-500 -mt-1" />
                 </div>
 
                 {/* 8. LEGAL PRINCIPLE (Lower Right) */}
-                <div className="bg-indigo-50/70 border-2 border-indigo-300 rounded-2xl p-4 space-y-2 shadow-2xs hover:shadow-sm transition-all">
+                <div
+                  onClick={() => openStepTutorModal(activePathway.architecture.legalPrinciple.title, 'Legal Jurisprudence')}
+                  className="bg-indigo-50/70 hover:bg-indigo-50 border-2 border-indigo-300 hover:border-indigo-400 rounded-2xl p-4 space-y-2 shadow-2xs hover:shadow-md transition-all cursor-pointer group"
+                >
                   <div className="flex items-center justify-between">
                     <div className="flex items-center gap-2">
-                      <div className="w-7 h-7 rounded-lg bg-indigo-700 text-white flex items-center justify-center shadow-xs">
+                      <div className="w-7 h-7 rounded-lg bg-indigo-700 text-white flex items-center justify-center shadow-xs group-hover:scale-105 transition-transform">
                         <Scale className="w-4 h-4" />
                       </div>
                       <h4 className="text-xs font-bold text-indigo-950 font-heading">Legal Principle</h4>
@@ -1346,17 +1433,29 @@ export const KnowledgeGraphPage: React.FC = () => {
                       Jurisprudence
                     </span>
                   </div>
-                  <ul className="text-xs text-indigo-900 space-y-1 font-medium pt-1">
+                  <ul className="text-xs text-indigo-900 space-y-1.5 font-medium pt-1">
                     {activePathway.architecture.legalPrinciple.items.map((item, i) => (
-                      <li key={i} className="flex items-center gap-1.5">
-                        <span className="w-1.5 h-1.5 rounded-full bg-indigo-700"></span>
-                        <span>e.g., {item}</span>
+                      <li
+                        key={i}
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          openStepTutorModal(item, 'Legal Principle');
+                        }}
+                        className="flex items-center justify-between p-1 rounded-md hover:bg-indigo-100/70 transition-colors"
+                      >
+                        <div className="flex items-center gap-1.5">
+                          <span className="w-1.5 h-1.5 rounded-full bg-indigo-700"></span>
+                          <span>e.g., {item}</span>
+                        </div>
+                        <span className="text-[9px] font-bold text-indigo-700 opacity-0 group-hover:opacity-100 transition-opacity">
+                          Ask AI →
+                        </span>
                       </li>
                     ))}
                   </ul>
                   {/* Directional Vector Badges: SUPPORTS & REFLECTED IN */}
-                  <div className="pt-2 flex items-center justify-between">
-                    <span className="text-[10px] font-black uppercase tracking-wider bg-indigo-200/90 text-indigo-900 px-2.5 py-0.5 rounded-full border border-indigo-300 shadow-2xs">
+                  <div className="pt-2 flex items-center justify-between border-t border-indigo-200/60">
+                    <span className="text-[10px] font-black uppercase tracking-wider bg-indigo-200/90 text-indigo-900 px-2 py-0.5 rounded-full border border-indigo-300 shadow-2xs">
                       ▲ supports
                     </span>
                     <span className="text-[10px] font-black uppercase tracking-wider bg-teal-100 text-teal-900 px-2.5 py-0.5 rounded-full border border-teal-300 shadow-2xs">
@@ -1369,10 +1468,13 @@ export const KnowledgeGraphPage: React.FC = () => {
               {/* BOTTOM ROW: Conflict | Scenario | Law / Section */}
               <div className="grid grid-cols-1 md:grid-cols-3 gap-6 items-start">
                 {/* 9. CONFLICT (Bottom Left) */}
-                <div className="bg-blue-50/80 border-2 border-blue-400 rounded-2xl p-4 space-y-2 shadow-2xs hover:shadow-sm transition-all">
+                <div
+                  onClick={() => openStepTutorModal(activePathway.architecture.conflict.title, 'Conflict & Moral Dilemma')}
+                  className="bg-blue-50/80 hover:bg-blue-50 border-2 border-blue-400 hover:border-blue-500 rounded-2xl p-4 space-y-2 shadow-2xs hover:shadow-md transition-all cursor-pointer group"
+                >
                   <div className="flex items-center justify-between">
                     <div className="flex items-center gap-2">
-                      <div className="w-7 h-7 rounded-lg bg-blue-600 text-white flex items-center justify-center shadow-xs">
+                      <div className="w-7 h-7 rounded-lg bg-blue-600 text-white flex items-center justify-center shadow-xs group-hover:scale-105 transition-transform">
                         <Users className="w-4 h-4" />
                       </div>
                       <h4 className="text-xs font-bold text-blue-950 font-heading">Conflict</h4>
@@ -1381,16 +1483,31 @@ export const KnowledgeGraphPage: React.FC = () => {
                       Dilemma Root
                     </span>
                   </div>
-                  <ul className="text-xs text-blue-900 space-y-1 font-medium pt-1">
+                  <ul className="text-xs text-blue-900 space-y-1.5 font-medium pt-1">
                     {activePathway.architecture.conflict.types.map((type, i) => (
-                      <li key={i} className="flex items-center gap-1.5">
-                        <span className="w-1.5 h-1.5 rounded-full bg-blue-600"></span>
-                        <span>e.g., {type}</span>
+                      <li
+                        key={i}
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          openStepTutorModal(type, 'Dilemma Conflict');
+                        }}
+                        className="flex items-center justify-between p-1 rounded-md hover:bg-blue-100/70 transition-colors"
+                      >
+                        <div className="flex items-center gap-1.5">
+                          <span className="w-1.5 h-1.5 rounded-full bg-blue-600"></span>
+                          <span>e.g., {type}</span>
+                        </div>
+                        <span className="text-[9px] font-bold text-blue-700 opacity-0 group-hover:opacity-100 transition-opacity">
+                          Ask AI →
+                        </span>
                       </li>
                     ))}
                   </ul>
                   {/* Directional Vector Badge: INVOLVES */}
-                  <div className="pt-2 flex items-center justify-end">
+                  <div className="pt-2 flex items-center justify-between border-t border-blue-200/60">
+                    <span className="text-[10px] font-bold text-blue-800">
+                      Resolve Dilemma →
+                    </span>
                     <span className="text-[10px] font-black uppercase tracking-wider bg-blue-200 text-blue-950 px-2.5 py-0.5 rounded-full border border-blue-300 shadow-2xs">
                       involves ➔
                     </span>
@@ -1398,10 +1515,16 @@ export const KnowledgeGraphPage: React.FC = () => {
                 </div>
 
                 {/* 10. SCENARIO (Bottom Center) */}
-                <div className="bg-red-50/80 border-2 border-red-400 rounded-2xl p-4 space-y-2 shadow-2xs hover:shadow-sm transition-all">
+                <div
+                  onClick={() => {
+                    setSelectedScenarioNumber(activePathway.architecture.scenario.number);
+                    setActiveTab('scenario-challenge');
+                  }}
+                  className="bg-red-50/80 hover:bg-red-50 border-2 border-red-400 hover:border-red-500 rounded-2xl p-4 space-y-2 shadow-2xs hover:shadow-md transition-all cursor-pointer group"
+                >
                   <div className="flex items-center justify-between">
                     <div className="flex items-center gap-2">
-                      <div className="w-7 h-7 rounded-lg bg-red-600 text-white flex items-center justify-center shadow-xs">
+                      <div className="w-7 h-7 rounded-lg bg-red-600 text-white flex items-center justify-center shadow-xs group-hover:scale-105 transition-transform">
                         <AlertTriangle className="w-4 h-4" />
                       </div>
                       <h4 className="text-xs font-bold text-red-950 font-heading">Scenario</h4>
@@ -1410,7 +1533,7 @@ export const KnowledgeGraphPage: React.FC = () => {
                       Simulation #{activePathway.architecture.scenario.number}
                     </span>
                   </div>
-                  <ul className="text-xs text-red-900 space-y-1 font-medium pt-1">
+                  <ul className="text-xs text-red-900 space-y-1.5 font-medium pt-1">
                     {activePathway.architecture.scenario.items.map((item, i) => (
                       <li key={i} className="flex items-center gap-1.5">
                         <span className="w-1.5 h-1.5 rounded-full bg-red-600"></span>
@@ -1418,8 +1541,11 @@ export const KnowledgeGraphPage: React.FC = () => {
                       </li>
                     ))}
                   </ul>
-                  {/* Directional Vector Badge: APPLIES TO */}
-                  <div className="pt-2 flex items-center justify-end">
+                  {/* Directional Vector Badge: APPLIES TO & LAUNCH BUTTON */}
+                  <div className="pt-2 flex items-center justify-between border-t border-red-200/60">
+                    <span className="text-[10px] font-black text-red-800 bg-red-100 px-2 py-0.5 rounded-md hover:bg-red-200 transition-colors">
+                      Launch Case #{activePathway.architecture.scenario.number} →
+                    </span>
                     <span className="text-[10px] font-black uppercase tracking-wider bg-red-200 text-red-950 px-2.5 py-0.5 rounded-full border border-red-300 shadow-2xs">
                       applies to ➔
                     </span>
@@ -1427,10 +1553,13 @@ export const KnowledgeGraphPage: React.FC = () => {
                 </div>
 
                 {/* 11. LAW / SECTION (Bottom Right) */}
-                <div className="bg-teal-50/80 border-2 border-teal-400 rounded-2xl p-4 space-y-2 shadow-2xs hover:shadow-sm transition-all">
+                <div
+                  onClick={() => openStepTutorModal(activePathway.architecture.lawSection.title, 'Statutory Law Corpus')}
+                  className="bg-teal-50/80 hover:bg-teal-50 border-2 border-teal-400 hover:border-teal-500 rounded-2xl p-4 space-y-2 shadow-2xs hover:shadow-md transition-all cursor-pointer group"
+                >
                   <div className="flex items-center justify-between">
                     <div className="flex items-center gap-2">
-                      <div className="w-7 h-7 rounded-lg bg-teal-600 text-white flex items-center justify-center shadow-xs">
+                      <div className="w-7 h-7 rounded-lg bg-teal-600 text-white flex items-center justify-center shadow-xs group-hover:scale-105 transition-transform">
                         <FileText className="w-4 h-4" />
                       </div>
                       <h4 className="text-xs font-bold text-teal-950 font-heading">Law / Section</h4>
@@ -1439,16 +1568,31 @@ export const KnowledgeGraphPage: React.FC = () => {
                       Statutory Corpus
                     </span>
                   </div>
-                  <ul className="text-xs text-teal-900 space-y-1 font-medium pt-1">
+                  <ul className="text-xs text-teal-900 space-y-1.5 font-medium pt-1">
                     {activePathway.architecture.lawSection.sections.map((sec, i) => (
-                      <li key={i} className="flex items-center gap-1.5">
-                        <span className="w-1.5 h-1.5 rounded-full bg-teal-600"></span>
-                        <span>e.g., {sec}</span>
+                      <li
+                        key={i}
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          openStepTutorModal(sec, 'Statutory Legal Section');
+                        }}
+                        className="flex items-center justify-between p-1 rounded-md hover:bg-teal-100/70 transition-colors"
+                      >
+                        <div className="flex items-center gap-1.5">
+                          <span className="w-1.5 h-1.5 rounded-full bg-teal-600"></span>
+                          <span>e.g., {sec}</span>
+                        </div>
+                        <span className="text-[9px] font-bold text-teal-700 opacity-0 group-hover:opacity-100 transition-opacity">
+                          Ask AI →
+                        </span>
                       </li>
                     ))}
                   </ul>
                   {/* Directional Vector Badge */}
-                  <div className="pt-2 flex items-center justify-end">
+                  <div className="pt-2 flex items-center justify-between border-t border-teal-200/60">
+                    <span className="text-[10px] font-bold text-teal-800">
+                      Query Law in Tutor →
+                    </span>
                     <span className="text-[10px] font-black uppercase tracking-wider bg-teal-200 text-teal-950 px-2.5 py-0.5 rounded-full border border-teal-300 shadow-2xs">
                       reflected in ▲
                     </span>
@@ -1462,24 +1606,32 @@ export const KnowledgeGraphPage: React.FC = () => {
             {/* ========================================================================= */}
             <div className="bg-blue-50/50 rounded-2xl border border-blue-200/90 p-5 md:p-6 space-y-4 shadow-2xs">
               {/* Header Pill */}
-              <div className="flex items-center gap-2">
-                <span className="text-xs font-extrabold text-white bg-[#071B3A] px-3 py-1 rounded-lg flex items-center gap-1.5 shadow-2xs">
-                  <BookOpen className="w-3.5 h-3.5 text-amber-300" />
-                  Sample Example
-                </span>
-                <span className="text-xs font-bold text-slate-700">
-                  Dual-Corpus Reasoning Pipeline: From Verse to Action
+              <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
+                <div className="flex items-center gap-2">
+                  <span className="text-xs font-extrabold text-white bg-[#071B3A] px-3 py-1 rounded-lg flex items-center gap-1.5 shadow-2xs">
+                    <BookOpen className="w-3.5 h-3.5 text-amber-300" />
+                    Sample Example
+                  </span>
+                  <span className="text-xs font-bold text-slate-700">
+                    Dual-Corpus Reasoning Pipeline: From Verse to Action
+                  </span>
+                </div>
+                <span className="text-[11px] font-medium text-slate-500 italic">
+                  💡 Click any step below to launch its real interactive tool
                 </span>
               </div>
 
               {/* Horizontal Connected Cards */}
               <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-7 gap-3 items-stretch">
                 {/* 1. Kural */}
-                <div className="bg-rose-50 border-2 border-rose-300 rounded-xl p-3 flex flex-col justify-between shadow-2xs hover:shadow-xs transition-all">
+                <div
+                  onClick={() => openKuralModalByNumber(activePathway.steps.kuralNumber)}
+                  className="bg-rose-50 hover:bg-rose-100/70 border-2 border-rose-300 hover:border-rose-400 rounded-xl p-3 flex flex-col justify-between shadow-2xs hover:shadow-md transition-all cursor-pointer group"
+                >
                   <div className="space-y-1">
                     <div className="flex items-center justify-between">
                       <span className="text-[10px] font-black text-rose-800 uppercase tracking-wider">Kural</span>
-                      <BookOpen className="w-3 h-3 text-rose-600" />
+                      <BookOpen className="w-3.5 h-3.5 text-rose-600 group-hover:scale-110 transition-transform" />
                     </div>
                     <p className="text-[11px] font-tamil font-bold text-rose-950 leading-snug">
                       "{activePathway.architecture.sampleExample.kuralVerse}"
@@ -1488,93 +1640,135 @@ export const KnowledgeGraphPage: React.FC = () => {
                       ({activePathway.architecture.sampleExample.kuralMeaning})
                     </p>
                   </div>
-                  <span className="text-[10px] font-extrabold text-rose-700 block mt-2 text-right">
-                    ({activePathway.architecture.sampleExample.kuralTag})
-                  </span>
+                  <div className="mt-2 pt-1 border-t border-rose-200 flex items-center justify-between">
+                    <span className="text-[9px] font-bold text-rose-600">Inspect →</span>
+                    <span className="text-[10px] font-extrabold text-rose-700">
+                      ({activePathway.architecture.sampleExample.kuralTag})
+                    </span>
+                  </div>
                 </div>
 
                 {/* 2. Ethical Value */}
-                <div className="bg-amber-50 border-2 border-amber-300 rounded-xl p-3 flex flex-col justify-between shadow-2xs hover:shadow-xs transition-all">
+                <div
+                  onClick={() => openStepTutorModal(activePathway.architecture.sampleExample.ethicalValue, 'Ethical Value Analysis')}
+                  className="bg-amber-50 hover:bg-amber-100/70 border-2 border-amber-300 hover:border-amber-400 rounded-xl p-3 flex flex-col justify-between shadow-2xs hover:shadow-md transition-all cursor-pointer group"
+                >
                   <div className="space-y-1">
                     <div className="flex items-center justify-between">
                       <span className="text-[10px] font-black text-amber-800 uppercase tracking-wider">Ethical Value</span>
-                      <Lightbulb className="w-3 h-3 text-amber-600" />
+                      <Lightbulb className="w-3.5 h-3.5 text-amber-600 group-hover:scale-110 transition-transform" />
                     </div>
                     <p className="text-[11px] font-bold text-amber-950 leading-snug">
                       {activePathway.architecture.sampleExample.ethicalValue}
                     </p>
                   </div>
-                  <span className="text-[9px] font-bold text-amber-700">➔ Aram Virtue</span>
+                  <div className="mt-2 pt-1 border-t border-amber-200 flex items-center justify-between">
+                    <span className="text-[9px] font-bold text-amber-700">➔ Aram Virtue</span>
+                    <span className="text-[9px] font-bold text-amber-600">Ask AI →</span>
+                  </div>
                 </div>
 
                 {/* 3. Life Skill */}
-                <div className="bg-emerald-50 border-2 border-emerald-300 rounded-xl p-3 flex flex-col justify-between shadow-2xs hover:shadow-xs transition-all">
+                <div
+                  onClick={() => openStepTutorModal(activePathway.architecture.sampleExample.lifeSkill, 'Life Skill Competency')}
+                  className="bg-emerald-50 hover:bg-emerald-100/70 border-2 border-emerald-300 hover:border-emerald-400 rounded-xl p-3 flex flex-col justify-between shadow-2xs hover:shadow-md transition-all cursor-pointer group"
+                >
                   <div className="space-y-1">
                     <div className="flex items-center justify-between">
                       <span className="text-[10px] font-black text-emerald-800 uppercase tracking-wider">Life Skill</span>
-                      <User className="w-3 h-3 text-emerald-600" />
+                      <User className="w-3.5 h-3.5 text-emerald-600 group-hover:scale-110 transition-transform" />
                     </div>
                     <p className="text-[11px] font-bold text-emerald-950 leading-snug">
                       {activePathway.architecture.sampleExample.lifeSkill}
                     </p>
                   </div>
-                  <span className="text-[9px] font-bold text-emerald-700">➔ Competency</span>
+                  <div className="mt-2 pt-1 border-t border-emerald-200 flex items-center justify-between">
+                    <span className="text-[9px] font-bold text-emerald-700">➔ Competency</span>
+                    <span className="text-[9px] font-bold text-emerald-600">Ask AI →</span>
+                  </div>
                 </div>
 
                 {/* 4. Legal Principle */}
-                <div className="bg-blue-50 border-2 border-blue-300 rounded-xl p-3 flex flex-col justify-between shadow-2xs hover:shadow-xs transition-all">
+                <div
+                  onClick={() => openStepTutorModal(activePathway.architecture.sampleExample.legalPrinciple, 'Legal Principle Analysis')}
+                  className="bg-blue-50 hover:bg-blue-100/70 border-2 border-blue-300 hover:border-blue-400 rounded-xl p-3 flex flex-col justify-between shadow-2xs hover:shadow-md transition-all cursor-pointer group"
+                >
                   <div className="space-y-1">
                     <div className="flex items-center justify-between">
                       <span className="text-[10px] font-black text-blue-800 uppercase tracking-wider">Legal Principle</span>
-                      <Scale className="w-3 h-3 text-blue-600" />
+                      <Scale className="w-3.5 h-3.5 text-blue-600 group-hover:scale-110 transition-transform" />
                     </div>
                     <p className="text-[11px] font-bold text-blue-950 leading-snug">
                       {activePathway.architecture.sampleExample.legalPrinciple}
                     </p>
                   </div>
-                  <span className="text-[9px] font-bold text-blue-700">➔ Rule of Law</span>
+                  <div className="mt-2 pt-1 border-t border-blue-200 flex items-center justify-between">
+                    <span className="text-[9px] font-bold text-blue-700">➔ Rule of Law</span>
+                    <span className="text-[9px] font-bold text-blue-600">Ask AI →</span>
+                  </div>
                 </div>
 
                 {/* 5. Law */}
-                <div className="bg-purple-50 border-2 border-purple-300 rounded-xl p-3 flex flex-col justify-between shadow-2xs hover:shadow-xs transition-all">
+                <div
+                  onClick={() => openStepTutorModal(activePathway.architecture.sampleExample.law, 'Statutory Section Analysis')}
+                  className="bg-purple-50 hover:bg-purple-100/70 border-2 border-purple-300 hover:border-purple-400 rounded-xl p-3 flex flex-col justify-between shadow-2xs hover:shadow-md transition-all cursor-pointer group"
+                >
                   <div className="space-y-1">
                     <div className="flex items-center justify-between">
                       <span className="text-[10px] font-black text-purple-800 uppercase tracking-wider">Law</span>
-                      <FileText className="w-3 h-3 text-purple-600" />
+                      <FileText className="w-3.5 h-3.5 text-purple-600 group-hover:scale-110 transition-transform" />
                     </div>
                     <p className="text-[11px] font-bold text-purple-950 leading-snug">
                       {activePathway.architecture.sampleExample.law}
                     </p>
                   </div>
-                  <span className="text-[9px] font-bold text-purple-700">➔ Statutory Section</span>
+                  <div className="mt-2 pt-1 border-t border-purple-200 flex items-center justify-between">
+                    <span className="text-[9px] font-bold text-purple-700">➔ Statute</span>
+                    <span className="text-[9px] font-bold text-purple-600">Query →</span>
+                  </div>
                 </div>
 
                 {/* 6. Scenario */}
-                <div className="bg-teal-50 border-2 border-teal-300 rounded-xl p-3 flex flex-col justify-between shadow-2xs hover:shadow-xs transition-all">
+                <div
+                  onClick={() => {
+                    setSelectedScenarioNumber(activePathway.steps.scenarioNumber);
+                    setActiveTab('scenario-challenge');
+                  }}
+                  className="bg-teal-50 hover:bg-teal-100/70 border-2 border-teal-300 hover:border-teal-400 rounded-xl p-3 flex flex-col justify-between shadow-2xs hover:shadow-md transition-all cursor-pointer group"
+                >
                   <div className="space-y-1">
                     <div className="flex items-center justify-between">
                       <span className="text-[10px] font-black text-teal-800 uppercase tracking-wider">Scenario</span>
-                      <AlertTriangle className="w-3 h-3 text-teal-600" />
+                      <AlertTriangle className="w-3.5 h-3.5 text-teal-600 group-hover:scale-110 transition-transform" />
                     </div>
                     <p className="text-[11px] font-bold text-teal-950 leading-snug">
                       {activePathway.architecture.sampleExample.scenario}
                     </p>
                   </div>
-                  <span className="text-[9px] font-bold text-teal-700">➔ Real Conflict</span>
+                  <div className="mt-2 pt-1 border-t border-teal-200 flex items-center justify-between">
+                    <span className="text-[9px] font-bold text-teal-700">➔ Case #{activePathway.steps.scenarioNumber}</span>
+                    <span className="text-[9px] font-black text-teal-800 bg-teal-200/80 px-1.5 py-0.5 rounded">Solve →</span>
+                  </div>
                 </div>
 
                 {/* 7. Action */}
-                <div className="bg-rose-50 border-2 border-rose-300 rounded-xl p-3 flex flex-col justify-between shadow-2xs hover:shadow-xs transition-all">
+                <div
+                  onClick={() => openStepTutorModal(activePathway.architecture.sampleExample.action, 'Responsible Action Guidance')}
+                  className="bg-rose-50 hover:bg-rose-100/70 border-2 border-rose-300 hover:border-rose-400 rounded-xl p-3 flex flex-col justify-between shadow-2xs hover:shadow-md transition-all cursor-pointer group"
+                >
                   <div className="space-y-1">
                     <div className="flex items-center justify-between">
                       <span className="text-[10px] font-black text-rose-800 uppercase tracking-wider">Action</span>
-                      <Target className="w-3 h-3 text-rose-600" />
+                      <Target className="w-3.5 h-3.5 text-rose-600 group-hover:scale-110 transition-transform" />
                     </div>
                     <p className="text-[11px] font-bold text-rose-950 leading-snug">
                       {activePathway.architecture.sampleExample.action}
                     </p>
                   </div>
-                  <span className="text-[9px] font-bold text-rose-700">➔ Ethical Outcome</span>
+                  <div className="mt-2 pt-1 border-t border-rose-200 flex items-center justify-between">
+                    <span className="text-[9px] font-bold text-rose-700">➔ Outcome</span>
+                    <span className="text-[9px] font-bold text-rose-600">Guidance →</span>
+                  </div>
                 </div>
               </div>
 
