@@ -817,16 +817,16 @@ const AUTHENTIC_VERSES: Record<number, { v1: string; v2: string; eng: string; tr
 
 // Perspective aspects for unique generation across the 10 couplets of any chapter
 const COUPLET_ASPECTS: { aspectTa: string; aspectEng: string; focus: string }[] = [
-  { aspectTa: 'அடிப்படை அறக் கோட்பாடு', aspectEng: 'Foundational Principle', focus: 'establishes the fundamental ethical basis' },
-  { aspectTa: 'செயல்முறை ஒழுக்கம்', aspectEng: 'Practical Discipline', focus: 'delineates daily practical application and vigilance' },
-  { aspectTa: 'சமூக நல்வாழ்வு நெறி', aspectEng: 'Social Harmony & Public Good', focus: 'highlights collective welfare, equity, and civic harmony' },
-  { aspectTa: 'நேர்மை மற்றும் பொறுப்புணர்வு', aspectEng: 'Integrity & Moral Duty', focus: 'underscores uncompromised accountability and fiduciary duty' },
-  { aspectTa: 'நீண்டகால நற்பயன்கள்', aspectEng: 'Enduring Consequences & Merit', focus: 'articulates the generational rewards and ethical legacy' },
-  { aspectTa: 'தடைகளை வெல்லும் விதம்', aspectEng: 'Overcoming Moral Pitfalls', focus: 'instructs on guarding against corruption, negligence, and bias' },
-  { aspectTa: 'சான்றோரின் முன்மாதிரி பண்பு', aspectEng: 'Exemplary Leadership & Character', focus: 'embodies the conduct of noble and discerning leaders' },
-  { aspectTa: 'தீமைகளிலிருந்து பாதுகாப்பு', aspectEng: 'Protection from Harm & Malice', focus: 'shields individual rights and societal peace from transgressions' },
-  { aspectTa: 'எக்காலத்திற்கும் ஏற்ற மெய்யறிவு', aspectEng: 'Universal Wisdom & Truth', focus: 'illuminates timeless jurisprudential insight and balance' },
-  { aspectTa: 'முழுமையான நிறைவும் வெற்றியும்', aspectEng: 'Triumph of Justice & Moral Glory', focus: 'celebrates the ultimate triumph of righteousness and honor' },
+  { aspectTa: 'அடிப்படை அறக் கோட்பாடு', aspectEng: 'Core Ethos', focus: 'establishes the fundamental ethical basis' },
+  { aspectTa: 'செயல்முறை ஒழுக்கம்', aspectEng: 'Practical Code', focus: 'delineates daily practical application and vigilance' },
+  { aspectTa: 'சமூக நல்வாழ்வு நெறி', aspectEng: 'Civic Harmony', focus: 'highlights collective welfare, equity, and civic harmony' },
+  { aspectTa: 'பொறுப்புணர்வு நெறி', aspectEng: 'Moral Obligation', focus: 'underscores accountability and conscientious duty' },
+  { aspectTa: 'நீண்டகால நற்பயன்கள்', aspectEng: 'Ethical Merit', focus: 'articulates the generational rewards and ethical legacy' },
+  { aspectTa: 'தடைகளை வெல்லும் விதம்', aspectEng: 'Conduct Safeguard', focus: 'instructs on guarding against pitfalls, negligence, and bias' },
+  { aspectTa: 'சான்றோரின் முன்மாதிரி பண்பு', aspectEng: 'Noble Exemplar', focus: 'embodies the conduct of discerning individuals' },
+  { aspectTa: 'தீமைகளிலிருந்து பாதுகாப்பு', aspectEng: 'Harm Prevention', focus: 'shields individual rights and societal peace from transgressions' },
+  { aspectTa: 'எக்காலத்திற்கும் ஏற்ற மெய்யறிவு', aspectEng: 'Perennial Insight', focus: 'illuminates timeless insight and balance' },
+  { aspectTa: 'முழுமையான நிறைவும் வெற்றியும்', aspectEng: 'Righteous Fulfillment', focus: 'celebrates the ultimate triumph of righteousness' },
 ];
 
 // Helper to generate the complete canonical 1,330 Kural records deterministically
@@ -871,19 +871,18 @@ export function generateCanonical1330Kurals(): NormalizedKural[] {
           paal: chapter.paal,
           paalTamil: chapter.paalTamil,
           transliteration: translit,
-          concepts: [chapter.concept, aspect.aspectEng],
+          concepts: [chapter.concept],
           keywords: [
             chapter.name.toLowerCase(),
             chapter.concept.toLowerCase(),
             `kural ${kuralNum}`,
-            chapter.tamilName,
-            aspect.aspectEng.toLowerCase()
+            chapter.tamilName
           ],
-          searchText: `${kuralNum} kural ${kuralNum} ${chapter.name} ${chapter.tamilName} ${chapter.paal} ${chapter.concept} ${aspect.aspectEng} ${v1} ${v2} ${englishVerse}`.toLowerCase(),
+          searchText: `${kuralNum} kural ${kuralNum} ${chapter.name} ${chapter.tamilName} ${chapter.paal} ${chapter.concept} ${v1} ${v2} ${englishVerse} ${englishExp}`.toLowerCase(),
           metadata: {
             lineCount: 2,
             wordCount: 7,
-            modernRelevance: `Enduring wisdom for ${chapter.concept.toLowerCase()} and ${aspect.aspectEng.toLowerCase()} in everyday ethical and civic duty.`,
+            modernRelevance: `Enduring wisdom for ${chapter.concept.toLowerCase()} in everyday ethical and civic duty.`,
             relatedLegalConcepts: [
               chapter.paal === 'Aram' ? 'Moral Jurisprudence' : chapter.paal === 'Porul' ? 'Governance & Law' : 'Personal Ethics'
             ]

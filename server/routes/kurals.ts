@@ -7,20 +7,32 @@ const preprocessor = DatasetPreprocessor.getInstance();
 
 // Strict chapter mappings for core moral and legal concepts
 export const CONCEPT_CHAPTER_MAP: Record<string, number[]> = {
-  'justice': [4, 12, 55, 56],
-  'leadership': [39, 44, 45, 54],
   'integrity': [14, 29],
+  'justice': [4, 12, 55, 56],
   'anger control': [31],
   'anger': [31],
   'honesty': [30],
   'truth': [30],
   'self-control': [13],
   'self control': [13],
+  'leadership': [39, 44, 45, 54],
   'responsibility': [5, 22],
   'duty': [5, 22],
   'conflict resolution': [16, 32],
   'forgiveness': [16],
+  'education': [40, 41, 42, 43],
+  'learning': [40],
+  'friendship': [79, 80, 81],
+  'dignity': [97, 98],
+  'investigation': [59],
+  'speech': [65, 72, 73],
+  'charity': [23],
+  'compassion': [8, 25],
 };
+
+function escapeRegex(str: string): string {
+  return str.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+}
 
 /**
  * GET /api/kurals
@@ -65,8 +77,11 @@ router.get('/', (req: Request, res: Response) => {
       const mappedChapters = CONCEPT_CHAPTER_MAP[c];
 
       if (mappedChapters && mappedChapters.length > 0) {
-        // Return strictly the kurals belonging to these mapped chapters
-        results = results.filter((k) => mappedChapters.includes(k.chapterNumber));
+        // Return strictly the kurals belonging to these mapped chapters plus exact concept matches
+        results = results.filter((k) =>
+          mappedChapters.includes(k.chapterNumber) ||
+          k.concepts.some((cp) => cp.toLowerCase() === c || cp.toLowerCase().includes(c))
+        );
       } else {
         // Strict concept match
         results = results.filter((k) =>
@@ -86,48 +101,109 @@ router.get('/', (req: Request, res: Response) => {
         .map((t) => t.trim())
         .filter((t) => t.length > 0 && t !== 'kural');
 
+      // Check if searchRaw matches or starts with any known concept
+      const conceptChapterMatches = new Set<number>();
+      for (const [conceptKey, chapters] of Object.entries(CONCEPT_CHAPTER_MAP)) {
+        if (
+          conceptKey.startsWith(searchRaw) ||
+          searchRaw.startsWith(conceptKey) ||
+          searchTokens.some((t) => t.length >= 3 && conceptKey.includes(t))
+        ) {
+          chapters.forEach((ch) => conceptChapterMatches.add(ch));
+        }
+      }
+
       const scoredResults = results
         .map((k) => {
           let score = 0;
 
-          // Exact Kural number match
+          // 1. Exact Kural number match
           if (searchedKuralNum !== null && k.kuralNumber === searchedKuralNum) {
+            score += 3000;
+          }
+
+          // 2. Exact concept-mapped chapter boost
+          if (conceptChapterMatches.has(k.chapterNumber)) {
             score += 1000;
           }
 
-          // Exact full phrase match in searchText
-          if (k.searchText.includes(searchRaw)) {
-            score += 200;
+          // 3. Exact full phrase match in concepts or chapter
+          const searchLower = searchRaw.toLowerCase();
+          if (k.chapter.toLowerCase() === searchLower || k.chapterTamil === searchRaw) {
+            score += 600;
+          } else if (k.chapter.toLowerCase().includes(searchLower)) {
+            score += 300;
           }
 
-          // Exact chapter or concept match
-          if (k.chapter.toLowerCase().includes(searchRaw)) score += 150;
-          if (k.concepts.some((cp) => cp.toLowerCase().includes(searchRaw))) score += 120;
-          if (k.keywords?.some((kw) => kw.toLowerCase().includes(searchRaw))) score += 80;
+          if (k.concepts.some((cp) => cp.toLowerCase() === searchLower)) {
+            score += 500;
+          } else if (k.concepts.some((cp) => cp.toLowerCase().includes(searchLower))) {
+            score += 250;
+          }
 
-          // Multi-token matches
+          // 4. Token-by-token strict word boundary matching
           let matchedTokensCount = 0;
           for (const token of searchTokens) {
-            if (k.searchText.includes(token)) {
+            const escaped = escapeRegex(token);
+            const wordStartRegex = new RegExp(`\\b${escaped}`, 'i');
+            const exactWordRegex = new RegExp(`\\b${escaped}\\b`, 'i');
+
+            let matchedForThisToken = false;
+
+            // Check chapter name
+            if (exactWordRegex.test(k.chapter) || exactWordRegex.test(k.chapterTamil)) {
+              score += 200;
+              matchedForThisToken = true;
+            } else if (wordStartRegex.test(k.chapter) || wordStartRegex.test(k.chapterTamil)) {
+              score += 120;
+              matchedForThisToken = true;
+            }
+
+            // Check concepts
+            if (k.concepts.some((cp) => exactWordRegex.test(cp))) {
+              score += 200;
+              matchedForThisToken = true;
+            } else if (k.concepts.some((cp) => wordStartRegex.test(cp))) {
+              score += 120;
+              matchedForThisToken = true;
+            }
+
+            // Check keywords
+            if (k.keywords?.some((kw) => exactWordRegex.test(kw))) {
+              score += 150;
+              matchedForThisToken = true;
+            } else if (k.keywords?.some((kw) => wordStartRegex.test(kw))) {
+              score += 90;
+              matchedForThisToken = true;
+            }
+
+            // Check English & Tamil verses
+            if (exactWordRegex.test(k.englishVerse) || exactWordRegex.test(k.tamilVerse)) {
+              score += 100;
+              matchedForThisToken = true;
+            } else if (wordStartRegex.test(k.englishVerse) || wordStartRegex.test(k.tamilVerse)) {
+              score += 60;
+              matchedForThisToken = true;
+            }
+
+            // Check transliteration
+            if (k.transliteration && wordStartRegex.test(k.transliteration)) {
+              score += 50;
+              matchedForThisToken = true;
+            }
+
+            if (matchedForThisToken) {
               matchedTokensCount++;
-              score += 25;
             }
           }
 
-          // Bonus if all tokens match
-          if (searchTokens.length > 0 && matchedTokensCount === searchTokens.length) {
-            score += 100;
+          // Bonus if all tokens matched
+          if (searchTokens.length > 1 && matchedTokensCount >= searchTokens.length) {
+            score += 200;
           }
 
-          // Scenario & Keyword boosts
-          if (searchRaw.includes('scenario') || searchRaw.includes('case')) {
-            if ((k.metadata?.relatedScenarioIds || []).length > 0) score += 60;
-          }
-          if (searchRaw.includes('law') || searchRaw.includes('statute') || searchRaw.includes('legal')) {
-            if ((k.metadata?.relatedLegalConcepts || []).length > 0) score += 40;
-          }
-
-          const isMatched = score > 0 || (searchTokens.length === 0 && searchedKuralNum !== null);
+          // Require that at least one token actually matched a word start/exact word, or exact number match
+          const isMatched = (matchedTokensCount > 0 && score >= 50) || (searchedKuralNum !== null && k.kuralNumber === searchedKuralNum);
 
           return { kural: k, score, isMatched };
         })
