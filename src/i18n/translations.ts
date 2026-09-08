@@ -242,6 +242,8 @@ export const TRANSLATIONS: Record<Language, Record<string, string>> = {
     reasoningOverLaw: 'AI Tutor is reasoning over Indian Law & Thirukkural...',
 
     // Pathways
+    guidedPathwaysTitle: 'Guided Learning Pathways',
+    guidedPathwaysSubtitle: 'Curated end-to-end learning journeys connecting specific Kurals, core ethical virtues, statutory legal mandates, and scenario simulations.',
     pathJusticeTitle: 'Impartiality & Natural Justice',
     pathJusticeDesc: 'How ancient Tamil impartiality rules mirror Article 21 and the Principles of Natural Justice.',
     pathIntegrityTitle: 'Propriety of Conduct & Integrity',
@@ -518,6 +520,8 @@ export const TRANSLATIONS: Record<Language, Record<string, string>> = {
     reasoningOverLaw: 'AI ஆசிரியர் இந்திய சட்டம் மற்றும் திருக்குறளை ஆராய்கிறார்...',
 
     // Pathways in Tamil
+    guidedPathwaysTitle: 'வழிகாட்டப்பட்ட கற்றல் பாதைகள்',
+    guidedPathwaysSubtitle: 'குறிப்பிட்ட குறள்கள், முக்கிய அறநெறிகள், சட்ட விதிகள் மற்றும் உருவகப்படுத்தப்பட்ட வழக்குகளை இணைக்கும் முழுமையான கற்றல் பயணம்.',
     pathJusticeTitle: 'நடுவுநிலைமை & இயற்கை நீதி',
     pathJusticeDesc: 'பண்டைய தமிழ் நடுவுநிலைமை விதிகள் அரசியலமைப்பு பிரிவு 21 மற்றும் இயற்கை நீதி கோட்பாடுகளுடன் எவ்வாறு ஒத்துப் போகின்றன.',
     pathIntegrityTitle: 'ஒழுக்கமுடைமை & நெறிமுறை',
@@ -794,6 +798,8 @@ export const TRANSLATIONS: Record<Language, Record<string, string>> = {
     reasoningOverLaw: 'AI गुरु भारतीय कानून और तिरुक्कुरल का विश्लेषण कर रहा है...',
 
     // Pathways in Hindi
+    guidedPathwaysTitle: 'मार्गदर्शित शिक्षण पथ',
+    guidedPathwaysSubtitle: 'विशिष्ट कुरल, मूल नैतिक मूल्यों, कानूनी धाराओं और परिदृश्य सिमुलेशन को जोड़ने वाली संपूर्ण शिक्षण यात्रा।',
     pathJusticeTitle: 'निष्पक्षता एवं प्राकृतिक न्याय',
     pathJusticeDesc: 'प्राचीन तमिल निष्पक्षता नियम अनुच्छेद 21 और प्राकृतिक न्याय के सिद्धांतों को कैसे दर्शाते हैं।',
     pathIntegrityTitle: 'आचरण की सत्यनिष्ठा एवं ईमानदारी',
