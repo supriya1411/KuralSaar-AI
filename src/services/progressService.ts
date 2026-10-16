@@ -5,7 +5,7 @@ const STORAGE_KEY = 'justice_ai_user_progress_v1';
 
 const DEFAULT_USER_PROGRESS: UserProgress = {
   userId: 'user-curr',
-  userName: 'Arun Kumar',
+  userName: 'KuralArivan',
   userRole: 'Senior Legal-Ethics Scholar',
   avatarUrl: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=150&auto=format&fit=crop&q=80',
   level: 4,
@@ -57,7 +57,7 @@ export const progressService = {
           const d = json.data;
           const transformed: UserProgress = {
             userId: d.userId || 'user-curr',
-            userName: d.userName || 'Arun Kumar',
+            userName: d.userName || 'KuralArivan',
             userRole: d.userRole || 'Senior Legal-Ethics Scholar',
             avatarUrl: d.avatarUrl || 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=150&auto=format&fit=crop&q=80',
             level: d.level || 4,
