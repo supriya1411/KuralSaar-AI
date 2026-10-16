@@ -119,7 +119,7 @@ export const StepAiTutorModal: React.FC<StepAiTutorModalProps> = ({
     `सरल शब्दों में उचित प्रक्रिया समझाइए।`,
   ] : [
     `How does Kural 111 relate to Article 21?`,
-    `What are real court examples of this?`,
+    `What are real court cases of this?`,
     `Explain due process in simple terms.`,
   ];
 

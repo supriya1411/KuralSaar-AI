@@ -30,8 +30,10 @@ import {
   ArrowRight,
   ArrowDown,
   CheckCircle2,
-  Share2
+  Share2,
+  CircleDot
 } from 'lucide-react';
+import { RingKnowledgeGraph } from '../components/knowledgeGraph/RingKnowledgeGraph';
 import { CHAPTER_NAMES_LOCALIZED, ETHICAL_CONCEPT_LOCALIZED } from '../i18n/kuralLocalizations';
 import { SCENARIO_TRANSLATIONS } from '../i18n/scenarioLocalizations';
 
@@ -394,7 +396,8 @@ export const KnowledgeGraphPage: React.FC = () => {
   const [nodes, setNodes] = useState<KnowledgeNode[]>([]);
   const [edges, setEdges] = useState<KnowledgeEdge[]>([]);
   const [selectedNode, setSelectedNode] = useState<KnowledgeNode | null>(null);
-  const [viewMode, setViewMode] = useState<'flow' | 'guided'>('flow');
+  const [selectedKuralNumber, setSelectedKuralNumber] = useState<number>(127);
+  const [viewMode, setViewMode] = useState<'ring' | 'flow' | 'guided'>('ring');
   const [searchQuery, setSearchQuery] = useState<string>('');
   const [filterType, setFilterType] = useState<string>('All');
   const [zoomLevel, setZoomLevel] = useState<number>(1);
@@ -417,17 +420,31 @@ export const KnowledgeGraphPage: React.FC = () => {
   };
 
   useEffect(() => {
+    // Default selected node for Kural 127 matching Image 2
+    setSelectedNode({
+      id: 'kural-127',
+      label: 'Kural 127',
+      type: 'Kural',
+      category: 'kural',
+      x: 480,
+      y: 350,
+      details: {
+        title: 'Kural 127: Adakkam Udaimai (Self-Control / Restraint)',
+        subtitle: 'Whatever else you fail to guard, guard your tongue; failing which, distress will follow from careless speech.',
+        description: 'யாகாவா ராயினும் நாகாக்க காவாக்கால்\nசோகாப்பர் சொல்லிழுக்குப் பட்டு.\n\nEven if you are unable to restrain all other impulses, you must stringently restrain your speech. Untamed and hurtful words invariably cause grave harm and legal grief.',
+        tags: ['Kural', 'Kural 127', 'Adakkam Udaimai', 'Speech Ethics', 'Self-Control'],
+        meta: {
+          number: 127,
+          chapter: 'Adakkam Udaimai (Self-Control / Restraint)',
+          paal: 'Aram'
+        }
+      }
+    });
+
     const fetchGraph = async () => {
       const data = await knowledgeGraphService.getGraphData();
       setNodes(data.nodes);
       setEdges(data.edges);
-      if (data.nodes.length > 0) {
-        const firstChapter =
-          data.nodes.find(n => n.type === 'Chapter' && n.label.toLowerCase().includes('aran valiyuruthal')) ||
-          data.nodes.find(n => n.type === 'Chapter') ||
-          data.nodes[0];
-        setSelectedNode(firstChapter);
-      }
     };
     fetchGraph();
   }, []);
@@ -508,6 +525,92 @@ export const KnowledgeGraphPage: React.FC = () => {
 
   const totalFilteredCount = visibleChapters.length + visibleKurals.length + visibleEthical.length + visibleLegal.length;
 
+  // Reusable inspection drawer for both Ring and Column flow layouts
+  const renderDrawer = () => {
+    if (!showDrawer) return null;
+    return (
+      <div className="lg:col-span-4 xl:col-span-3 bg-white rounded-2xl border border-slate-200 shadow-2xs p-6 space-y-4 h-full overflow-y-auto">
+        {selectedNode ? (
+          <div className="space-y-4 animate-in fade-in duration-150">
+            {/* Node Pill & Type Header */}
+            <div className="flex items-center justify-between pb-2 border-b border-slate-100">
+              <span className="text-xs font-bold text-blue-800 bg-blue-100 px-3 py-1 rounded-full">
+                {selectedNode.type} Node
+              </span>
+              <span className="text-xs font-medium text-slate-500">
+                {(selectedNode.type || '').toLowerCase()}
+              </span>
+            </div>
+
+            {/* Node Title */}
+            <h3 className="text-xl font-bold text-slate-900 font-heading">
+              {selectedNode.label}
+            </h3>
+
+            {/* Deep Description Box */}
+            <div className="p-4 bg-slate-50 rounded-xl border border-slate-200/90 space-y-2">
+              <span className="text-xs font-bold text-slate-800 block">
+                {language === 'ta' ? 'ஆழ்ந்த விளக்கம்:' : language === 'hi' ? 'विस्तृत विवरण:' : 'Deep Description:'}
+              </span>
+              <p className="text-xs text-slate-700 leading-relaxed font-medium whitespace-pre-line">
+                {selectedNode.details?.description || selectedNode.details?.title}
+              </p>
+
+              {selectedNode.details?.subtitle && (
+                <p className="text-xs text-slate-600 italic pt-1 border-t border-slate-200">
+                  {selectedNode.details.subtitle}
+                </p>
+              )}
+            </div>
+
+            {/* Semantic Tags */}
+            <div className="space-y-2">
+              <span className="text-xs font-bold text-slate-800 block">
+                {language === 'ta' ? 'பொருள்சார் குறிச்சொற்கள்:' : language === 'hi' ? 'अर्थगत टैग:' : 'Semantic Tags:'}
+              </span>
+              <div className="flex flex-wrap gap-2">
+                {(selectedNode.details?.tags || [selectedNode.type, (selectedNode.type || '').toLowerCase()]).map((tag, idx) => (
+                  <span
+                    key={idx}
+                    className="text-xs font-semibold text-blue-700 bg-blue-50 px-2.5 py-1 rounded-md border border-blue-200/60"
+                  >
+                    #{tag}
+                  </span>
+                ))}
+              </div>
+            </div>
+
+            {/* Node Action Button */}
+            <button
+              onClick={() => openStepTutorModal(selectedNode.label, `${selectedNode.type} Node Inquiry`)}
+              className="w-full py-2.5 px-4 bg-white hover:bg-slate-50 text-slate-800 border border-slate-200 font-bold text-xs rounded-xl shadow-2xs transition-all cursor-pointer flex items-center justify-center gap-2 mt-4"
+            >
+              <Sparkles className="w-4 h-4 text-amber-500" />
+              {language === 'ta' ? 'இந்த நோடு குறித்து AI ஆசிரியரிடம் கேட்க' : language === 'hi' ? 'इस नोड पर AI शिक्षक से पूछें' : 'Ask AI Tutor About This Node'}
+            </button>
+
+            {/* Kural Open Modal Button if Kural */}
+            {(selectedNode.type === 'Kural' || selectedNode.id.startsWith('kural-') || selectedNode.details?.meta?.number) && (
+              <button
+                onClick={() => {
+                  const num = Number(selectedNode.id.replace('kural-', '')) || (selectedNode.details?.meta?.number as number) || selectedKuralNumber || 127;
+                  openKuralModalByNumber(num);
+                }}
+                className="w-full py-2.5 bg-[#071B3A] hover:bg-[#0A2540] text-white font-bold text-xs rounded-xl shadow-2xs transition-colors cursor-pointer text-center block"
+              >
+                {language === 'ta' ? 'குறள் விவரங்களைத் திறக்க →' : language === 'hi' ? 'कुरल विवरण खोलें →' : 'Open Kural Details →'}
+              </button>
+            )}
+          </div>
+        ) : (
+          <p className="text-xs text-slate-500 text-center py-12 font-medium">
+            {language === 'ta' ? 'விவரங்களைப் பார்க்க வரைபடத்தில் ஏதேனும் நோடைத் தேர்ந்தெடுக்கவும்.' : language === 'hi' ? 'विवरण देखने के लिए आरेख में किसी नोड का चयन करें।' : 'Select a node from the network graph to inspect details.'}
+          </p>
+        )}
+      </div>
+    );
+  };
+
   return (
     <div className={`space-y-6 pb-12 ${isFullscreen ? 'fixed inset-0 z-100 bg-slate-900/60 backdrop-blur-xs p-3 md:p-6 flex flex-col h-screen w-screen overflow-hidden' : ''}`}>
       {/* Top Controls Bar */}
@@ -518,10 +621,10 @@ export const KnowledgeGraphPage: React.FC = () => {
           </div>
           <div>
             <h2 className="text-sm font-extrabold text-[#071B3A] font-heading">
-              Knowledge Graph & Learning Journeys
+              {language === 'ta' ? 'அறிவு வரைபடம் & கற்றல் பயணங்கள்' : language === 'hi' ? 'ज्ञान आरेख एवं अधिगम यात्राएं' : 'Knowledge Graph & Learning Journeys'}
             </h2>
             <p className="text-xs text-slate-500 font-medium">
-              Dual-Corpus Jurisprudence & Ethical Reasoning Map
+              {language === 'ta' ? 'இரட்டைத் தரவுத்தள சட்டவியல் & அறநெறிப் பகுத்தறிவு வரைபடம்' : language === 'hi' ? 'द्वि-कॉर्पस न्यायशास्त्र एवं नैतिक तर्क आरेख' : 'Dual-Corpus Jurisprudence & Ethical Reasoning Map'}
             </p>
           </div>
         </div>
@@ -529,6 +632,17 @@ export const KnowledgeGraphPage: React.FC = () => {
         {/* View Mode Toggle & Stats */}
         <div className="flex items-center gap-3">
           <div className="flex items-center p-1 bg-slate-100 rounded-xl border border-slate-200">
+            <button
+              onClick={() => setViewMode('ring')}
+              className={`px-3 py-1.5 text-xs font-bold rounded-lg transition-all flex items-center gap-1.5 cursor-pointer ${
+                viewMode === 'ring'
+                  ? 'bg-white text-blue-700 shadow-2xs'
+                  : 'text-slate-600 hover:text-slate-900'
+              }`}
+            >
+              <CircleDot className="w-3.5 h-3.5 text-blue-600" />
+              {language === 'ta' ? 'வளைய வரைபடம்' : language === 'hi' ? 'रिंग आरेख' : 'Ring Graph'}
+            </button>
             <button
               onClick={() => setViewMode('flow')}
               className={`px-3 py-1.5 text-xs font-bold rounded-lg transition-all flex items-center gap-1.5 cursor-pointer ${
@@ -538,7 +652,7 @@ export const KnowledgeGraphPage: React.FC = () => {
               }`}
             >
               <Layers className="w-3.5 h-3.5" />
-              Interactive Flow
+              {language === 'ta' ? 'வரிசைப் பாய்வு' : language === 'hi' ? 'कॉलम प्रवाह' : 'Column Flow'}
             </button>
             <button
               onClick={() => setViewMode('guided')}
@@ -549,7 +663,7 @@ export const KnowledgeGraphPage: React.FC = () => {
               }`}
             >
               <Compass className="w-3.5 h-3.5" />
-              Guided Pathways
+              {language === 'ta' ? 'வழிகாட்டப்பட்ட பாதைகள்' : language === 'hi' ? 'मार्गदर्शित पथ' : 'Guided Pathways'}
             </button>
           </div>
 
@@ -567,7 +681,86 @@ export const KnowledgeGraphPage: React.FC = () => {
       </div>
 
       {/* ========================================================================= */}
-      {/* MODE A: INTERACTIVE MULTI-COLUMN FLOW GRAPH (Matches User's UI Screenshot) */}
+      {/* MODE 1: RING TYPE KNOWLEDGE GRAPH (Matches User's Image 2 Requirement)    */}
+      {/* ========================================================================= */}
+      {viewMode === 'ring' && (
+        <div className={`grid grid-cols-1 ${isFullscreen ? 'h-[calc(100vh-120px)] flex-1' : 'min-h-[640px]'} lg:grid-cols-12 gap-6 items-stretch`}>
+          {/* Main Ring Canvas Card */}
+          <div className={`${showDrawer ? 'lg:col-span-8 xl:col-span-9' : 'lg:col-span-12'} bg-white rounded-2xl border border-slate-200 shadow-2xs overflow-hidden flex flex-col h-full transition-all`}>
+            {/* Top Toolbar matching screenshot controls */}
+            <div className="flex items-center justify-between p-3.5 border-b border-slate-200 bg-slate-50 shrink-0">
+              <div className="flex items-center gap-2">
+                <span className="text-xs font-black uppercase tracking-wider text-[#004889] bg-blue-100/70 px-2.5 py-1 rounded-md">
+                  Ring Radial Layout
+                </span>
+                <span className="text-xs font-semibold text-slate-500 hidden sm:inline">
+                  Interactive multi-corpus nexus around Kural {selectedKuralNumber}
+                </span>
+              </div>
+
+              {/* Zoom & View Controls */}
+              <div className="flex items-center gap-1.5">
+                <button
+                  onClick={() => setZoomLevel((z) => Math.max(0.6, Number((z - 0.1).toFixed(1))))}
+                  title="Zoom Out"
+                  className="p-1.5 bg-white border border-slate-200 rounded-lg text-slate-700 hover:bg-slate-100 transition-colors cursor-pointer shadow-2xs"
+                >
+                  <ZoomOut className="w-3.5 h-3.5" />
+                </button>
+                <button
+                  onClick={() => setZoomLevel(1)}
+                  title="Reset Zoom"
+                  className="px-2 py-1 text-xs font-bold text-slate-700 bg-white border border-slate-200 rounded-lg hover:bg-slate-100 transition-colors cursor-pointer shadow-2xs"
+                >
+                  {Math.round(zoomLevel * 100)}%
+                </button>
+                <button
+                  onClick={() => setZoomLevel((z) => Math.min(1.5, Number((z + 0.1).toFixed(1))))}
+                  title="Zoom In"
+                  className="p-1.5 bg-white border border-slate-200 rounded-lg text-slate-700 hover:bg-slate-100 transition-colors cursor-pointer shadow-2xs"
+                >
+                  <ZoomIn className="w-3.5 h-3.5" />
+                </button>
+                <button
+                  onClick={() => setIsFullscreen(!isFullscreen)}
+                  title={isFullscreen ? 'Exit Fullscreen' : 'Open Full Screen Graph'}
+                  className={`p-1.5 border rounded-lg transition-colors cursor-pointer shadow-2xs ml-1 ${
+                    isFullscreen ? 'bg-blue-600 text-white border-blue-600' : 'bg-white border-slate-200 text-slate-700 hover:bg-slate-100'
+                  }`}
+                >
+                  {isFullscreen ? <Minimize2 className="w-3.5 h-3.5" /> : <Maximize2 className="w-3.5 h-3.5" />}
+                </button>
+                <button
+                  onClick={() => setShowDrawer(!showDrawer)}
+                  title={showDrawer ? 'Hide Details Panel' : 'Show Details Panel'}
+                  className="p-1.5 bg-white border border-slate-200 rounded-lg text-slate-700 hover:bg-slate-100 transition-colors cursor-pointer shadow-2xs ml-1"
+                >
+                  <Sidebar className="w-3.5 h-3.5" />
+                </button>
+              </div>
+            </div>
+
+            {/* Ring Knowledge Graph Canvas */}
+            <div className="flex-1 min-h-0 overflow-hidden flex flex-col">
+              <RingKnowledgeGraph
+                selectedKuralNumber={selectedKuralNumber}
+                onSelectKuralNumber={setSelectedKuralNumber}
+                selectedNode={selectedNode}
+                onSelectNode={setSelectedNode}
+                zoomLevel={zoomLevel}
+                onZoomChange={setZoomLevel}
+                isFullscreen={isFullscreen}
+              />
+            </div>
+          </div>
+
+          {/* Right Side Inspection Drawer */}
+          {renderDrawer()}
+        </div>
+      )}
+
+      {/* ========================================================================= */}
+      {/* MODE 2: INTERACTIVE MULTI-COLUMN FLOW GRAPH                               */}
       {/* ========================================================================= */}
       {viewMode === 'flow' && (
         <div className={`grid grid-cols-1 ${isFullscreen ? 'h-[calc(100vh-120px)] flex-1' : 'min-h-[640px]'} lg:grid-cols-12 gap-6 items-stretch`}>
@@ -817,87 +1010,7 @@ export const KnowledgeGraphPage: React.FC = () => {
           </div>
 
           {/* Right Side Inspection Drawer */}
-          {showDrawer && (
-            <div className="lg:col-span-4 xl:col-span-3 bg-white rounded-2xl border border-slate-200 shadow-2xs p-6 space-y-4 h-full overflow-y-auto">
-              {selectedNode ? (
-                <div className="space-y-4 animate-in fade-in duration-150">
-                  {/* Node Pill & Type Header */}
-                  <div className="flex items-center justify-between pb-2 border-b border-slate-100">
-                    <span className="text-xs font-bold text-blue-800 bg-blue-100 px-3 py-1 rounded-full">
-                      {selectedNode.type} Node
-                    </span>
-                    <span className="text-xs font-medium text-slate-500">
-                      {(selectedNode.type || '').toLowerCase()}
-                    </span>
-                  </div>
-
-                  {/* Node Title */}
-                  <h3 className="text-xl font-bold text-slate-900 font-heading">
-                    {selectedNode.label}
-                  </h3>
-
-                  {/* Deep Description Box */}
-                  <div className="p-4 bg-slate-50 rounded-xl border border-slate-200/90 space-y-2">
-                    <span className="text-xs font-bold text-slate-800 block">
-                      Deep Description:
-                    </span>
-                    <p className="text-xs text-slate-700 leading-relaxed font-medium">
-                      {selectedNode.details?.description || selectedNode.details?.title}
-                    </p>
-
-                    {selectedNode.details?.subtitle && (
-                      <p className="text-xs text-slate-600 italic pt-1 border-t border-slate-200">
-                        {selectedNode.details.subtitle}
-                      </p>
-                    )}
-                  </div>
-
-                  {/* Semantic Tags */}
-                  <div className="space-y-2">
-                    <span className="text-xs font-bold text-slate-800 block">
-                      Semantic Tags:
-                    </span>
-                    <div className="flex flex-wrap gap-2">
-                      {(selectedNode.details?.tags || [selectedNode.type, (selectedNode.type || '').toLowerCase()]).map((tag, idx) => (
-                        <span
-                          key={idx}
-                          className="text-xs font-semibold text-blue-700 bg-blue-50 px-2.5 py-1 rounded-md border border-blue-200/60"
-                        >
-                          #{tag}
-                        </span>
-                      ))}
-                    </div>
-                  </div>
-
-                  {/* Node Action Button */}
-                  <button
-                    onClick={() => openStepTutorModal(selectedNode.label, `${selectedNode.type} Node Inquiry`)}
-                    className="w-full py-2.5 px-4 bg-white hover:bg-slate-50 text-slate-800 border border-slate-200 font-bold text-xs rounded-xl shadow-2xs transition-all cursor-pointer flex items-center justify-center gap-2 mt-4"
-                  >
-                    <Sparkles className="w-4 h-4 text-amber-500" />
-                    Ask AI Tutor About This Node
-                  </button>
-
-                  {/* Kural Open Modal Button if Kural */}
-                  {(selectedNode.type === 'Kural' || selectedNode.id.startsWith('kural-')) && (
-                    <button
-                      onClick={() => {
-                        const num = Number(selectedNode.id.replace('kural-', '')) || (selectedNode.details?.meta?.number as number) || 118;
-                        openKuralModalByNumber(num);
-                      }}
-                      className="w-full py-2.5 bg-[#071B3A] hover:bg-[#0A2540] text-white font-bold text-xs rounded-xl shadow-2xs transition-colors cursor-pointer text-center block"
-                    >
-                      Open Kural Details →
-                    </button>
-                  )}
-                </div>
-              ) : (
-                <p className="text-xs text-slate-500 text-center py-12 font-medium">
-                  Select a node from the network graph to inspect details.
-                </p>
-              )}
-            </div>
-          )}
+          {renderDrawer()}
         </div>
       )}
 
@@ -1477,7 +1590,7 @@ export const KnowledgeGraphPage: React.FC = () => {
                 <div className="flex items-center gap-2">
                   <span className="text-xs font-extrabold text-white bg-[#071B3A] px-3 py-1 rounded-lg flex items-center gap-1.5 shadow-2xs">
                     <BookOpen className="w-3.5 h-3.5 text-amber-300" />
-                    Sample Example
+                    {language === 'ta' ? 'நடைமுறை வழக்காய்வு' : language === 'hi' ? 'व्यावहारिक केस अध्ययन' : 'Case Study Walkthrough'}
                   </span>
                   <span className="text-xs font-bold text-slate-700">
                     Dual-Corpus Reasoning Pipeline: From Verse to Action
