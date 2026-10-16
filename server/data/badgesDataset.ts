@@ -82,7 +82,7 @@ export const BADGES_DATASET: BadgeItem[] = [
 export const INITIAL_LEADERBOARD_USERS: LeaderboardUserData[] = [
   {
     id: 'user-curr',
-    name: 'Arun Kumar',
+    name: 'KuralArivan',
     title: 'Senior Legal-Ethics Scholar',
     avatarUrl: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=150&auto=format&fit=crop&q=80',
     xp: 2840,
